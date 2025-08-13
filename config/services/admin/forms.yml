@@ -1,0 +1,44 @@
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # Settings
+
+  molonion.settings.form:
+    class: MoloniOn\Form\Settings\SettingsFormHandler
+    public: true
+    autowire: true
+    autoconfigure: false
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@molonion.settings.form_data_provider'
+
+  molonion.settings.form_data_provider:
+    class: MoloniOn\Form\Settings\SettingsFormDataProvider
+    arguments:
+      - '@molonion.context'
+      - '@=service("prestashop.adapter.legacy.context").getLanguage().id'
+
+  molonion.settings.form_type:
+    class: MoloniOn\Form\Settings\SettingsFormType
+    parent: 'form.type.translatable.aware'
+    public: true
+    autowire: true
+    autoconfigure: false
+    tags:
+      - { name: form.type }
+    arguments:
+      - '@molonion.settings.form_data_provider'
+
+  # Login
+
+  molonion.login.form_type:
+    class: MoloniOn\Form\Login\LoginFormType
+    parent: 'form.type.translatable.aware'
+    public: true
+    autowire: true
+    autoconfigure: false
+    tags:
+      - { name: form.type }

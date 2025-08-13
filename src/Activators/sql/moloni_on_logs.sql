@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS PREFIX_moloni_on_logs (
+    `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `shop_id` int(11) NOT NULL,
+    `order_id` int(11) DEFAULT NULL,
+    `company_id` int(11) DEFAULT NULL,
+    `level` tinyint(4) NOT NULL,
+    `message` text NOT NULL,
+    `extra` text,
+    `created_at` datetime DEFAULT NULL
+    ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

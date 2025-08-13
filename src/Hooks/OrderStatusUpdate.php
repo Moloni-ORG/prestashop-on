@@ -1,0 +1,140 @@
+<?php
+
+/**
+ * 2025 - Moloni.com
+ *
+ * NOTICE OF LICENSE
+ *
+ * This file is licenced under the Software License Agreement.
+ * With the purchase or the installation of the software in your application
+ * you accept the licence agreement.
+ *
+ * You must not modify, adapt or create derivative works of this source code
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Moloni
+ * @copyright Moloni
+ * @license   https://creativecommons.org/licenses/by-nd/4.0/
+ *
+ * @noinspection PhpMultipleClassDeclarationsInspection
+ */
+
+namespace MoloniOn\Hooks;
+
+use Doctrine\ORM\EntityManagerInterface;
+use MoloniOn\Actions\Orders\OrderCreateDocument;
+use MoloniOn\Api\MoloniApi;
+use MoloniOn\Enums\Boolean;
+use MoloniOn\Enums\DocumentReference;
+use MoloniOn\Exceptions\Document\MoloniDocumentException;
+use MoloniOn\Exceptions\Document\MoloniDocumentWarning;
+use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\Mails\DocumentErrorMail;
+use MoloniOn\Mails\DocumentWarningMail;
+use MoloniOn\MoloniContext;
+use MoloniOn\Tools\Logs;
+use MoloniOn\Tools\Settings;
+
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
+class OrderStatusUpdate extends AbstractHookAction
+{
+    private $orderId;
+
+    private $newOrderStatus;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(int $orderId, \OrderState $newOrderStatus, MoloniContext $moloniContext)
+    {
+        $this->orderId = $orderId;
+        $this->newOrderStatus = $newOrderStatus;
+        $this->entityManager = $moloniContext->iEntityManager();
+
+        $this->handle();
+    }
+
+    private function handle(): void
+    {
+        if (!$this->shouldExecuteHandle()) {
+            return;
+        }
+
+        try {
+            $action = new OrderCreateDocument($this->orderId, $this->entityManager);
+            $action->handle();
+        } catch (MoloniDocumentWarning $e) {
+            if (!empty(Settings::get('alertEmail'))) {
+                (new DocumentWarningMail(Settings::get('alertEmail'), ['order_id' => $this->orderId]))->handle();
+            }
+
+            $auxMessage = 'Warning processing order ({0})';
+
+            if (Settings::get('documentReference') === DocumentReference::ID || !isset($action)) {
+                $auxIdentifiers = ['{0}' => $this->orderId];
+            } else {
+                $auxIdentifiers = ['{0}' => $action->getOrder()->reference];
+            }
+
+            Logs::addWarningLog(
+                [[$auxMessage, $auxIdentifiers], [$e->getMessage(), $e->getIdentifiers()]],
+                $e->getData(),
+                $this->orderId
+            );
+        } catch (MoloniDocumentException|MoloniException $e) {
+            if ($e->shouldCreateLog()) {
+                if (!empty(Settings::get('alertEmail'))) {
+                    (new DocumentErrorMail(Settings::get('alertEmail'), ['order_id' => $this->orderId]))->handle();
+                }
+
+                $auxMessage = 'Error processing order ({0})';
+
+                if (Settings::get('documentReference') === DocumentReference::ID || !isset($action)) {
+                    $auxIdentifiers = ['{0}' => $this->orderId];
+                } else {
+                    $auxIdentifiers = ['{0}' => $action->getOrder()->reference];
+                }
+
+                Logs::addErrorLog(
+                    [[$auxMessage, $auxIdentifiers], [$e->getMessage(), $e->getIdentifiers()]],
+                    $e->getData(),
+                    $this->orderId
+                );
+            }
+        } catch (\PrestaShopDatabaseException|\PrestaShopException $e) {
+            Logs::addErrorLog('Error getting prestashop order', ['message' => $e->getMessage()], $this->orderId);
+        }
+    }
+
+    private function shouldExecuteHandle(): bool
+    {
+        if ($this->orderId < 1) {
+            return false;
+        }
+
+        if ((int) Settings::get('automaticDocuments') === Boolean::NO) {
+            return false;
+        }
+
+        $orderStatusToShow = Settings::get('orderStatusToShow');
+
+        if ($orderStatusToShow === null) {
+            if ((int) $this->newOrderStatus->paid === Boolean::NO) {
+                return false;
+            }
+        } elseif (!in_array($this->newOrderStatus->id, $orderStatusToShow, false)) {
+            return false;
+        }
+
+        return MoloniApi::hasValidAuthentication();
+    }
+}

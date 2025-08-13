@@ -1,0 +1,3 @@
+moloni_es:
+  resource: "routing/admin/admin.yaml"
+  prefix: /molonion

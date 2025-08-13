@@ -1,0 +1,35 @@
+moloni_on_login:
+  resource: "login/login.yaml"
+  prefix: /login
+
+moloni_on_orders:
+  resource: "orders/orders.yaml"
+  prefix: /orders
+
+moloni_on_documents:
+  resource: "documents/documents.yaml"
+  prefix: /documents
+
+moloni_on_settings:
+  resource: "settings/settings.yaml"
+  prefix: /settings
+
+moloni_on_tools:
+  resource: "tools/tools.yaml"
+  prefix: /tools
+
+moloni_on_logs:
+  resource: "logs/logs.yaml"
+  prefix: /logs
+
+moloni_on_prestashop_products:
+  resource: "products/prestashop_products.yaml"
+  prefix: /products/prestashop
+
+moloni_on_moloni_products:
+  resource: "products/moloni_products.yaml"
+  prefix: /products/moloni
+
+moloni_on_debug:
+  resource: "debug/debug.yaml"
+  prefix: /debug

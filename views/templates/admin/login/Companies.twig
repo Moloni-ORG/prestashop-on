@@ -1,0 +1,90 @@
+{% extends view_dir ~ 'Layout.twig' %}
+
+{% block plugin_content %}
+    <div class="container">
+        {% if companies %}
+            <div class="d-flex flex-row flex-wrap justify-content-center moloni-company--wrapper">
+                {% for company in companies %}
+                    <div class="card moloni-company--card">
+                        <div class="card-header">
+                            {{ company.name }}
+                        </div>
+                        <div class="card-block moloni-company--image">
+                            {% if company.img1 %}
+                                <img src="{{ configs.media_api_url }}{{ company.img1 }}" height="auto" alt="Company logo">
+                            {% else %}
+                                <img src="{{ img_path }}companyDefault.png" height="auto" alt="Company logo">
+                            {% endif %}
+                        </div>
+                        <div class="card-block moloni-company--information">
+                            {% if company.email %}
+                                <p>
+                                    {{ 'E-mail'|trans({}, 'Modules.Molonion.Common') }}: {{ company.email|default('') }}
+                                </p>
+                            {% endif %}
+
+                            {% if company.address %}
+                                <p>
+                                    {{ 'Address'|trans({}, 'Modules.Molonion.Common') }}
+                                    : {{ company.address|default('') }}
+                                </p>
+                            {% endif %}
+
+
+                            {% if company.zipCode %}
+                                <p>
+                                    {{ 'Zip-Code'|trans({}, 'Modules.Molonion.Common') }}
+                                    : {{ company.zipCode|default('') }}
+                                </p>
+                            {% endif %}
+
+                            {% if company.country.title %}
+                                <p>
+                                    {{ 'Country'|trans({}, 'Modules.Molonion.Common') }}
+                                    : {{ company.country.title|default('') }}
+                                </p>
+                            {% endif %}
+
+                            {% if company.vat %}
+                                <p>
+                                    {{ 'Vat'|trans({}, 'Modules.Molonion.Common') }}
+                                    : {{ company.vat }}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ path(submit_route, {companyId: company.companyId}) }}"
+                                   class="btn btn-primary">
+                                    {{ 'Select this company'|trans({}, 'Modules.Molonion.Common') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-companies__wrapper">
+                <img class="no-companies__image" src="{{ img_path }}no_companies.svg" height="auto" alt="Company logo">
+
+                <div class="no-companies__title">
+                    {{ 'Your account does not have access to any eligible company.'|trans({}, 'Modules.Molonion.Common') }}
+                </div>
+
+                <div class="no-companies__message">
+                    {{ 'Please confirm that your account has access to an active company with a plan that allows you to access the plugins.'|trans({}, 'Modules.Molonion.Common') }}
+                </div>
+                <div class="no-companies__help">
+                    {{ 'Learn more about our plans at:'|trans({}, 'Modules.Molonion.Common') }}
+                    <a href="{{ configs.plans_page }}"
+                       target="_blank">{{ configs.plans_page }}</a>
+                </div>
+
+                <a href="{{ path(logoutRoute) }}"
+                   class="btn btn-primary">
+                    {{ 'Back to login'|trans({}, 'Modules.Molonion.Common') }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

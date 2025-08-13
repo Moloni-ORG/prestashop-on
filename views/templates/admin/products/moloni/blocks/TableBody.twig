@@ -1,0 +1,16 @@
+<tbody>
+
+{% if productsArray %}
+    {% for product in productsArray %}
+        {# Row #}
+        {% include view_dir ~ 'products/moloni/blocks/TableBodyRow.twig' %}
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="100%">
+            {# Empty state #}
+            {% include view_dir ~ 'components/EmptyState.twig' with {'empty_state_text': 'No information to show!'|trans({}, 'Modules.Molonion.Common')} %}
+        </td>
+    </tr>
+{% endif %}
+</tbody>

@@ -1,0 +1,79 @@
+moloni_on_debug_home:
+  path: /
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::home'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_multipurpose:
+  path: /multipurpose
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::multipurpose'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_delete_order_document:
+  path: /deleteOrderDocument
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::deleteOrderDocument'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_update_stock_from_moloni:
+  path: /updateStockFromMoloni
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::updateStockFromMoloni'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_update_product_from_moloni:
+  path: /updateProductFromMoloni
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::updateProductFromMoloni'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_insert_product_from_moloni:
+  path: /insertProductFromMoloni
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::insertProductFromMoloni'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_update_stock_from_prestashop:
+  path: /updateStockFromPrestashop
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::updateStockFromPrestashop'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_update_product_from_prestashop:
+  path: /updateProductFromPrestashop
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::updateProductFromPrestashop'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_insert_product_from_prestashop:
+  path: /insertProductFromPrestashop
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::insertProductFromPrestashop'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_debug_dump_product_associations:
+  path: /dumpProductAssociations
+  methods: [ GET,POST ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Debug\Debug::dumpProductAssociations'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'

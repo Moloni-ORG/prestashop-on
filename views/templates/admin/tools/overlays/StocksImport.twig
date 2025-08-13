@@ -1,0 +1,44 @@
+<div class="modal fade"
+     id="import_stocks_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ 'Import Moloni stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                </h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    {{ 'This tool will fetch all your Moloni products and synchronize your Prestashop stocks with the ones on your Moloni account.'|trans({}, 'Modules.Molonion.Tools') }}<br>
+                    {{ 'When the tool is finish, all your Prestashop stock will be updated to match the stock on your Moloni account.'|trans({}, 'Modules.Molonion.Tools') }}<br>
+                    {{ 'Please keep this window open until the process finishes.'|trans({}, 'Modules.Molonion.Tools') }}
+                </p>
+                <p>
+                    {{ 'Are you sure you want to continue? '|trans({}, 'Modules.Molonion.Tools') }}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        data-dismiss="modal">
+                    {{ 'Close'|trans({}, 'Modules.Molonion.Tools') }}
+                </button>
+                <button class="btn btn-primary"
+                        data-dismiss="modal"
+                        id="import_stocks_button">
+                    {{ 'Import stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

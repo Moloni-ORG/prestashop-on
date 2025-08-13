@@ -1,0 +1,13 @@
+moloni_on_logs_home:
+  path: /
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Logs\Logs::home'
+    _legacy_controller: 'MoloniOnLogs'
+    _legacy_link: 'MoloniOnLogs'
+
+moloni_on_logs_delete:
+  path: /deleteLogs
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Logs\Logs::deleteLogs'

@@ -1,0 +1,79 @@
+<tbody>
+
+{% if logsArray %}
+    {% for log in logsArray %}
+        <tr>
+            <td>
+                {{ log.created_at|date("Y-m-d H:i:s")}}
+            </td>
+            <td class="text-center">
+                {% if log.level == constant('MoloniOn\\Enums\\LogLevel::INFO') %}
+                    <span class="badge badge-info">
+                        {{ 'Information'|trans({}, 'Modules.Molonion.Common') }}
+                    </span>
+                {% elseif log.level == constant('MoloniOn\\Enums\\LogLevel::STOCK') %}
+                    <span class="badge badge-info">
+                        {{ 'Stock'|trans({}, 'Modules.Molonion.Common') }}
+                    </span>
+                {% elseif log.level == constant('MoloniOn\\Enums\\LogLevel::WARNING') %}
+                    <span class="badge badge-warning">
+                        {{ 'Warning'|trans({}, 'Modules.Molonion.Common') }}
+                    </span>
+                {% elseif log.level == constant('MoloniOn\\Enums\\LogLevel::ERROR') %}
+                    <span class="badge badge-danger">
+                        {{ 'Error'|trans({}, 'Modules.Molonion.Common') }}
+                    </span>
+                {% elseif log.level == constant('MoloniOn\\Enums\\LogLevel::DEBUG') %}
+                    <span class="badge badge-warning">
+                        {{ 'Debug'|trans({}, 'Modules.Molonion.Common') }}
+                    </span>
+                {% else %}
+                    ---
+                {% endif %}
+            </td>
+            <td>
+                {% for message in log.message %}
+                    {% set foo = {} %}
+
+                    {% if message[1] is defined %}
+                        {% for key, value in message[1] %}
+                            {% set translatedValue = value|trans({}, 'Modules.Molonion.Common') %}
+
+                            {% set foo = foo|merge({(key): translatedValue}) %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if log.level == constant('MoloniOn\\Enums\\LogLevel::INFO') %}
+                        {{ message[0]|trans(foo, 'Modules.Molonion.Common') }}
+                    {% elseif log.level == constant('MoloniOn\\Enums\\LogLevel::STOCK') %}
+                        {{ message[0]|trans(foo, 'Modules.Molonion.Common') }}
+                    {% else %}
+                        {{ message[0]|trans(foo, 'Modules.Molonion.Errors') }}
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </td>
+            <td class="text-center">
+
+                {# Overlay button #}
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm"
+                        data-toggle="modal"
+                        data-target="#log_{{ log.id }}">
+                    <i class="material-icons">inventory</i>
+                </button>
+
+                {# Payload Overlay #}
+                {% include view_dir ~ 'logs/overlays/LogPayload.twig' with {'log_id': log.id, 'payload_data': log.extra} %}
+            </td>
+        </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="100%">
+            {# Empty state #}
+            {% include view_dir ~ 'components/EmptyState.twig' with {'empty_state_text': 'No information to show!'|trans({}, 'Modules.Molonion.Common')}%}
+        </td>
+    </tr>
+{% endif %}
+</tbody>

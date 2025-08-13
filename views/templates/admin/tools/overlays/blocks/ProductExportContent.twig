@@ -1,0 +1,29 @@
+<div>
+    {% if hasMore %}
+        <div class="d-flex align-items-center">
+            <div class="spinner spinner-primary"></div>
+            &nbsp
+            {{ '{0} products processed'|trans({'{0}': processedProducts}, 'Modules.Molonion.Tools') }}
+        </div>
+
+        <br>
+
+        <div class="alert alert-info" role="alert">
+            <p class="alert-text">
+                {{ 'Please wait, exporting in progress'|trans({}, 'Modules.Molonion.Tools') }}
+            </p>
+        </div>
+    {% else %}
+        <p>
+            {{ '{0} products processed'|trans({'{0}': processedProducts}, 'Modules.Molonion.Tools') }}
+        </p>
+
+        <br>
+
+        <div class="alert alert-success" role="alert">
+            <p class="alert-text">
+                {{ 'Process complete'|trans({}, 'Modules.Molonion.Tools') }}
+            </p>
+        </div>
+    {% endif %}
+</div>

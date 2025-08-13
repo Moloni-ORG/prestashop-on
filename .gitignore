@@ -1,0 +1,7 @@
+.idea
+.env
+.dev/node_modules
+vendor
+build
+views/css/app.css
+views/js/app.js

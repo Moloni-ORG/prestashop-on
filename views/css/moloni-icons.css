@@ -1,0 +1,10 @@
+[class^="moloni-icon-"], [class*=" moloni-icon-"], .mi-logo, .icon-MoloniTab {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url('../img/logo_tab.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}

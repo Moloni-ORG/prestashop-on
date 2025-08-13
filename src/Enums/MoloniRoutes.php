@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * 2025 - Moloni.com
+ *
+ * NOTICE OF LICENSE
+ *
+ * This file is licenced under the Software License Agreement.
+ * With the purchase or the installation of the software in your application
+ * you accept the licence agreement.
+ *
+ * You must not modify, adapt or create derivative works of this source code
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Moloni
+ * @copyright Moloni
+ * @license   https://creativecommons.org/licenses/by-nd/4.0/
+ *
+ * @noinspection PhpMultipleClassDeclarationsInspection
+ */
+
+namespace MoloniOn\Enums;
+
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
+class MoloniRoutes
+{
+    public const LOGIN = 'moloni_on_login_home';
+    public const LOGIN_SUBMIT = 'moloni_on_login_submit';
+    public const LOGIN_RETRIEVE_CODE = 'moloni_on_login_retrievecode';
+    public const LOGIN_COMPANY_SELECT = 'moloni_on_login_company_select';
+    public const LOGIN_COMPANY_SUBMIT = 'moloni_on_login_company_submit';
+
+    public const ORDERS = 'moloni_on_orders_home';
+    public const ORDERS_CREATE = 'moloni_on_orders_create';
+    public const ORDERS_DISCARD = 'moloni_on_orders_discard';
+
+    public const DOCUMENTS = 'moloni_on_documents_home';
+    public const DOCUMENTS_VIEW = 'moloni_on_documents_view';
+    public const DOCUMENTS_DOWNLOAD = 'moloni_on_documents_download';
+    public const DOCUMENTS_RESTORE = 'moloni_on_documents_restore';
+
+    public const TOOLS = 'moloni_on_tools_home';
+    public const TOOLS_IMPORT_PRODUCTS = 'moloni_on_tools_import_products';
+    public const TOOLS_IMPORT_STOCKS = 'moloni_on_tools_import_stocks';
+    public const TOOLS_EXPORT_PRODUCTS = 'moloni_on_tools_export_products';
+    public const TOOLS_EXPORT_STOCKS = 'moloni_on_tools_export_stocks';
+    public const TOOLS_REINSTALL_HOOKS = 'moloni_on_tools_reinstall_hooks';
+    public const TOOLS_LOGOUT = 'moloni_on_tools_logout';
+    public const TOOLS_EXPORT = 'moloni_on_tools_export';
+
+    public const LOGS = 'moloni_on_logs_home';
+    public const LOGS_DELETE = 'moloni_on_logs_delete';
+
+    public const MOLONI_PRODUCTS = 'moloni_on_moloni_products_home';
+    public const MOLONI_PRODUCTS_IMPORT_PRODUCT = 'moloni_on_moloni_products_import_product';
+    public const MOLONI_PRODUCTS_IMPORT_STOCK = 'moloni_on_moloni_products_import_stock';
+
+    public const PRESTASHOP_PRODUCTS = 'moloni_on_prestashop_products_home';
+    public const PRESTASHOP_PRODUCTS_EXPORT_PRODUCT = 'moloni_on_prestashop_products_export_product';
+    public const PRESTASHOP_PRODUCTS_EXPORT_STOCK = 'moloni_on_prestashop_products_export_stock';
+
+    public const SETTINGS = 'moloni_on_settings_home';
+
+    public const DEBUG = 'moloni_on_debug_home';
+    public const DEBUG_MULTIPURPOSE = 'moloni_on_debug_multipurpose';
+    public const DEBUG_DELETE_ORDER_DOCUMENT = 'moloni_on_debug_delete_order_document';
+    public const DEBUG_UPDATE_STOCK_FROM_MOLONI = 'moloni_on_debug_update_stock_from_moloni';
+    public const DEBUG_INSERT_PRODUCT_FROM_MOLONI = 'moloni_on_debug_insert_product_from_moloni';
+    public const DEBUG_UPDATE_PRODUCT_FROM_MOLONI = 'moloni_on_debug_update_product_from_moloni';
+    public const DEBUG_UPDATE_STOCK_FROM_PRESTASHOP = 'moloni_on_debug_update_stock_from_prestashop';
+    public const DEBUG_INSERT_PRODUCT_FROM_PRESTASHOP = 'moloni_on_debug_insert_product_from_prestashop';
+    public const DEBUG_UPDATE_PRODUCT_FROM_PRESTASHOP = 'moloni_on_debug_update_product_from_prestashop';
+    public const DEBUG_DUMP_PRODUCT_ASSOCIATIONS = 'moloni_on_debug_dump_product_associations';
+
+    public const ROUTES_FULLY_AUTHENTICATED = [
+        self::ORDERS,
+        self::ORDERS_CREATE,
+        self::ORDERS_DISCARD,
+        self::DOCUMENTS,
+        self::DOCUMENTS_VIEW,
+        self::DOCUMENTS_DOWNLOAD,
+        self::DOCUMENTS_RESTORE,
+        self::TOOLS,
+        self::TOOLS_IMPORT_PRODUCTS,
+        self::TOOLS_IMPORT_STOCKS,
+        self::TOOLS_EXPORT_PRODUCTS,
+        self::TOOLS_EXPORT_STOCKS,
+        self::TOOLS_REINSTALL_HOOKS,
+        self::TOOLS_LOGOUT,
+        self::TOOLS_EXPORT,
+        self::LOGS,
+        self::LOGS_DELETE,
+        self::PRESTASHOP_PRODUCTS,
+        self::PRESTASHOP_PRODUCTS_EXPORT_PRODUCT,
+        self::PRESTASHOP_PRODUCTS_EXPORT_STOCK,
+        self::MOLONI_PRODUCTS,
+        self::MOLONI_PRODUCTS_IMPORT_PRODUCT,
+        self::MOLONI_PRODUCTS_IMPORT_STOCK,
+        self::SETTINGS,
+
+        self::DEBUG,
+        self::DEBUG_MULTIPURPOSE,
+        self::DEBUG_DELETE_ORDER_DOCUMENT,
+        self::DEBUG_UPDATE_STOCK_FROM_MOLONI,
+        self::DEBUG_INSERT_PRODUCT_FROM_MOLONI,
+        self::DEBUG_UPDATE_PRODUCT_FROM_MOLONI,
+        self::DEBUG_UPDATE_STOCK_FROM_PRESTASHOP,
+        self::DEBUG_INSERT_PRODUCT_FROM_PRESTASHOP,
+        self::DEBUG_UPDATE_PRODUCT_FROM_PRESTASHOP,
+        self::DEBUG_DUMP_PRODUCT_ASSOCIATIONS,
+    ];
+
+    public const ROUTES_PARTIALLY_AUTHENTICATED = [
+        self::LOGIN_COMPANY_SELECT,
+        self::LOGIN_COMPANY_SUBMIT,
+        self::TOOLS_LOGOUT,
+        self::LOGS,
+        self::LOGS_DELETE,
+    ];
+
+    public const ROUTES_NON_AUTHENTICATED = [
+        self::LOGIN,
+        self::LOGIN_SUBMIT,
+        self::LOGIN_RETRIEVE_CODE,
+        self::LOGS,
+        self::LOGS_DELETE,
+    ];
+
+    public static function isFullyAuthenticatedRoute(string $route): bool
+    {
+        return in_array($route, self::ROUTES_FULLY_AUTHENTICATED, true);
+    }
+
+    public static function isPartiallyAuthenticatedRoute(string $route): bool
+    {
+        return in_array($route, self::ROUTES_PARTIALLY_AUTHENTICATED, true);
+    }
+
+    public static function isNonAuthenticatedRoute(string $route): bool
+    {
+        return in_array($route, self::ROUTES_NON_AUTHENTICATED, true);
+    }
+}

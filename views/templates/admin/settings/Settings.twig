@@ -1,0 +1,212 @@
+{% extends view_dir ~ 'Layout.twig' %}
+
+{% block plugin_content %}
+    {{ form_errors(form) }}
+
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <h3 class="card-header">
+                    <i class="material-icons">settings</i>
+                    {{ 'Settings'|trans({}, 'Modules.Molonion.Settings') }}
+                </h3>
+                {{ form_start(form) }}
+                <div class="card-nav">
+                    <ul class="nav nav-pills border-top-0" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                               id="pills-documents-tab"
+                               data-toggle="pill"
+                               href="#pills-documents"
+                               role="tab"
+                               aria-controls="pills-documents"
+                               aria-expanded="true">
+                                {{ 'Documents'|trans({}, 'Modules.Molonion.Settings') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               id="pills-orders-tab"
+                               data-toggle="pill"
+                               href="#pills-orders"
+                               role="tab"
+                               aria-controls="pills-orders"
+                               aria-expanded="true">
+                                {{ 'Orders'|trans({}, 'Modules.Molonion.Settings') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               id="pills-automation-tab"
+                               data-toggle="pill"
+                               href="#pills-automation"
+                               role="tab"
+                               aria-controls="pills-automation"
+                               aria-expanded="true">
+                                {{ 'Automation'|trans({}, 'Modules.Molonion.Settings') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               id="pills-advanced-tab"
+                               data-toggle="pill"
+                               href="#pills-advanced"
+                               role="tab"
+                               aria-controls="pills-advanced"
+                               aria-expanded="true">
+                                {{ 'Advanced'|trans({}, 'Modules.Molonion.Settings') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block card-text">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active"
+                             id="pills-documents"
+                             role="tabpanel"
+                             aria-labelledby="pills-documents-tab">
+                            {{ form_row(form.documentSet) }}
+                            {{ form_row(form.documentType) }}
+                            {{ form_row(form.documentReference) }}
+                            {{ form_row(form.documentStatus) }}
+
+                            <div id="settings_form_sendByEmail_row" style="display: none;">
+                                {{ form_row(form.sendByEmail) }}
+                            </div>
+
+                            <div id="settings_form_billOfLading_row" style="display: none;">
+                                {{ form_row(form.billOfLading) }}
+                            </div>
+
+                            {{ form_row(form.fiscalZoneBasedOn) }}
+                            {{ form_row(form.shippingInformation) }}
+
+                            <div id="settings_form_loadAddress_row" style="display: none;">
+                                {{ form_row(form.loadAddress) }}
+                            </div>
+
+                            <div id="settings_form_custom_loadAddress_row" style="display: none;">
+                                <div class="form-group row">
+                                    {{ form_label(form.customloadAddressAddress) }}
+                                    {{ form_errors(form.customloadAddressAddress) }}
+                                    <div class="col-sm-4">
+                                        {{ form_widget(form.customloadAddressAddress) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form_label(form.customloadAddressZipCode) }}
+                                    {{ form_errors(form.customloadAddressZipCode) }}
+                                    <div class="col-sm-4">
+                                        {{ form_widget(form.customloadAddressZipCode) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form_label(form.customloadAddressCity) }}
+                                    {{ form_errors(form.customloadAddressCity) }}
+                                    <div class="col-sm-4">
+                                        {{ form_widget(form.customloadAddressCity) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {{ form_label(form.customloadAddressCountry) }}
+                                    {{ form_errors(form.customloadAddressCountry) }}
+                                    <div class="col-sm-4">
+                                        {{ form_widget(form.customloadAddressCountry) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{ form_row(form.automaticDocuments) }}
+                            {{ form_row(form.useProductNameAndSummaryFrom) }}
+                            {{ form_row(form.exemptionReasonProduct) }}
+                            {{ form_row(form.exemptionReasonShipping) }}
+                            {{ form_row(form.measurementUnit) }}
+                            {{ form_row(form.documentWarehouse) }}
+                            {{ form_row(form.clientPrefix) }}
+                            {{ form_row(form.clientUpdate) }}
+                            {{ form_row(form.clientLanguage) }}
+                        </div>
+                        <div class="tab-pane fade"
+                             id="pills-orders"
+                             role="tabpanel"
+                             aria-labelledby="pills-orders-tab">
+                            {{ form_row(form.orderDateCreated) }}
+                            {{ form_row(form.orderStatusToShow) }}
+                        </div>
+                        <div class="tab-pane fade"
+                             id="pills-automation"
+                             role="tabpanel"
+                             aria-labelledby="pills-automation-tab">
+
+                            <div class="form-group row mb-0">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm h2">{{ 'Automatic actions from Prestashop'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm text-muted">{{ 'This actions happen when an action occours in your Prestashop Store.'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            {{ form_row(form.syncStockToMoloni) }}
+                            {{ form_row(form.syncStockToMoloniWarehouse) }}
+                            {{ form_row(form.addProductsToMoloni) }}
+                            {{ form_row(form.updateProductsToMoloni) }}
+
+                            <div class="form-group row mb-0">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm h2">{{ 'Automatic actions from Moloni'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm text-muted">{{ 'This actions happen when an action occours in your Moloni account.'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            {{ form_row(form.syncStockToPrestashop) }}
+                            {{ form_row(form.syncStockToPrestashopWarehouse) }}
+                            {{ form_row(form.addProductsToPrestashop) }}
+                            {{ form_row(form.updateProductsToPrestashop) }}
+
+                            <div class="form-group row mb-0">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm h2">{{ 'Synchronization extras'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="form-control-label"></label>
+                                <label class="col-sm text-muted">{{ 'This settings will be applied to all automatic actions.'|trans({}, 'Modules.Molonion.Settings') }}</label>
+                            </div>
+
+                            {{ form_row(form.productSyncFields) }}
+                        </div>
+                        <div class="tab-pane fade"
+                             id="pills-advanced"
+                             role="tabpanel"
+                             aria-labelledby="pills-advanced-tab">
+                            {{ form_row(form.alertEmail) }}
+                            {{ form_row(form.productReferenceFallback) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        {{ form_widget(form.saveChanges) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            window.molonion.Settings.startObservers();
+        });
+    </script>
+{% endblock %}

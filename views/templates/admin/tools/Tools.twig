@@ -1,0 +1,176 @@
+{% extends view_dir ~ 'Layout.twig' %}
+
+{% block plugin_content %}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">plumbing</i>
+            {{ 'Tools'|trans({}, 'Modules.Molonion.Tools') }}
+        </h3>
+        <div class="card-block">
+            <div class="d-flex">
+                <div class="ml-py-2">
+                    <b>{{ 'Import products from Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "Use this tool to create all products from your Moloni account in your Prestashop store."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#import_products_modal">
+                        {{ 'Import products to Prestashop'|trans({}, 'Modules.Molonion.Tools') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ 'Export products to Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "Use this tool to create all products in your Prestashop store account in your Moloni account."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#export_products_modal">
+                        {{ 'Export products to Moloni'|trans({}, 'Modules.Molonion.Tools') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ 'Synchronize Prestashop stocks with Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "This tool will search for all the products that were updated in your Moloni account in the last seven days, and will update only the stock of the matching Prestashop products."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#import_stocks_modal">
+                        {{ 'Update Prestashop stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ 'Synchronize Moloni stocks with Prestashop'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "This tool will search for all the products in your Prestashop store and update the matching products in your Moloni account."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#export_stocks_modal">
+                        {{ 'Update Moloni stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ 'Reinstall webhooks'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "This tool is used to recreate the synchronization webhooks that run in Moloni."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "You should run this if for example your store URL changes or if the Prestashop access tokens for this module change."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <a class="btn btn-primary" href="{{ path(reinstallHooksRoute) }}">
+                        {{ 'Reinstall webhooks'|trans({}, 'Modules.Molonion.Tools') }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ "List Prestashop products"|trans({}, 'Modules.Molonion.Tools') }}</b>
+
+                    <p class="small-text text-muted">
+                        {{ "List all prestashop products and the corresponding Moloni product."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "This page allow to verify if the product stock are updated, if they exist in Moloni or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <a class="btn btn-primary" href="{{ path(productsPrestashopRoutes) }}">
+                        {{ 'View Prestashop products'|trans({}, 'Modules.Molonion.Tools') }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ "List Moloni products"|trans({}, 'Modules.Molonion.Tools') }}</b>
+
+                    <p class="small-text text-muted">
+                        {{ "List all Moloni products and the corresponding Prestashop product."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "This page allow to verify if the product stock are updated, if they exist in Prestashop or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <a class="btn btn-primary" href="{{ path(productsMoloniRoutes) }}">
+                        {{ 'View Moloni products'|trans({}, 'Modules.Molonion.Tools') }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex border-top">
+                <div class="ml-py-2">
+                    <b>{{ "Logout"|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <p class="small-text text-muted">
+                        {{ "Logout from the selected Moloni account. We will keep all the data regarding issued documents."|trans({}, 'Modules.Molonion.Tools') }}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center ml-auto">
+                    <button type="button"
+                            class="btn btn-danger"
+                            data-toggle="modal"
+                            data-target="#logout_modal">
+                        {{ 'Logout'|trans({}, 'Modules.Molonion.Tools') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Import products Overlay #}
+    {% include view_dir ~ 'tools/overlays/ProductImport.twig' %}
+
+    {# Import stocks Overlay #}
+    {% include view_dir ~ 'tools/overlays/StocksImport.twig' %}
+
+    {# Export products Overlay #}
+    {% include view_dir ~ 'tools/overlays/ProductExport.twig' %}
+
+    {# Export stocks Overlay #}
+    {% include view_dir ~ 'tools/overlays/StocksExport.twig' %}
+
+    {# Logout Overlay #}
+    {% include view_dir ~ 'tools/overlays/Logout.twig' %}
+
+    {# Action Overlay #}
+    {% include view_dir ~ 'tools/overlays/ActionOverlay.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            let props = {
+                importProductsAction: "{{ path(importProductsRoute) }}",
+                importStocksAction: "{{ path(importStocksRoute) }}",
+                exportProductsAction: "{{ path(exportProductsRoute) }}",
+                exportStocksAction: "{{ path(exportStocksRoute) }}"
+            };
+
+            window.molonion.Tools.startObservers(props);
+        });
+    </script>
+{% endblock %}

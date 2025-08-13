@@ -1,0 +1,51 @@
+{% extends view_dir ~ 'Layout.twig' %}
+
+{% block plugin_content %}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">developer_mode</i>
+            {{ 'Logs'|trans({}, 'Modules.Molonion.Common') }}
+        </h3>
+        <div class="card-block overflow-auto">
+            <table class="table table-striped table-bordered">
+                {# Table header #}
+                {% include view_dir ~ 'logs/blocks/TableHeader.twig' %}
+
+                {# Table body #}
+                {% include view_dir ~ 'logs/blocks/TableBody.twig' %}
+            </table>
+
+            {# Delete Overlay #}
+            {% include view_dir ~ 'logs/overlays/DeleteLogs.twig' %}
+
+            {# Paginator #}
+            {% include view_dir ~ 'components/Paginator.twig' %}
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex justify-content-end">
+                {# Delete logs #}
+                <button type="button"
+                        class="btn btn-danger mr-2"
+                        data-toggle="modal"
+                        data-target="#delete_logs">
+                    {{ 'Delete older logs'|trans({}, 'Modules.Molonion.Common') }}
+                </button>
+
+                {# Refresh list #}
+                <a href="{{ path(thisRoute, {page: paginator.currentPage, filters: filters}) }}"
+                   class="btn btn-outline-secondary">
+                    {{ 'Refresh list'|trans({}, 'Modules.Molonion.Common') }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            window.molonion.Logs.startObservers("{{ path(thisRoute) }}");
+        });
+    </script>
+{% endblock %}

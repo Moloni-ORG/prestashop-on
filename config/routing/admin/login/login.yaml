@@ -1,0 +1,32 @@
+moloni_on_login_home:
+  path: /
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Login\Login::home'
+    _legacy_controller: 'MoloniOn'
+    _legacy_link: 'MoloniOn'
+
+moloni_on_login_submit:
+  path: /
+  methods: [POST]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Login\Login::submit'
+
+moloni_on_login_retrievecode:
+  path: /retrieveCode
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Login\Login::retrieveCode'
+
+moloni_on_login_company_select:
+  path: /company
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Login\Login::companySelect'
+    _legacy_controller: 'MoloniOn'
+
+moloni_on_login_company_submit:
+  path: /companySubmit/{companyId}
+  methods: [ GET ]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Login\Login::companySelectSubmit'

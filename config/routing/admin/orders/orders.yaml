@@ -1,0 +1,19 @@
+moloni_on_orders_home:
+  path: /
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Orders\Orders::home'
+    _legacy_controller: 'MoloniOnOrders'
+    _legacy_link: 'MoloniOnOrders'
+
+moloni_on_orders_create:
+  path: /createDocument
+  methods: [GET, POST]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Orders\Orders::create'
+
+moloni_on_orders_discard:
+  path: /clearInvoice
+  methods: [GET, POST]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Orders\Orders::discard'

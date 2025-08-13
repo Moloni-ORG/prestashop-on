@@ -1,0 +1,7 @@
+moloni_on_settings_home:
+  path: /
+  methods: [GET,POST]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Settings\Settings::home'
+    _legacy_controller: 'MoloniOnSettings'
+    _legacy_link: 'MoloniOnSettings'

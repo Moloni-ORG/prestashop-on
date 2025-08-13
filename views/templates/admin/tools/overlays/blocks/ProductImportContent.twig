@@ -1,0 +1,45 @@
+<div>
+    <p>
+        {{ 'Total results'|trans({}, 'Modules.Molonion.Tools') }}: {{ totalResults }}
+    </p>
+
+    {% if hasMore %}
+        <div class="progress">
+            <div class="progress-bar bg-primary"
+                 role="progressbar"
+                 style="width: {{ currentPercentage }}%;"
+                 aria-valuenow="{{ currentPercentage }}"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+                {{ currentPercentage }}%
+            </div>
+        </div>
+
+        <br>
+
+        <div class="alert alert-info" role="alert">
+            <p class="alert-text">
+                {{ 'Please wait, importing in progress'|trans({}, 'Modules.Molonion.Tools') }}
+            </p>
+        </div>
+    {% else %}
+        <div class="progress">
+            <div class="progress-bar bg-success"
+                 role="progressbar"
+                 style="width: 100%;"
+                 aria-valuenow="100"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+                100%
+            </div>
+        </div>
+
+        <br>
+
+        <div class="alert alert-success" role="alert">
+            <p class="alert-text">
+                {{ 'Process complete'|trans({}, 'Modules.Molonion.Tools') }}
+            </p>
+        </div>
+    {% endif %}
+</div>

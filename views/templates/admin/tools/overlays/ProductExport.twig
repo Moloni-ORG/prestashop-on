@@ -1,0 +1,43 @@
+<div class="modal fade"
+     id="export_products_modal"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ 'Export products to Moloni'|trans({}, 'Modules.Molonion.Tools') }}
+                </h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    {{ 'This will fetch all the products in Prestashop store and create them in your Moloni account.'|trans({}, 'Modules.Molonion.Tools') }}<br>
+                    {{ 'This may take a while, so, please keep this window open until the process finishes.'|trans({}, 'Modules.Molonion.Tools') }}
+                </p>
+                <p>
+                    {{ 'Are you sure you want to continue? '|trans({}, 'Modules.Molonion.Tools') }}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        data-dismiss="modal">
+                    {{ 'Close'|trans({}, 'Modules.Molonion.Tools') }}
+                </button>
+                <button class="btn btn-primary"
+                        data-dismiss="modal"
+                        id="export_products_button">
+                    {{ 'Export products'|trans({}, 'Modules.Molonion.Tools') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

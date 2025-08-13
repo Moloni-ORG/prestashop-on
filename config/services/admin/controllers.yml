@@ -1,0 +1,54 @@
+services:
+  MoloniOn\Controller\Admin\Debug\Debug:
+    class: MoloniOn\Controller\Admin\Debug\Debug
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Documents\Documents:
+    class: MoloniOn\Controller\Admin\Documents\Documents
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Login\Login:
+    class: MoloniOn\Controller\Admin\Login\Login
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Logs\Logs:
+    class: MoloniOn\Controller\Admin\Logs\Logs
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Orders\Orders:
+    class: MoloniOn\Controller\Admin\Orders\Orders
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Products\MoloniProducts:
+    class: MoloniOn\Controller\Admin\Products\MoloniProducts
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Products\PrestashopProducts:
+    class: MoloniOn\Controller\Admin\Products\PrestashopProducts
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Settings\Settings:
+    class: MoloniOn\Controller\Admin\Settings\Settings
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'
+
+  MoloniOn\Controller\Admin\Tools\Tools:
+    class: MoloniOn\Controller\Admin\Tools\Tools
+    tags: ['controller.service_arguments']
+    arguments:
+      - '@molonion.context'

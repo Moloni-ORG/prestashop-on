@@ -1,0 +1,25 @@
+moloni_on_documents_home:
+  path: /
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Documents\Documents::home'
+    _legacy_controller: 'MoloniOnDocuments'
+    _legacy_link: 'MoloniOnDocuments'
+
+moloni_on_documents_download:
+  path: /download/
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Documents\Documents::download'
+
+moloni_on_documents_view:
+  path: /view/
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Documents\Documents::view'
+
+moloni_on_documents_restore:
+  path: /restore/
+  methods: [GET]
+  defaults:
+    _controller: 'MoloniOn\Controller\Admin\Documents\Documents::restore'
