@@ -126,11 +126,8 @@ class Login extends MoloniController
         $companies = [];
 
         try {
-            $query = MoloniApiClient::companies()
-                ->queryMe();
-
-            $queryCompanies = $query['data']['me']['data']['userCompanies'] ?? [];
-            $queryLanguageId = $query['data']['me']['data']['language']['languageId'] ?? Languages::EN;
+            $queryCompanies = MoloniApiClient::companies()
+                ->queryCompanies();
 
             if (empty($queryCompanies)) {
                 throw new MoloniException('You have no companies!!');
@@ -141,18 +138,11 @@ class Login extends MoloniController
                     continue;
                 }
 
-                $variables = [
-                    'companyId' => $company['companyId'],
-                    'options' => [
-                        'defaultLanguageId' => $queryLanguageId,
-                    ],
-                ];
-
-                $userCompanyInfo = MoloniApiClient::companies()->queryCompany($variables);
-
-                if (!empty($userCompanyInfo)) {
-                    $companies[] = $userCompanyInfo;
+                if (!$company['isConfirmed']) {
+                    continue;
                 }
+
+                $companies[] = $company;
             }
         } catch (MoloniException $e) {
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());

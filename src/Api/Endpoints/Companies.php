@@ -62,4 +62,18 @@ class Companies extends Endpoint
 
         return $this->simplePost($query, $variables)['data']['company']['data'] ?? [];
     }
+
+    /**
+     * Gets the information of the companies that the logged-in user has access
+     *
+     * @return array returns an array with the company's information
+     *
+     * @throws MoloniApiException
+ */
+    public function queryCompanies(): array
+    {
+        $query = $this->loadQuery('companies');
+
+        return $this->simplePost($query, [])['data']['companies']['data'] ?? [];
+    }
 }

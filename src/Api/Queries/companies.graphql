@@ -1,0 +1,24 @@
+query companies($options: CompanyOptions) {
+    companies(options: $options) {
+        data {
+            companyId
+            name
+            email
+            img1
+            slug
+            address
+            isConfirmed
+            zipCode
+            city
+            vat
+            country {
+                countryId
+                title
+            }
+        }
+        errors {
+            field
+            msg
+        }
+    }
+}
