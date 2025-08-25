@@ -48,7 +48,7 @@ abstract class SendMail
         $this->email = $email;
         $this->data = $data;
 
-        $this->subject = 'Prestashop - Moloni plugin';
+        $this->subject = 'Prestashop - Moloni ON plugin';
     }
 
     protected function getCommonVars(): array
