@@ -86,7 +86,7 @@ abstract class Endpoint
      */
     private function loadFromFile($folder, $name): string
     {
-        $path = MoloniContext::instance()->getModuleDir() . "src/API/$folder/$name.graphql";
+        $path = MoloniContext::instance()->getModuleDir() . "src/Api/$folder/$name.graphql";
 
         if (!file_exists($path)) {
             throw new MoloniApiException("Query/Mutation file not found: $path");
