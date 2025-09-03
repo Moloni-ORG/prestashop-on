@@ -63,7 +63,7 @@ class MoloniDocumentException extends \Exception
         return $this->identifiers ?? [];
     }
 
-    public function shoudCreateLog(): bool
+    public function shouldCreateLog(): bool
     {
         return $this->shouldCreateLog;
     }
