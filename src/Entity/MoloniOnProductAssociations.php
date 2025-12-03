@@ -101,6 +101,13 @@ class MoloniOnProductAssociations
     /**
      * @var int
      *
+     * @ORM\Column(name="company_id", type="integer")
+     */
+    private $companyId;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="active", type="integer")
      */
     private $active;
@@ -159,6 +166,19 @@ class MoloniOnProductAssociations
     public function setActive(int $active): void
     {
         $this->active = $active;
+    }
+
+    public function getCompanyId(): int
+    {
+        return $this->companyId;
+    }
+
+    /**
+     * @param int $companyId
+     */
+    public function setCompanyId(int $companyId): void
+    {
+        $this->companyId = $companyId;
     }
 
     /**
@@ -255,6 +275,7 @@ class MoloniOnProductAssociations
             'ml_product_id' => $this->getMlProductId(),
             'ml_product_reference' => $this->getMlProductReference(),
             'ml_variant_id' => $this->getMlVariantId(),
+            'company_id' => $this->getCompanyId(),
             'active' => $this->getActive(),
         ];
     }

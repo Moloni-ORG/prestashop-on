@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS PREFIX_moloni_on_product_associations(
     `ml_product_id` INT(11) NOT NULL,
     `ml_product_reference` VARCHAR(250) DEFAULT NULL,
     `ml_variant_id` INT(11) NOT NULL,
+    `company_id` INT(11) DEFAULT 0,
     `active` INT(11) DEFAULT NULL
     ) ENGINE=ENGINE_TYPE DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;

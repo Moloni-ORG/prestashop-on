@@ -29,6 +29,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use MoloniOn\Entity\MoloniOnProductAssociations;
+use MoloniOn\MoloniContext;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -49,6 +50,7 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
         $association->setPsCombinationId($psCombinationId ?? 0);
         $association->setPsCombinationReference($psCombinationReference ?? '');
         $association->setActive($active ?? 1);
+        $association->setCompanyId(MoloniContext::instance()->getCompanyId());
 
         try {
             $entityManager->persist($association);
@@ -63,7 +65,9 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
         $this->createQueryBuilder('a')
             ->delete()
             ->where('a.mlProductId = :moloni_id')
+            ->where('a.companyId = :company_id')
             ->setParameter('moloni_id', $moloniId)
+            ->setParameter('company_id', MoloniContext::instance()->getCompanyId())
             ->getQuery()
             ->getResult();
     }
@@ -73,7 +77,9 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
         $this->createQueryBuilder('a')
             ->delete()
             ->where('a.psProductId = :prestashop_id')
+            ->where('a.companyId = :company_id')
             ->setParameter('prestashop_id', $prestashopId)
+            ->setParameter('company_id', MoloniContext::instance()->getCompanyId())
             ->getQuery()
             ->getResult();
     }
@@ -83,7 +89,9 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
         $this->createQueryBuilder('a')
             ->delete()
             ->where('a.psCombinationId = :combination_id')
+            ->where('a.companyId = :company_id')
             ->setParameter('combination_id', $combinationId)
+            ->setParameter('company_id', MoloniContext::instance()->getCompanyId())
             ->getQuery()
             ->getResult();
     }
