@@ -25,8 +25,6 @@
 
 namespace MoloniOn\Activators;
 
-use CoreModule;
-use MoloniOn\Configurations;
 use MoloniOn\Exceptions\MoloniActivatorException;
 use Tab;
 
@@ -39,7 +37,7 @@ class Install extends ActivatorAbstract
     /**
      * Installer constructor.
      */
-    public function __construct(CoreModule $module)
+    public function __construct(\CoreModule $module)
     {
         $this->module = $module;
     }

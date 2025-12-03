@@ -37,7 +37,6 @@ use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\ProductInformation;
-use MoloniOn\Enums\ProductType;
 use MoloniOn\Exceptions\Document\MoloniDocumentProductException;
 use MoloniOn\Exceptions\Document\MoloniDocumentProductTaxException;
 use MoloniOn\Exceptions\MoloniApiException;

@@ -59,7 +59,7 @@ class SettingsFormHandler implements FormHandlerInterface
     public function __construct(
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
-        SettingsFormDataProvider $formDataProvider
+        SettingsFormDataProvider $formDataProvider,
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;

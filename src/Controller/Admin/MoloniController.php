@@ -27,8 +27,10 @@ namespace MoloniOn\Controller\Admin;
 
 use MoloniOn\Entity\MoloniOnApp;
 use MoloniOn\Enums\MoloniRoutes;
+use MoloniOn\EventListener\AuthenticationListener;
 use MoloniOn\MoloniContext;
 use MoloniOn\Repository\MoloniOnAppRepository;
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +53,8 @@ abstract class MoloniController extends FrameworkBundleAdminController implement
         parent::__construct();
 
         $this->moloniContext = $context;
+
+        $this->registerAuthEvent();
     }
 
     //          Privates          //
@@ -121,6 +125,14 @@ abstract class MoloniController extends FrameworkBundleAdminController implement
             ->getRepository(MoloniOnApp::class);
 
         $repository->deleteApp();
+    }
+
+    protected function registerAuthEvent()
+    {
+        $container = SymfonyContainer::getInstance();
+        $dispatcher = $container->get('event_dispatcher');
+
+        $dispatcher->addListener('kernel.controller', [new AuthenticationListener(), 'onKernelController']);
     }
 
     //          Messages          //

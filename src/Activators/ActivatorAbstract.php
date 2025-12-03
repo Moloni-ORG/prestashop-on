@@ -27,8 +27,6 @@ declare(strict_types=1);
 
 namespace MoloniOn\Activators;
 
-use MoloniOn\Configurations;
-
 class ActivatorAbstract
 {
     /**

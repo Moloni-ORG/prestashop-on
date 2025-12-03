@@ -69,7 +69,7 @@ class Companies extends Endpoint
      * @return array returns an array with the company's information
      *
      * @throws MoloniApiException
- */
+     */
     public function queryCompanies(): array
     {
         $query = $this->loadQuery('companies');

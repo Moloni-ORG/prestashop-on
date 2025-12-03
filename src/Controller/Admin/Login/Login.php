@@ -29,7 +29,6 @@ use MoloniOn\Api\MoloniApi;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Entity\MoloniOnApp;
-use MoloniOn\Enums\Languages;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Form\Login\LoginFormType;

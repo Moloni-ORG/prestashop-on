@@ -119,7 +119,16 @@ function buildZip()
         copyDir($srcDir, "$buildDir/$dirName");
     }
 
-    // Step 3: Zip the build folder
+    // Step 3: Update version placeholders
+    // Step 3.1: Update the main file version
+    $buildMainPath = "$buildDir/molonion.php";
+
+    $buildMain = file_get_contents($buildMainPath);
+    $buildMain = str_replace('#VERSION#', PLUGIN_VERSION, $buildMain); // Replace version placeholder
+
+    file_put_contents($buildMainPath, $buildMain);
+
+    // Step 4: Zip the build folder
     $zip = new ZipArchive();
     $zipPath = "$base/build/$zipName.zip";
     $zipFolderName = $zipName;

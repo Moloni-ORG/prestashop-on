@@ -137,16 +137,16 @@ class Customer
         return false;
     }
 
-    public static function isVatPtValid(?string  $vat = ''): bool
+    public static function isVatPtValid(?string $vat = ''): bool
     {
         if (preg_match('/^[123456789]\d{8}$/', $vat)) {
             $sum = 0;
 
-            for ($i = 0; $i < 9; $i++) {
-                $sum += (int)$vat[$i] * (10 - ($i + 1));
+            for ($i = 0; $i < 9; ++$i) {
+                $sum += (int) $vat[$i] * (10 - ($i + 1));
             }
 
-            if (((int)$vat[8] === 0) && ($sum % 11) !== 0) {
+            if (((int) $vat[8] === 0) && ($sum % 11) !== 0) {
                 $sum += 10;
             }
 

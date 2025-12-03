@@ -61,7 +61,6 @@ final class MoloniContext
      */
     private $router;
 
-
     /**
      * @var MoloniOnApp|null
      */
@@ -71,7 +70,6 @@ final class MoloniContext
      * @var Configurations
      */
     private $configurations;
-
 
     /**
      * Current instance of the MoloniContext
@@ -182,12 +180,12 @@ final class MoloniContext
 
     public function getViewDir(): string
     {
-        return "@Modules/molonion/views/templates/admin/";
+        return '@Modules/molonion/views/templates/admin/';
     }
 
     public function getImgPath(): string
     {
-        return _MODULE_DIR_ . "molonion/views/img/";
+        return _MODULE_DIR_ . 'molonion/views/img/';
     }
 
     public function getCompanyId(): int

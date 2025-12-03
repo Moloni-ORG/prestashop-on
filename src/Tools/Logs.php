@@ -158,7 +158,7 @@ class Logs
         }
 
         $log = new MoloniOnLogs();
-        $log->setShopId((int)\Shop::getContextShopID());
+        $log->setShopId((int) \Shop::getContextShopID());
         $log->setOrderId($orderId);
         $log->setCompanyId(self::$context->getCompanyId());
         $log->setLevel($level);
