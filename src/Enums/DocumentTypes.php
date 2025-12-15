@@ -42,12 +42,14 @@ class DocumentTypes
 
     public const TYPES_WITH_PAYMENTS = [
         self::RECEIPTS,
+        self::INVOICE_RECEIPT,
         self::PRO_FORMA_INVOICES,
         self::SIMPLIFIED_INVOICES,
     ];
 
     public const TYPES_WITH_DELIVERY = [
         self::INVOICES,
+        self::INVOICE_RECEIPT,
         self::PURCHASE_ORDERS,
         self::PRO_FORMA_INVOICES,
         self::SIMPLIFIED_INVOICES,
@@ -61,6 +63,7 @@ class DocumentTypes
 
     public const TYPES_WITH_PRODUCTS = [
         self::INVOICES,
+        self::INVOICE_RECEIPT,
         self::PURCHASE_ORDERS,
         self::PRO_FORMA_INVOICES,
         self::SIMPLIFIED_INVOICES,
