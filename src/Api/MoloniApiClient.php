@@ -36,6 +36,7 @@ use MoloniOn\Api\Endpoints\Documents\BillsOfLading;
 use MoloniOn\Api\Endpoints\Documents\CreditNote;
 use MoloniOn\Api\Endpoints\Documents\Estimate;
 use MoloniOn\Api\Endpoints\Documents\Invoice;
+use MoloniOn\Api\Endpoints\Documents\InvoiceReceipt;
 use MoloniOn\Api\Endpoints\Documents\ProFormaInvoice;
 use MoloniOn\Api\Endpoints\Documents\PurchaseOrder;
 use MoloniOn\Api\Endpoints\Documents\Receipt;
@@ -80,6 +81,10 @@ class MoloniApiClient
      * @var Invoice|null
      */
     private static $invoice;
+    /**
+     * @var InvoiceReceipt|null
+     */
+    private static $invoiceReceipt;
     /**
      * @var ProFormaInvoice|null
      */
@@ -224,6 +229,15 @@ class MoloniApiClient
         }
 
         return self::$invoice;
+    }
+
+    public static function invoiceReceipt(): InvoiceReceipt
+    {
+        if (!self::$invoiceReceipt) {
+            self::$invoiceReceipt = new InvoiceReceipt();
+        }
+
+        return self::$invoiceReceipt;
     }
 
     public static function proFormaInvoice(): ProFormaInvoice

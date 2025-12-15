@@ -1,0 +1,18 @@
+mutation invoiceReceiptUpdate($companyId: Int!,$data: InvoiceReceiptUpdate!) {
+  invoiceReceiptUpdate(companyId: $companyId,data: $data) {
+    errors {
+      field
+      msg
+    }
+    data {
+      documentId
+      status
+      currencyExchangeTotalValue
+      products {
+        documentProductId
+        productId
+      }
+    }
+  }
+}
+

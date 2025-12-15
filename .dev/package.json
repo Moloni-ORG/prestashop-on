@@ -1,7 +1,7 @@
 {
   "name": "moloni-prestashop-on",
   "version": "3.0.0",
-  "description": "Module for Prestashop integration with MoloniOn",
+  "description": "Module for Prestashop integration with Moloni ON",
   "scripts": {
     "build": "webpack --progress",
     "build-prod": "webpack",

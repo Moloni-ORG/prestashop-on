@@ -501,6 +501,11 @@ class DocumentFromOrder implements BuilderInterface
                     $key = 'invoiceCreate';
 
                     break;
+                case DocumentTypes::INVOICE_RECEIPT:
+                    $mutation = MoloniApiClient::invoiceReceipt()->mutationInvoiceReceiptCreate($this->createProps);
+                    $key = 'invoiceReceiptCreate';
+
+                    break;
                 case DocumentTypes::RECEIPTS:
                     $mutation = MoloniApiClient::receipt()->mutationReceiptCreate($this->createProps);
                     $key = 'receiptCreate';
@@ -586,6 +591,11 @@ class DocumentFromOrder implements BuilderInterface
                 case DocumentTypes::INVOICES:
                     $mutation = MoloniApiClient::invoice()->mutationInvoiceUpdate($updateProps);
                     $key = 'invoiceUpdate';
+
+                    break;
+                case DocumentTypes::INVOICE_RECEIPT:
+                    $mutation = MoloniApiClient::invoiceReceipt()->mutationInvoiceReceiptUpdate($updateProps);
+                    $key = 'invoiceReceiptUpdate';
 
                     break;
                 case DocumentTypes::RECEIPTS:
@@ -1182,6 +1192,10 @@ class DocumentFromOrder implements BuilderInterface
                     MoloniApiClient::invoice()->mutationInvoiceGetPDF($variables);
 
                     break;
+                case DocumentTypes::INVOICE_RECEIPT:
+                    MoloniApiClient::invoiceReceipt()->mutationInvoiceReceiptGetPDF($variables);
+
+                    break;
                 case DocumentTypes::RECEIPTS:
                     MoloniApiClient::receipt()->mutationReceiptGetPDF($variables);
 
@@ -1245,6 +1259,10 @@ class DocumentFromOrder implements BuilderInterface
             switch ($this->documentType) {
                 case DocumentTypes::INVOICES:
                     MoloniApiClient::invoice()->mutationInvoiceSendEmail($variables);
+
+                    break;
+                case DocumentTypes::INVOICE_RECEIPT:
+                    MoloniApiClient::invoiceReceipt()->mutationInvoiceReceiptSendEmail($variables);
 
                     break;
                 case DocumentTypes::RECEIPTS:

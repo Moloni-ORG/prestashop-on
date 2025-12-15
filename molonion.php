@@ -45,7 +45,7 @@ class MoloniOn extends CoreModule
 
         parent::__construct();
 
-        $this->displayName = $this->trans('MoloniOn', [], 'Modules.Molonion.Core');
+        $this->displayName = $this->trans('Moloni ON', [], 'Modules.Molonion.Core');
         $this->description = $this->trans(
             'Automatic document creation with real time stock synchronization and powerful sales analysis.',
             [],
