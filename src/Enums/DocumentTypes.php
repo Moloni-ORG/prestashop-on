@@ -33,7 +33,7 @@ class DocumentTypes
 {
     public const INVOICES = 'invoices';
     public const RECEIPTS = 'receipts';
-    public const INVOICE_AND_RECEIPT = 'invoiceAndReceipts';
+    public const INVOICE_RECEIPT = 'invoiceReceipt';
     public const PURCHASE_ORDERS = 'purchaseOrders';
     public const PRO_FORMA_INVOICES = 'proFormaInvoices';
     public const SIMPLIFIED_INVOICES = 'simplifiedInvoices';
@@ -82,7 +82,7 @@ class DocumentTypes
     {
         return [
             'Invoice' => self::INVOICES,
-            'Invoice + Receipt' => self::INVOICE_AND_RECEIPT,
+            'Invoice-Receipt' => self::INVOICE_RECEIPT,
             'Purchase Order' => self::PURCHASE_ORDERS,
             'Pro Forma Invoice' => self::PRO_FORMA_INVOICES,
             'Simplified invoice' => self::SIMPLIFIED_INVOICES,
