@@ -1,7 +1,7 @@
 const DocumentType = {
   INVOICES: 'invoices',
   RECEIPTS: 'receipts',
-  INVOICE_RECEIPT: 'invoiceReceipt',
+  INVOICE_RECEIPT: 'invoiceReceipts',
   PURCHASE_ORDERS: 'purchaseOrders',
   PRO_FORMA_INVOICES: 'proFormaInvoices',
   SIMPLIFIED_INVOICES: 'simplifiedInvoices',
