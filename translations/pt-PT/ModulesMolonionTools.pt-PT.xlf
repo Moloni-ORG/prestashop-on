@@ -117,26 +117,6 @@
         <target>Ver produtos da Moloni</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="ef9bd66e2148c02b9a2aa4b928d59f05">
-        <source>Consult logs</source>
-        <target>Consultar logs</target>
-        <note>Line: </note>
-      </trans-unit>
-      <trans-unit id="ba97b9eee18d832a0123ec2c401dcd42">
-        <source>All plugin operations like document creation or stock synchronization are automatically logged.</source>
-        <target>Todas as operações do plugin, como criação de documentos ou sincronização de stocks, são registadas automaticamente.</target>
-        <note>Line: </note>
-      </trans-unit>
-      <trans-unit id="3b33cad1a0e5717629298b821c5cbe07">
-        <source>You can access all the logs using this tool to keep track on everything that happens.</source>
-        <target>Pode aceder a todos os logs usando esta ferramenta para acompanhar tudo o que acontece.</target>
-        <note>Line: </note>
-      </trans-unit>
-      <trans-unit id="5850b5fc125e3eecae04a5412f2b054f">
-        <source>View logs</source>
-        <target>Ver logs</target>
-        <note>Line: </note>
-      </trans-unit>
       <trans-unit id="0323de4f66a1700e2173e9bcdce02715">
         <source>Logout</source>
         <target>Terminar sessão</target>

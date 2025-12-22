@@ -59,6 +59,11 @@ class FetchDocumentById
                     $query = $query['data']['invoice']['data'] ?? [];
 
                     break;
+                case DocumentTypes::INVOICE_RECEIPT:
+                    $query = MoloniApiClient::invoiceReceipt()->queryInvoiceReceipt($variables);
+                    $query = $query['data']['invoiceReceipt']['data'] ?? [];
+
+                    break;
                 case DocumentTypes::RECEIPTS:
                     $query = MoloniApiClient::receipt()->queryReceipt($variables);
                     $query = $query['data']['receipt']['data'] ?? [];

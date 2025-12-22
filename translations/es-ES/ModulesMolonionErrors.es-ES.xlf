@@ -2,11 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="administration" source-language="es-ES" target-language="es-ES" datatype="plaintext">
     <body>
-      <trans-unit id="6d8102dddebcfbf60d19f8a8e2b21dbe">
-        <source>Document set is not registered in AT</source>
-        <target>Document set is not registered in AT</target>
-        <note>Line: </note>
-      </trans-unit>
       <trans-unit id="ecf86ca60b1e74dba70847c917f9250a">
         <source>Discarded order not found!</source>
         <target>Pedido de cliente descartado no encontrado</target>
@@ -465,6 +460,11 @@
       <trans-unit id="4776874d3ab58b9d1fb4c386b97fea69">
         <source>Error fetching fiscal zone tax settings</source>
         <target>Error al obtener la configuración de impuestos de la zona fiscal</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="6d8102dddebcfbf60d19f8a8e2b21dbe">
+        <source>Document set is not registered in AT</source>
+        <target>Document set is not registered in AT</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="1dde9f68f65790879230c4e697d2d24a">

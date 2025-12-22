@@ -152,7 +152,7 @@ class DummyTranslations
     {
         $this->translator->trans('Invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Receipt', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Invoice + Receipt', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Invoice-Receipt', [], 'Modules.Molonion.Common');
         $this->translator->trans('Purchase Order', [], 'Modules.Molonion.Common');
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Common');
@@ -208,7 +208,7 @@ class DummyTranslations
     {
         $this->translator->trans('Moloni Spain', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Moloni Dev', [], 'Modules.Molonion.Admin');
-        $this->translator->trans('MoloniOn', [], 'Modules.Molonion.Admin');
+        $this->translator->trans('Moloni ON', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Automatic document creation with real time stock synchronization and powerful sales analysis.', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Orders', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Documents', [], 'Modules.Molonion.Admin');

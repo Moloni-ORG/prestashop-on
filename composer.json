@@ -1,6 +1,6 @@
 {
   "name": "moloni/prestashop-on",
-  "description": "Module for Prestashop integration with MoloniOn",
+  "description": "Module for Prestashop integration with Moloni ON",
   "type": "prestashop-module",
   "license": "OSL-3.0",
   "authors": [

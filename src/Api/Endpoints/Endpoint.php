@@ -58,8 +58,8 @@ abstract class Endpoint
      */
     protected function loadQuery(string $queryName): string
     {
-        if (isset($this->responseCache[$queryName]) && !empty($this->responseCache[$queryName])) {
-            return $this->responseCache[$queryName];
+        if (isset($this->operationsCache[$queryName]) && !empty($this->operationsCache[$queryName])) {
+            return $this->operationsCache[$queryName];
         }
 
         return $this->loadFromFile('Queries', $queryName);
@@ -72,8 +72,8 @@ abstract class Endpoint
      */
     protected function loadMutation(string $mutationName): string
     {
-        if (isset($this->responseCache[$mutationName]) && !empty($this->responseCache[$mutationName])) {
-            return $this->responseCache[$mutationName];
+        if (isset($this->operationsCache[$mutationName]) && !empty($this->operationsCache[$mutationName])) {
+            return $this->operationsCache[$mutationName];
         }
 
         return $this->loadFromFile('Mutations', $mutationName);

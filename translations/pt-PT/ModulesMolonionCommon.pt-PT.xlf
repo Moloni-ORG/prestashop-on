@@ -12,9 +12,9 @@
         <target>Recibo</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="75a19f56f1a64cbc25e3e7eb7938c48d">
-        <source>Invoice + Receipt</source>
-        <target>Fatura + Recibo</target>
+      <trans-unit id="ebed9413192967aeea49adf83a7a76ff">
+        <source>Invoice-Receipt</source>
+        <target>Fatura-Recibo</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="56ea0ee77c2c6efe0131dfeea01705f5">
@@ -377,11 +377,6 @@
         <target>Eliminar registos antigos</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262">
-        <source>Go back</source>
-        <target>Voltar</target>
-        <note>Line: </note>
-      </trans-unit>
       <trans-unit id="27ce7f8b5623b2e2df568d64cf051607">
         <source>Stock</source>
         <target>Stock</target>
@@ -470,6 +465,11 @@
       <trans-unit id="b5a098d431b0cd6eb34ffe29e462fabd">
         <source>Moloni products</source>
         <target>Produtos Moloni</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262">
+        <source>Go back</source>
+        <target>Voltar</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="06fb4f46f4c78a0fa56e60259036cab1">

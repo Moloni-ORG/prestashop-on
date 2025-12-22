@@ -97,32 +97,9 @@ class OrderCreateDocument extends AbstractOrderAction
             $builder = new DocumentFromOrder($this->order, $company, $this->entityManager);
         }
 
-        if ($documentType === DocumentTypes::INVOICE_AND_RECEIPT) {
-            $builder
-                ->setDocumentType(DocumentTypes::INVOICES)
-                ->setDocumentStatus(DocumentStatus::CLOSED)
-                ->setSendEmail(Boolean::NO)
-                ->createDocument()
-                ->addLog();
-
-            $receipt = clone $builder;
-
-            $receipt
-                ->addRelatedDocument(
-                    $builder->getDocumentId(),
-                    $builder->getDocumentTotal(),
-                    $builder->getDocumentProducts()
-                )
-                ->setDocumentType(DocumentTypes::RECEIPTS)
-                ->setDocumentStatus(DocumentStatus::CLOSED)
-                ->setSendEmail()
-                ->createDocument()
-                ->addLog();
-        } else {
-            $builder
-                ->createDocument()
-                ->addLog();
-        }
+        $builder
+            ->createDocument()
+            ->addLog();
     }
 
     private function shouldCreateBillOfLading(string $documentType): bool
