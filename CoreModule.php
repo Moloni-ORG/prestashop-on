@@ -188,12 +188,10 @@ class CoreModule extends Module
 
         $this->context->controller->addCSS("{$this->_path}views/css/moloni-icons.css");
 
-        if (strpos($action, 'Moloni') !== 0) {
-            return;
+        if (strpos($action, 'Moloni') === 0) {
+            $this->context->controller->addJS("{$this->_path}views/js/app.js");
+            $this->context->controller->addCSS("{$this->_path}views/css/app.css");
         }
-
-        $this->context->controller->addJS("{$this->_path}views/js/app.js?v={$this->version}");
-        $this->context->controller->addCSS("{$this->_path}views/css/app.css?v={$this->version}");
     }
 
     /**

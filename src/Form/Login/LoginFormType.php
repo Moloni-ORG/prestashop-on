@@ -53,7 +53,7 @@ class LoginFormType extends TranslatorAwareType
                 ],
             ])
             ->add('clientSecret', TextType::class, [
-                'label' => $this->trans('Client Secret', 'Modules.Molonion.Common'),
+                'label' => $this->trans('Client secret', 'Modules.Molonion.Common'),
                 'required' => true,
                 'constraints' => [
                     new Length(['min' => 10]),
