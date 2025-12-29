@@ -37,6 +37,7 @@ use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use PrestaShopBundle\Translation\DataCollectorTranslator;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -52,7 +53,7 @@ final class MoloniContext
     private $entityManager;
 
     /**
-     * @var TranslatorInterface
+     * @var TranslatorInterface|DataCollectorTranslator
      */
     private $translator;
 
@@ -78,7 +79,7 @@ final class MoloniContext
      */
     private static $instance;
 
-    public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, $translator)
     {
         $this->entityManager = $entityManager;
         $this->router = $router;
