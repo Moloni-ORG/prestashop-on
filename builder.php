@@ -47,6 +47,7 @@ const INCLUDE_FILES = [
     'molonion.php',
     'composer.json',
     'composer.lock',
+    'logo.png',
 ];
 
 function copyDir($src, $dst, $exclude = [])

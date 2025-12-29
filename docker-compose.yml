@@ -11,7 +11,7 @@ services:
     volumes:
       - database:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
   prestashop:
     container_name: dev-prestashop
     image: prestashop/prestashop:latest
@@ -19,7 +19,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 8080:80
+      - "8080:80"
     environment:
       DB_SERVER: dev-mysql
       DB_NAME: prestashop
@@ -34,8 +34,8 @@ services:
     networks:
       - prestashop_network
     volumes:
-      - ./molonion:/var/www/html/modules/molonion
       - site:/var/www/html
+      - ./molonion:/var/www/html/modules/molonion
 networks:
     prestashop_network:
 volumes:
