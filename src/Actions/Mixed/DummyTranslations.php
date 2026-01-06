@@ -186,7 +186,7 @@ class DummyTranslations
     {
         $this->translator->trans('Invoice', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Receipt', [], 'Modules.Molonion.Settings');
-        $this->translator->trans('Invoice-receipt', [], 'Modules.Molonion.Settings');
+        $this->translator->trans('Invoice-Receipt', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Purchase Order', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Settings');
