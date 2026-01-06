@@ -36,8 +36,6 @@ use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use PrestaShopBundle\Translation\DataCollectorTranslator;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -53,7 +51,7 @@ final class MoloniContext
     private $entityManager;
 
     /**
-     * @var TranslatorInterface|DataCollectorTranslator
+     * @var \Symfony\Component\Translation\TranslatorInterface|\Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -157,7 +155,7 @@ final class MoloniContext
 
     //          Internal instances          //
 
-    public function iTranslator(): TranslatorInterface
+    public function iTranslator()
     {
         return $this->translator;
     }

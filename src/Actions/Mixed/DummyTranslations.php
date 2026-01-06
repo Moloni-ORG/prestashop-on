@@ -25,8 +25,6 @@
 
 namespace MoloniOn\Actions\Mixed;
 
-use Symfony\Component\Translation\TranslatorInterface;
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -38,9 +36,9 @@ class DummyTranslations
     /**
      * Construct
      *
-     * @param TranslatorInterface $translator
+     * @param \Symfony\Component\Translation\TranslatorInterface|\Symfony\Contracts\Translation\TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct($translator)
     {
         $this->translator = $translator;
     }
