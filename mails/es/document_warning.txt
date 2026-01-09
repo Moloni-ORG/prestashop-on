@@ -2,7 +2,7 @@
 
 Hi,
 
-Advertencia de documento de Moloni
+Advertencia de documento de Moloni ON
 
 Se creó un documento como borrador porque los valores del pedido y del documento no coinciden.
 Por favor revise el documento resultante.

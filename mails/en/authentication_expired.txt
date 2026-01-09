@@ -2,9 +2,9 @@
 
 Hi,
 
-You're getting this email because there was an error getting new Moloni authentication tokens in your Prestashop plugin.
+You're getting this email because there was an error getting new Moloni ON authentication tokens in your PrestaShop plugin.
 
-Please access the Moloni plugin from your Prestashop store admin panel and confirm the authentication status of your account.
+Please access the Moloni ON plugin from your PrestaShop store admin panel and confirm the authentication status of your account.
 
 If the authentication has expired, please proceed with the authentication process again.
 

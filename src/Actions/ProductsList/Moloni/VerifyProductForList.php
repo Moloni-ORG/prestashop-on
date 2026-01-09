@@ -95,7 +95,7 @@ class VerifyProductForList
     private function verifyPrestashopProduct()
     {
         if (empty($this->prestaProduct)) {
-            $this->parsedProduct['notices'][] = ['Product does not exist in current Prestashop store.'];
+            $this->parsedProduct['notices'][] = ['Product does not exist in current PrestaShop store.'];
             $this->parsedProduct['missing_product'] = true;
 
             return;
@@ -113,7 +113,7 @@ class VerifyProductForList
         $checkStock = $this->psManagesStock && $this->warehouseId > 0;
 
         if ($checkStock && $this->moloniProduct['hasStock'] === false) {
-            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni.'];
+            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni ON.'];
 
             $checkStock = false;
         }

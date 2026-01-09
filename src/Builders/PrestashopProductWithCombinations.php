@@ -353,7 +353,7 @@ class PrestashopProductWithCombinations implements BuilderInterface
             $this->prestashopProduct->save();
 
             if ($this->shouldWriteLogs()) {
-                Logs::addInfoLog(['Product created in Prestashop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
+                Logs::addInfoLog(['Product created in PrestaShop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
             }
 
             $this->afterSave();
@@ -380,7 +380,7 @@ class PrestashopProductWithCombinations implements BuilderInterface
             $this->prestashopProduct->save();
 
             if ($this->shouldWriteLogs()) {
-                Logs::addInfoLog(['Product updated in Prestashop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
+                Logs::addInfoLog(['Product updated in PrestaShop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
             }
 
             $this->afterSave();

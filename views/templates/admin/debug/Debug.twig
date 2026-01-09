@@ -59,7 +59,7 @@
                             Update stock in Moloni
                         </td>
                         <td>
-                            <input placeholder="Prestashop product id"
+                            <input placeholder="PrestaShop product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -77,7 +77,7 @@
                             Update product in Moloni
                         </td>
                         <td>
-                            <input placeholder="Prestashop product id"
+                            <input placeholder="PrestaShop product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -95,7 +95,7 @@
                             Insert product in Moloni
                         </td>
                         <td>
-                            <input placeholder="Prestashop product id"
+                            <input placeholder="PrestaShop product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -110,10 +110,10 @@
                 <tr>
                     <form action="{{ path(updateStockFromMoloni) }}" method="post">
                         <td>
-                            Update stock in Prestashop
+                            Update stock in PrestaShop
                         </td>
                         <td>
-                            <input placeholder="Moloni product id"
+                            <input placeholder="Moloni ON product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -128,10 +128,10 @@
                 <tr>
                     <form action="{{ path(updateProductFromMoloni) }}" method="post">
                         <td>
-                            Update product in Prestashop
+                            Update product in PrestaShop
                         </td>
                         <td>
-                            <input placeholder="Moloni product id"
+                            <input placeholder="Moloni ON product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -146,10 +146,10 @@
                 <tr>
                     <form action="{{ path(insertProductFromMoloni) }}" method="post">
                         <td>
-                            Insert product in Prestashop
+                            Insert product in PrestaShop
                         </td>
                         <td>
-                            <input placeholder="Moloni product id"
+                            <input placeholder="Moloni ON product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>
@@ -171,13 +171,13 @@
                                 <select class="form-control custom-select"
                                         name="type_id">
                                     <option value="ALL" selected>All results</option>
-                                    <option value="MOLONI_PRODUCT">Moloni product</option>
-                                    <option value="MOLONI_VARIANT">Moloni variant</option>
-                                    <option value="PRESTASHOP_PRODUCT">Prestashop product</option>
-                                    <option value="PRESTASHOP_COMBINATION">Prestashop combination</option>
+                                    <option value="MOLONI_PRODUCT">Moloni ON product</option>
+                                    <option value="MOLONI_VARIANT">Moloni ON variant</option>
+                                    <option value="PRESTASHOP_PRODUCT">PrestaShop product</option>
+                                    <option value="PRESTASHOP_COMBINATION">PrestaShop combination</option>
                                 </select>
                             </div>
-                            <input placeholder="Moloni product id"
+                            <input placeholder="Moloni ON product id"
                                    type="text"
                                    class="form-control"
                                    name="product_id"/>

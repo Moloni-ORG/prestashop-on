@@ -114,7 +114,7 @@ class Documents extends MoloniController
             $moloniDocument = (new FetchDocumentById($document->getDocumentId(), $document->getDocumentType()))->handle();
 
             if (empty($moloniDocument)) {
-                throw new MoloniException('Moloni document not found');
+                throw new MoloniException('Moloni ON document not found');
             }
 
             $company = MoloniApiClient::companies()->queryCompany();
@@ -185,7 +185,7 @@ class Documents extends MoloniController
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());
             $this->addErrorMessage($msg, $e->getData());
         } catch (\PrestaShopDatabaseException|\PrestaShopException $e) {
-            $msg = $this->trans('Error fetching Prestashop order', 'Modules.Molonion.Errors');
+            $msg = $this->trans('Error fetching PrestaShop order', 'Modules.Molonion.Errors');
             $this->addErrorMessage($msg);
         }
 

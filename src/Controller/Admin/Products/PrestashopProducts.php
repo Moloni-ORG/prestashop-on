@@ -98,7 +98,7 @@ class PrestashopProducts extends MoloniController
             if ($productBuilder->getMoloniProductId() > 0) {
                 $productBuilder->updateStock();
             } else {
-                throw new MoloniProductException('Product does not exist in Moloni', null, [$productId]);
+                throw new MoloniProductException('Product does not exist in Moloni ON', null, [$productId]);
             }
 
             $response = $this->getCommonResponse($productId);
