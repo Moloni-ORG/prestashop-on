@@ -68,7 +68,7 @@ class GetPrestashopCategoriesFromMoloniCategoryId
                 try {
                     $category->save();
                 } catch (\PrestaShopException $e) {
-                    throw new MoloniProductCategoryException('Error creating Prestashop category', [], ['name' => $moloniCategoryName, 'parentId' => $parentId]);
+                    throw new MoloniProductCategoryException('Error creating PrestaShop category', [], ['name' => $moloniCategoryName, 'parentId' => $parentId]);
                 }
 
                 array_unshift($prestashopCategoryIds, $category->id);

@@ -2,9 +2,9 @@
 
 Hi,
 
-Error de documento Moloni
+Error de documento Moloni ON
 
-Se produjo un error al crear un documento de Moloni.
+Se produjo un error al crear un documento de Moloni ON.
 Consulte los registros del complemento para obtener más información.
 
 Pedido ID: {order_id}

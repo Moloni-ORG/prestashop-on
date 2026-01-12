@@ -2,9 +2,9 @@
 
 Olá,
 
-Erro no documento Moloni
+Erro no documento Moloni ON
 
-Ocorreu um erro ao criar um documento Moloni.
+Ocorreu um erro ao criar um documento Moloni ON.
 Consulte os ‘logs’ do plugin para obter mais informações.
 
 ID do pedido: {order_id}

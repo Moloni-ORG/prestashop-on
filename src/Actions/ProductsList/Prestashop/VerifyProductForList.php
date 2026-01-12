@@ -111,10 +111,10 @@ class VerifyProductForList
     {
         if (empty($this->moloniProduct)) {
             if (empty($this->prestaProduct->reference) && $this->productReferenceFallback === Boolean::NO) {
-                $this->parsedProduct['notices'][] = ['Product does not have a reference set in Prestashop.'];
+                $this->parsedProduct['notices'][] = ['Product does not have a reference set in PrestaShop.'];
                 $this->parsedProduct['missing_product'] = false;
             } else {
-                $this->parsedProduct['notices'][] = ['Product does not exist in current Moloni company.'];
+                $this->parsedProduct['notices'][] = ['Product does not exist in current Moloni ON company.'];
                 $this->parsedProduct['missing_product'] = true;
             }
 
@@ -123,7 +123,7 @@ class VerifyProductForList
 
         if ((int) $this->moloniProduct['visible'] === Boolean::NO) {
             $this->parsedProduct['notices'][] = [
-                'Product is invisible in Moloni. Cannot be used in document creation.',
+                'Product is invisible in Moloni ON. Cannot be used in document creation.',
             ];
         }
 
@@ -157,7 +157,7 @@ class VerifyProductForList
         }
 
         if ($this->moloniProduct['hasStock'] === false) {
-            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni.'];
+            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni ON.'];
 
             $checkStock = false;
         }

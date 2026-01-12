@@ -224,7 +224,7 @@ class SettingsFormDataProvider implements FormDataProviderInterface
         ];
 
         $this->addresses = [
-            $this->trans('Moloni company', 'Modules.Molonion.Settings') => LoadAddress::MOLONI,
+            $this->trans('Moloni ON company', 'Modules.Molonion.Settings') => LoadAddress::MOLONI,
             $this->trans('Custom address', 'Modules.Molonion.Settings') => LoadAddress::CUSTOM,
         ];
 

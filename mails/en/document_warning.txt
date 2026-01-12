@@ -2,7 +2,7 @@
 
 Hi,
 
-Moloni document warning
+Moloni ON document warning
 
 A document was created as draft because the order and document values do not match.
 Please check the resulting document.

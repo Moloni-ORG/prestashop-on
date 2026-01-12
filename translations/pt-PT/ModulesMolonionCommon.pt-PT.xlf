@@ -57,14 +57,14 @@
         <target>Informação</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="1cb0070b30d2288bb6748c4cf44895b7">
-        <source>Stock is already updated in Moloni ({0})</source>
-        <target>O stock já está atualizado na Moloni ({0})</target>
+      <trans-unit id="bae205c1a0f13c9e740ab1ca8c28c805">
+        <source>Stock is already updated in Moloni ON ({0})</source>
+        <target>O stock já está atualizado no Moloni ON ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7418fbf6a8a117ef97266493c410961a">
-        <source>Stock updated in Moloni (old: {0} | new: {1}) ({2})</source>
-        <target>Stock atualizado na Moloni (antigo: {0} | novo: {1}) ({2})</target>
+      <trans-unit id="5e84bbd3fa74302a5b0c205486cca3e0">
+        <source>Stock updated in Moloni ON (old: {0} | new: {1}) ({2})</source>
+        <target>Stock atualizado no Moloni ON (antigo: {0} | novo: {1}) ({2})</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="9a9cb9d14334ec96f35e0bdc8eb525e7">
@@ -92,24 +92,24 @@
         <target>Documento {0} criado com sucesso ({1})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="e7e1975a8fc5bf31c6825cc17012bed0">
-        <source>Product created in Moloni ({0})</source>
-        <target>Produto criado na Moloni ({0})</target>
+      <trans-unit id="22980be381e501fb2800635c7989fbb9">
+        <source>Product created in Moloni ON ({0})</source>
+        <target>Produto criado no Moloni ON ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="c4772f5ca50a8deacd6bfa0721b4f2c5">
-        <source>Product updated in Moloni ({0})</source>
-        <target>Produto atualizado na Moloni ({0})</target>
+      <trans-unit id="d883b40b5fa867d34ba220ff24e926da">
+        <source>Product updated in Moloni ON ({0})</source>
+        <target>Produto atualizado no Moloni ON ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2606994c7949fc2980fda6b734f44d82">
-        <source>Stock is already updated in Prestashop ({0})</source>
-        <target>O stock já está atualizado no Prestashop ({0})</target>
+      <trans-unit id="9c4d29d80643b678ffef0680980b7e65">
+        <source>Stock is already updated in PrestaShop ({0})</source>
+        <target>O stock já está atualizado no PrestaShop ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="18a2527d5b4470491f431187ebb31a17">
-        <source>Stock updated in Prestashop (old: {0} | new: {1}) ({2})</source>
-        <target>Stock atualizado no Prestashop (antigo: {0} | novo: {1}) ({2})</target>
+      <trans-unit id="a253b5b0162feb03c0c6ebb1b87d768b">
+        <source>Stock updated in PrestaShop (old: {0} | new: {1}) ({2})</source>
+        <target>Stock atualizado no PrestaShop (antigo: {0} | novo: {1}) ({2})</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e008166577c8bd4838acea9caea04f69">
@@ -117,24 +117,24 @@
         <target>Algo correu mal ao atualizar o stock ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="71bdae89e1ae75d851471e4efa1aa5ab">
-        <source>Combination created in Prestashop ({0})</source>
-        <target>Combinação criada no Prestashop ({0})</target>
+      <trans-unit id="04b254a69da9c959a5caa7b72ee230ee">
+        <source>Combination created in PrestaShop ({0})</source>
+        <target>Combinação criada no PrestaShop ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="a86d26862ce556c48c24e5f5af3206ed">
-        <source>Combination updated in Prestashop ({0})</source>
-        <target>Combinação atualizada no Prestashop ({0})</target>
+      <trans-unit id="374b31c9cfd02240c5a0c196789a8d9c">
+        <source>Combination updated in PrestaShop ({0})</source>
+        <target>Combinação atualizada no PrestaShop ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="689c7ed64b9b1e835eec7c25c664484b">
-        <source>Product created in Prestashop ({0})</source>
-        <target>Produto criado no Prestashop ({0})</target>
+      <trans-unit id="f7b41e7c9d10dc551df36654d1b2bf65">
+        <source>Product created in PrestaShop ({0})</source>
+        <target>Produto criado no PrestaShop ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="bfb13a46e4e52b06828e5ec9f2613a16">
-        <source>Product updated in Prestashop ({0})</source>
-        <target>Produto atualizado no Prestashop ({0})</target>
+      <trans-unit id="cb3f0d80c63bdc6ee37939b21842b483">
+        <source>Product updated in PrestaShop ({0})</source>
+        <target>Produto atualizado no PrestaShop ({0})</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b9208b03bcc9eb4a336258dcdcb66207">
@@ -462,9 +462,9 @@
         <target>Pesquisar email</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="b5a098d431b0cd6eb34ffe29e462fabd">
-        <source>Moloni products</source>
-        <target>Produtos Moloni</target>
+      <trans-unit id="8e1f77e2554d1a930d64101c8a5c6ccb">
+        <source>Moloni ON products</source>
+        <target>Produtos Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="22b653bd8d2edcebb9e0036b4ac79262">
@@ -472,23 +472,23 @@
         <target>Voltar</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="06fb4f46f4c78a0fa56e60259036cab1">
-        <source>View in Moloni</source>
-        <target>Ver em Moloni</target>
+      <trans-unit id="0593767c5b9453a6edb97934e2df7c28">
+        <source>View in Moloni ON</source>
+        <target>Ver em Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="ddbd0f07634b3a8c6a49d7de9b8804b2">
-        <source>View in Prestashop</source>
+      <trans-unit id="44ccb107299fe0d0af59f2ada2bb7e78">
+        <source>View in PrestaShop</source>
         <target>Ver em Prestashop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2930a9c4565a5775fd6ee195aedc1c89">
-        <source>Import product to Prestashop</source>
+      <trans-unit id="5e3adfa495c55bb31c0ac92ef05c8262">
+        <source>Import product to PrestaShop</source>
         <target>Importar produto para Prestashop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="af9354230fe709410bc3fd21fde0354b">
-        <source>Import stock to Prestashop</source>
+      <trans-unit id="30b71de16dae9989ff87ef72bbddad32">
+        <source>Import stock to PrestaShop</source>
         <target>Importar stock para Prestashop</target>
         <note>Line: </note>
       </trans-unit>
@@ -507,19 +507,19 @@
         <target>Pesquisar por nome</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="05e39040555dcd57e52c5979ba604161">
-        <source>Prestashop products</source>
+      <trans-unit id="8ba08775d71c47dde3d5674ce660ec6a">
+        <source>PrestaShop products</source>
         <target>Produtos Prestashop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2f80fac2e1a1973252afda7ff15f131e">
-        <source>Export product to Moloni</source>
-        <target>Exportar produto para Moloni</target>
+      <trans-unit id="6aa61e361ee76557a27da0e391c67e9b">
+        <source>Export product to Moloni ON</source>
+        <target>Exportar produto para Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="1d9424f8b1443e38cc8a398f594ba9da">
-        <source>Export stock to Moloni</source>
-        <target>Exportar stock para Moloni</target>
+      <trans-unit id="7c251f0f7c2955864b91bc6ef0bdefd7">
+        <source>Export stock to Moloni ON</source>
+        <target>Exportar stock para Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
     </body>

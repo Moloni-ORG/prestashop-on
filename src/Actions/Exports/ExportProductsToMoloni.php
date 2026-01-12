@@ -80,7 +80,7 @@ class ExportProductsToMoloni extends ExportProducts
                     $this->syncedProducts[] = $product->reference;
                 } else {
                     $this->errorProducts[] = [
-                        $product->reference => 'Product already exists in Moloni',
+                        $product->reference => 'Product already exists in Moloni ON',
                     ];
                 }
             } catch (MoloniProductException $e) {

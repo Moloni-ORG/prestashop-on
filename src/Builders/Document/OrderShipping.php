@@ -299,7 +299,7 @@ class OrderShipping implements BuilderItemInterface
     protected function afterSearch(): OrderShipping
     {
         if (!empty($this->moloniProduct) && $this->moloniProduct['visible'] === Boolean::NO) {
-            throw new MoloniDocumentShippingException('Product with reference ({0}) is invisible in Moloni. Please change the product visibility.', ['{0}' => $this->reference], ['product' => $this->moloniProduct]);
+            throw new MoloniDocumentShippingException('Product with reference ({0}) is invisible in Moloni ON. Please change the product visibility.', ['{0}' => $this->reference], ['product' => $this->moloniProduct]);
         }
 
         return $this;

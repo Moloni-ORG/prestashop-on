@@ -333,7 +333,7 @@ class MoloniProductSimple implements BuilderInterface
     protected function beforeUpdate(): void
     {
         if (!$this->moloniProduct['deletable'] && !empty($this->moloniProduct['variants']) && $this->productExists()) {
-            throw new MoloniProductException('Cannot update product in Moloni. Product types do not match', null, ['moloniProductId' => $this->getMoloniProductId(), 'prestashopProductId' => $this->prestashopProduct->id]);
+            throw new MoloniProductException('Cannot update product in Moloni ON. Product types do not match', null, ['moloniProductId' => $this->getMoloniProductId(), 'prestashopProductId' => $this->prestashopProduct->id]);
         }
     }
 
@@ -372,7 +372,7 @@ class MoloniProductSimple implements BuilderInterface
                 $this->moloniProduct = $moloniProduct;
 
                 if ($this->shouldWriteLogs()) {
-                    Logs::addInfoLog(['Product created in Moloni ({0})', ['{0}' => $this->reference]],
+                    Logs::addInfoLog(['Product created in Moloni ON ({0})', ['{0}' => $this->reference]],
                         ['props' => $props]);
                 }
 
@@ -411,7 +411,7 @@ class MoloniProductSimple implements BuilderInterface
                 $this->moloniProduct = $moloniProduct;
 
                 if ($this->shouldWriteLogs()) {
-                    Logs::addInfoLog(['Product updated in Moloni ({0})', ['{0}' => $this->reference]],
+                    Logs::addInfoLog(['Product updated in Moloni ON ({0})', ['{0}' => $this->reference]],
                         ['props' => $props]);
                 }
 
@@ -919,7 +919,7 @@ class MoloniProductSimple implements BuilderInterface
     protected function verifyPrestaProduct(): MoloniProductSimple
     {
         if (empty($this->prestashopProduct->id)) {
-            throw new MoloniProductException('Prestashop product not found');
+            throw new MoloniProductException('PrestaShop product not found');
         }
 
         return $this;
