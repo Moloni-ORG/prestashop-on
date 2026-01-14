@@ -209,10 +209,14 @@ class Tools extends MoloniController
             return $this->redirectToLogin();
         }
 
-        try {
-            (new WebhookDeleteAll())->handle();
-        } catch (MoloniException $e) {
-            // catch nothing
+        $company = $this->moloniContext->company();
+
+        if ($company && $company->canSyncStock()) {
+            try {
+                (new WebhookDeleteAll())->handle();
+            } catch (MoloniException $e) {
+                // catch nothing
+            }
         }
 
         return $this->redirectToLogin();
