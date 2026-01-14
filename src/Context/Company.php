@@ -47,7 +47,7 @@ final class Company
 
             unset($company['limits'][$key]);
         }
-        dump($company);
+
         $this->company = $company;
     }
 

@@ -743,7 +743,6 @@ class SettingsFormType extends TranslatorAwareType
                 ),
             ],
             'choices' => $this->options->getWarehouses(),
-            'required' => true,
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'disabled' => !$canUseFeature,
             'disabled_value' => Boolean::NO,

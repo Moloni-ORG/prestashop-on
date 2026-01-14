@@ -27,8 +27,10 @@ namespace MoloniOn\Form\Settings;
 
 use MoloniOn\Actions\Tools\WebhookCreate;
 use MoloniOn\Actions\Tools\WebhookDeleteAll;
+use MoloniOn\Context\Company;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\MoloniContext;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
 use PrestaShop\PrestaShop\Core\Hook\HookDispatcherInterface;
@@ -56,14 +58,22 @@ class SettingsFormHandler implements FormHandlerInterface
      */
     protected $hookDispatcher;
 
+
+    /**
+     * @var Company
+     */
+    private $company;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
-        SettingsFormDataProvider $formDataProvider
+        SettingsFormDataProvider $formDataProvider,
+        MoloniContext $context
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;
         $this->formDataProvider = $formDataProvider;
+        $this->company = $context->company();
     }
 
     public function getForm(): FormInterface
@@ -88,6 +98,10 @@ class SettingsFormHandler implements FormHandlerInterface
 
     private function createWebHooks($submitData): void
     {
+        if (!$this->company->canSyncStock()) {
+            return;
+        }
+
         try {
             (new WebhookDeleteAll())->handle();
             $action = new WebhookCreate();
