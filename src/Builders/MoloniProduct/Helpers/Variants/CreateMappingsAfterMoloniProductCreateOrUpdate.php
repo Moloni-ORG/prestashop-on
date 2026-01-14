@@ -49,7 +49,7 @@ class CreateMappingsAfterMoloniProductCreateOrUpdate
     public function __construct(
         \Product $prestashopProduct,
         array $moloniProductMutated,
-        array $variantsBuilders,
+        array $variantsBuilders
     ) {
         $this->prestashopProduct = $prestashopProduct;
 
