@@ -35,7 +35,6 @@ use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
-use Product;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -66,11 +65,6 @@ class VerifyProductForList
     private $warehouseId;
 
     /**
-     * @var string
-     */
-    private $slug;
-
-    /**
      * @var int
      */
     private $productReferenceFallback;
@@ -80,13 +74,11 @@ class VerifyProductForList
      *
      * @param \Product $prestaProduct
      * @param int $warehouseId
-     * @param string $slug
      */
-    public function __construct(\Product $prestaProduct, int $warehouseId, string $slug)
+    public function __construct(\Product $prestaProduct, int $warehouseId)
     {
         $this->prestaProduct = $prestaProduct;
         $this->warehouseId = $warehouseId;
-        $this->slug = $slug;
 
         $this->productReferenceFallback = (int) Settings::get('productReferenceFallback');
     }
@@ -129,14 +121,14 @@ class VerifyProductForList
 
         $this->parsedProduct['moloni_id'] = $this->moloniProduct['productId'];
         $this->parsedProduct['moloni_url'] = MoloniContext::instance()->configs()->getAcUrl()
-            . $this->slug
+            . MoloniContext::instance()->company()->get('slug')
             . '/productCategories/products/all/'
             . $this->moloniProduct['productId'];
     }
 
     private function compareBothProducts()
     {
-        $checkStock = $this->warehouseId > 0;
+        $checkStock = MoloniContext::instance()->company()->canSyncStock() && $this->warehouseId > 0;
         $checkCombinations = true;
 
         if (empty($this->moloniProduct)) {
@@ -156,7 +148,7 @@ class VerifyProductForList
             $checkStock = false;
         }
 
-        if ($this->moloniProduct['hasStock'] === false) {
+        if ($checkStock && $this->moloniProduct['hasStock'] === false) {
             $this->parsedProduct['notices'][] = ['Product without stock active in Moloni ON.'];
 
             $checkStock = false;
@@ -181,7 +173,7 @@ class VerifyProductForList
                     $this->getAttributes($variant)
                 ))->handle();
 
-                /* Couldn´t match variant to any existing combination */
+                /* Couldn't match variant to any existing combination */
                 if (empty($combination->id)) {
                     $this->parsedProduct['notices'][] = [
                         'Combination not found ({0}).', ['{0}' => $variant['reference']],
@@ -211,7 +203,7 @@ class VerifyProductForList
 
         if ($prestashopStock !== $moloniProductStock) {
             $this->parsedProduct['notices'][] = [
-                'Product combination stock do not match (Moloni: {0}, Prestashop: {1}).',
+                'Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).',
                 ['{0}' => $moloniProductStock, '{1}' => $prestashopStock],
             ];
 
@@ -226,7 +218,7 @@ class VerifyProductForList
 
         if ($prestashopStock !== $moloniProductStock) {
             $this->parsedProduct['notices'][] = [
-                'Product stock do not match (Moloni: {0}, Prestashop: {1}).',
+                'Product stock do not match (Moloni: {0}, PrestaShop: {1}).',
                 ['{0}' => $moloniProductStock, '{1}' => $prestashopStock],
             ];
 

@@ -25,8 +25,8 @@
 
 namespace MoloniOn\Actions\Documents;
 
-use MoloniOn\Configurations;
 use MoloniOn\Enums\DocumentTypes;
+use MoloniOn\MoloniContext;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -35,14 +35,13 @@ if (!defined('_PS_VERSION_')) {
 class DocumentsListDetails
 {
     private $createdDocuments;
-    private $company;
-    private $configurations;
 
-    public function __construct(array $createdDocuments, array $company, Configurations $configurations)
+    private $urlPrefix = '';
+
+    public function __construct(array $createdDocuments, MoloniContext $context)
     {
-        $this->company = $company;
         $this->createdDocuments = $createdDocuments;
-        $this->configurations = $configurations;
+        $this->urlPrefix = $context->configs()->getAcUrl() . $context->company()->get('slug');
     }
 
     public function handle(): array
@@ -83,7 +82,7 @@ class DocumentsListDetails
                 continue;
             }
 
-            $document['document_link'] = $this->configurations->getAcUrl() . $this->company['slug'] . '/' . $document['document_type'] . '/view/' . $document['document_id'];
+            $document['document_link'] = $this->urlPrefix . '/' . $document['document_type'] . '/view/' . $document['document_id'];
 
             if (!empty($moloniDocument['pdfExport'])) {
                 $document['document_has_pdf'] = true;

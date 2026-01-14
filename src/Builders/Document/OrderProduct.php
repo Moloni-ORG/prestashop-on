@@ -42,6 +42,7 @@ use MoloniOn\Exceptions\Document\MoloniDocumentProductTaxException;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -75,7 +76,7 @@ class OrderProduct implements BuilderItemInterface
      *
      * @var int
      */
-    protected $warehouseId;
+    protected $warehouseId = 0;
 
     /**
      * Product name
@@ -192,6 +193,7 @@ class OrderProduct implements BuilderItemInterface
             'ordering' => $order,
             'qty' => $this->quantity,
             'discount' => $this->discount,
+            'warehouseId' => $this->warehouseId,
             'taxes' => [],
             'exemptionReason' => '',
         ];
@@ -207,7 +209,7 @@ class OrderProduct implements BuilderItemInterface
         }
 
         if (!empty($this->exchangeRate)) {
-            // Invert exchage rate, because order currency !== company currency
+            // Invert exchange rate, because order currency !== company currency
             $params['price'] *= (1 / $this->exchangeRate['exchange']);
         }
 
@@ -441,6 +443,10 @@ class OrderProduct implements BuilderItemInterface
      */
     public function setWarehouseId(): OrderProduct
     {
+        if (!MoloniContext::instance()->company()->canSyncStock()) {
+            return $this;
+        }
+
         $this->warehouseId = Settings::get('documentWarehouse');
 
         return $this;

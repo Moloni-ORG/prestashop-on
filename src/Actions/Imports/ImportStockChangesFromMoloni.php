@@ -88,7 +88,7 @@ class ImportStockChangesFromMoloni extends ImportProducts
                     $this->syncedProducts[] = $product['reference'];
                 } else {
                     $this->errorProducts[] = [
-                        $product['reference'] => 'Product does not exist in Prestashop',
+                        $product['reference'] => 'Product does not exist in PrestaShop',
                     ];
                 }
             } catch (MoloniProductException $e) {

@@ -27,6 +27,7 @@ namespace MoloniOn\Controller\Admin\Login;
 
 use MoloniOn\Api\MoloniApi;
 use MoloniOn\Api\MoloniApiClient;
+use MoloniOn\Context\Company;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Entity\MoloniOnApp;
 use MoloniOn\Enums\MoloniRoutes;
@@ -133,15 +134,21 @@ class Login extends MoloniController
             }
 
             foreach ($queryCompanies as $company) {
-                if (!isset($company['companyId'])) {
+                $object = new Company($company);
+
+                if (!$object->getCompanyId()) {
                     continue;
                 }
 
-                if (!$company['isConfirmed']) {
+                if (!$object->get('isConfirmed')) {
                     continue;
                 }
 
-                $companies[] = $company;
+                if (!$object->hasApiClient()) {
+                    continue;
+                }
+
+                $companies[] = $object->getAll();
             }
         } catch (MoloniException $e) {
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());

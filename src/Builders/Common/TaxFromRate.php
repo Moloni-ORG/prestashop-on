@@ -107,8 +107,8 @@ class TaxFromRate implements BuilderItemInterface
     {
         if (empty($fiscalZone)) {
             $fiscalZone = [
-                'code' => 'ES',
-                'countryId' => Countries::SPAIN,
+                'code' => 'PT',
+                'countryId' => Countries::PORTUGAL,
             ];
         }
 

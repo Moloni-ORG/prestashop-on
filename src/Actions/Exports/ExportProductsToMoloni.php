@@ -56,7 +56,7 @@ class ExportProductsToMoloni extends ExportProducts
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
                 $this->errorProducts[] = [
-                    $productData['id_product'] => 'Product has no reference in Prestashop.',
+                    $productData['id_product'] => 'Product has no reference in PrestaShop.',
                 ];
 
                 continue;

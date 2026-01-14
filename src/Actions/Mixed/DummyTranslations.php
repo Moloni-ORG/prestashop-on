@@ -131,9 +131,9 @@ class DummyTranslations
         $this->translator->trans('Product not found', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product types do not match.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product without stock active in Moloni ON.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product stock do not match (Moloni: {0}, Prestashop: {1}).', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product combination stock do not match (Moloni: {0}, Prestashop: {1}).', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product does not have a reference set in Prestashop.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product stock do not match (Moloni: {0}, PrestaShop: {1}).', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product does not have a reference set in PrestaShop.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Combination not found ({0}).', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product does not exist in current Moloni ON company.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product does not exist in current PrestaShop store.', [], 'Modules.Molonion.Errors');

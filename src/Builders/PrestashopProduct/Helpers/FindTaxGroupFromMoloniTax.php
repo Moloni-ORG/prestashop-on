@@ -42,7 +42,7 @@ class FindTaxGroupFromMoloniTax
     {
         $taxRulesGroupId = 0;
 
-        $fiscalZone = $this->moloniTax['fiscalZone'] ?? 'ES';
+        $fiscalZone = $this->moloniTax['fiscalZone'] ?? 'PT';
         $countryId = \Country::getByIso($fiscalZone);
         $value = (float) ($this->moloniTax['value'] ?? 0);
 

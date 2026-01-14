@@ -30,6 +30,7 @@ namespace MoloniOn\Form\Settings;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use MoloniOn\Api\MoloniApiClient;
+use MoloniOn\Context\Company;
 use MoloniOn\Entity\MoloniOnSettings;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\DocumentReference;
@@ -53,7 +54,9 @@ class SettingsFormDataProvider implements FormDataProviderInterface
 {
     private $translator;
     private $languageId;
-    private $companyId;
+
+    /** @var Company */
+    private $company;
 
     private $settingsRepository;
 
@@ -81,7 +84,7 @@ class SettingsFormDataProvider implements FormDataProviderInterface
         $this->settingsRepository = $context->iEntityManager()->getRepository(MoloniOnSettings::class);
 
         $this->languageId = $languageId;
-        $this->companyId = $context->getCompanyId();
+        $this->company = $context->company();
     }
 
     public function getData(): array
@@ -117,7 +120,7 @@ class SettingsFormDataProvider implements FormDataProviderInterface
     {
         $shopId = (int) \Shop::getContextShopID();
 
-        $this->settingsRepository->saveSettings($data, $shopId, $this->companyId);
+        $this->settingsRepository->saveSettings($data, $shopId, $this->company->getCompanyId());
 
         return $data;
     }
@@ -148,8 +151,7 @@ class SettingsFormDataProvider implements FormDataProviderInterface
     public function loadMoloniAvailableSettings(): SettingsFormDataProvider
     {
         $measurementUnitsQuery = MoloniApiClient::measurementUnits()->queryMeasurementUnits();
-        $companyQuery = MoloniApiClient::companies()->queryCompany();
-        $warehousesQuery = MoloniApiClient::warehouses()->queryWarehouses();
+        $warehousesQuery = $this->company->canSyncStock() ? MoloniApiClient::warehouses()->queryWarehouses() : [];
         $documentSetsQuery = MoloniApiClient::documentSets()->queryDocumentSets();
         $countriesQuery = MoloniApiClient::countries()->queryCountries([
             'options' => [
@@ -159,9 +161,9 @@ class SettingsFormDataProvider implements FormDataProviderInterface
         $storesQuery = \Store::getStores($this->languageId);
         $orderStatusQuery = \OrderState::getOrderStates($this->languageId);
 
-        $this->companyName = $companyQuery['name'];
+        $this->companyName = MoloniContext::instance()->company()->get('name');
 
-        foreach ($companyQuery['fiscalZone']['exemption']['reasons'] ?? [] as $reason) {
+        foreach (MoloniContext::instance()->company()->get('fiscalZone')['exemption']['reasons'] ?? [] as $reason) {
             $this->exemptionReasons["{$reason['code']} - {$reason['name']}"] = $reason['code'];
         }
 
@@ -195,8 +197,8 @@ class SettingsFormDataProvider implements FormDataProviderInterface
         ];
 
         $this->productInformation = [
-            'Prestashop' => ProductInformation::PRESTASHOP,
-            'Moloni' => ProductInformation::MOLONI,
+            'PrestaShop' => ProductInformation::PRESTASHOP,
+            'Moloni ON' => ProductInformation::MOLONI,
         ];
 
         $this->status = [

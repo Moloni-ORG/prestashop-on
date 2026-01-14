@@ -26,7 +26,7 @@
 namespace MoloniOn\Actions\Documents;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Enums\DocumentTypes;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;

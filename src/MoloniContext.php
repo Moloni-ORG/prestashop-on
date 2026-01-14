@@ -27,6 +27,9 @@ namespace MoloniOn;
 
 use Doctrine\ORM\EntityManagerInterface;
 use MoloniOn\Api\MoloniApi;
+use MoloniOn\Api\MoloniApiClient;
+use MoloniOn\Context\Company;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Entity\MoloniOnApp;
 use MoloniOn\Entity\MoloniOnSettings;
 use MoloniOn\Repository\MoloniOnAppRepository;
@@ -69,6 +72,11 @@ final class MoloniContext
      * @var Configurations
      */
     private $configurations;
+
+    /**
+     * @var Company
+     */
+    private $company;
 
     /**
      * Current instance of the MoloniContext
@@ -153,6 +161,17 @@ final class MoloniContext
         new ProductAssociations($this->entityManager, $this);
     }
 
+    public function loadCompany(): void
+    {
+        try {
+            $company = MoloniApiClient::companies()->queryCompany();
+        } catch (Exceptions\MoloniApiException $e) {
+            $company = [];
+        }
+
+        $this->company = new Company($company);
+    }
+
     //          Internal instances          //
 
     public function iTranslator()
@@ -206,6 +225,11 @@ final class MoloniContext
     public function configs(): Configurations
     {
         return $this->configurations;
+    }
+
+    public function company(): ?Company
+    {
+        return $this->company;
     }
 
     //          Statics          //

@@ -46,6 +46,7 @@ use MoloniOn\Exceptions\Product\MoloniProductCategoryException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Exceptions\Product\MoloniProductTaxException;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\LogsTrait;
@@ -163,7 +164,7 @@ class MoloniProductWithVariants implements BuilderInterface
      *
      * @var int
      */
-    protected $warehouseId;
+    protected $warehouseId = 0;
 
     /**
      * Tax builder
@@ -208,6 +209,13 @@ class MoloniProductWithVariants implements BuilderInterface
     protected $prestashopProduct;
 
     /**
+     * If the company can sync stock
+     *
+     * @var bool
+     */
+    private $canSyncStock;
+
+    /**
      * Constructor
      *
      * @throws MoloniProductException
@@ -217,6 +225,8 @@ class MoloniProductWithVariants implements BuilderInterface
         $this->prestashopProduct = $prestashopProduct;
 
         $this->syncFields = Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
+
+        $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
 
         $this->init();
     }
@@ -335,7 +345,7 @@ class MoloniProductWithVariants implements BuilderInterface
                     ];
                 }
             }
-        } else {
+        } elseif ($this->productHasStock()) {
             $props['hasStock'] = $this->hasStock;
             $props['warehouseId'] = $this->warehouseId;
             $props['warehouses'] = [
@@ -654,6 +664,10 @@ class MoloniProductWithVariants implements BuilderInterface
      */
     public function setHasStock(): MoloniProductWithVariants
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $this->hasStock = $this->moloniProduct['hasStock'] ?? (bool) Boolean::YES;
 
         return $this;
@@ -667,17 +681,17 @@ class MoloniProductWithVariants implements BuilderInterface
     public function setTax(): MoloniProductWithVariants
     {
         try {
-            $mutation = MoloniApiClient::companies()->queryCompany();
+            $company = MoloniContext::instance()->company()->getAll();
 
             $address = new \Address();
-            $address->id_country = \Country::getByIso($mutation['fiscalZone']['fiscalZone'] ?? 'ES');
+            $address->id_country = \Country::getByIso($company['fiscalZone']['fiscalZone'] ?? 'PT');
 
             $taxRate = (float) $this->prestashopProduct->getTaxesRate($address);
 
             if ($taxRate > 0) {
                 $fiscalZone = [
-                    'code' => $mutation['fiscalZone']['fiscalZone'] ?? 'ES',
-                    'countryId' => $mutation['country']['countryId'] ?? Countries::SPAIN,
+                    'code' => $company['fiscalZone']['fiscalZone'] ?? 'PT',
+                    'countryId' => $company['country']['countryId'] ?? Countries::PORTUGAL,
                 ];
 
                 $taxBuilder = new ProductTax($taxRate, $fiscalZone, 1);
@@ -728,6 +742,10 @@ class MoloniProductWithVariants implements BuilderInterface
      */
     public function setWarehouseId(): MoloniProductWithVariants
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
 
         if (in_array($warehouseId, [0, 1])) {

@@ -27,7 +27,7 @@ namespace MoloniOn\Api;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Entity\MoloniOnApp;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniLoginException;
@@ -283,5 +283,26 @@ class MoloniApi
         }
 
         return self::$app->isValidRefreshToken() && self::refreshTokens();
+    }
+
+    /**
+     * Verifies if company is selected and tokens validity
+     *
+     * @return bool
+     */
+    public static function hasAuthenticationAndCompany(): bool
+    {
+        if (!self::hasValidAuthentication()) {
+            return false;
+        }
+
+        if (!self::hasValidCompany()) {
+            return false;
+        }
+
+        /* Load company to context */
+        MoloniContext::instance()->loadCompany();
+
+        return true;
     }
 }

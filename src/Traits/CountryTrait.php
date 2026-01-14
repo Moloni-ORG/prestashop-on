@@ -46,7 +46,7 @@ trait CountryTrait
     {
         $countryIso = \Country::getIsoById($prestashopCountryId) ?? '';
 
-        $default = ['countryId' => Countries::SPAIN, 'languageId' => Languages::EN, 'code' => strtoupper($countryIso)];
+        $default = ['countryId' => Countries::PORTUGAL, 'languageId' => Languages::EN, 'code' => strtoupper($countryIso)];
 
         /* Early return */
         if (empty($countryIso)) {

@@ -32,6 +32,7 @@ use MoloniOn\Builders\MoloniProductSimple;
 use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -112,6 +113,10 @@ class ProductStockUpdate extends AbstractHookAction
             return false;
         }
 
-        return MoloniApi::hasValidAuthentication();
+        if (!MoloniApi::hasAuthenticationAndCompany()) {
+            return false;
+        }
+
+        return MoloniContext::instance()->company()->canSyncStock();
     }
 }

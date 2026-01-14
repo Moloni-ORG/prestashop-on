@@ -161,6 +161,6 @@ class AdminOrderButtons extends AbstractHookAction
 
     private function shouldExecuteHandle(): bool
     {
-        return MoloniApi::hasValidAuthentication() && MoloniApi::hasValidCompany();
+        return MoloniApi::hasAuthenticationAndCompany();
     }
 }

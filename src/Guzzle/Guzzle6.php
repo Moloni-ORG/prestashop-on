@@ -28,7 +28,7 @@ namespace MoloniOn\Guzzle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Exceptions\MoloniApiException;
 
 if (!defined('_PS_VERSION_')) {

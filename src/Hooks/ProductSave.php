@@ -97,6 +97,6 @@ class ProductSave extends AbstractHookAction
             return false;
         }
 
-        return MoloniApi::hasValidAuthentication();
+        return MoloniApi::hasAuthenticationAndCompany();
     }
 }

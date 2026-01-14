@@ -35,6 +35,7 @@ use MoloniOn\Enums\SyncFields;
 use MoloniOn\Exceptions\Product\MoloniProductCombinationException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
@@ -162,6 +163,14 @@ class ProductCombination implements BuilderInterface
      */
     protected $syncFields;
 
+
+    /**
+     * If the company can sync stock
+     *
+     * @var bool
+     */
+    private $canSyncStock;
+
     /**
      * Constructor
      *
@@ -177,6 +186,8 @@ class ProductCombination implements BuilderInterface
         $this->prestashopProduct = $prestashopProduct;
 
         $this->syncFields = $syncFields ?? Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
+
+        $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
 
         $this->init();
     }
@@ -469,6 +480,10 @@ class ProductCombination implements BuilderInterface
      */
     public function setWarehouseId(): ProductCombination
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
 
         if (empty($warehouseId)) {
@@ -487,6 +502,10 @@ class ProductCombination implements BuilderInterface
      */
     public function setHasStock(): ProductCombination
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $this->hasStock = $this->moloniVariant['hasStock'] ?? (bool) Boolean::YES;
 
         return $this;
@@ -499,9 +518,11 @@ class ProductCombination implements BuilderInterface
      */
     public function setStock(): ProductCombination
     {
-        if ($this->combinationHasStock()) {
-            $this->stock = Stock::getMoloniStock($this->moloniVariant, $this->warehouseId);
+        if (!$this->canSyncStock || !$this->combinationHasStock()) {
+            return $this;
         }
+
+        $this->stock = Stock::getMoloniStock($this->moloniVariant, $this->warehouseId);
 
         return $this;
     }

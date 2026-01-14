@@ -29,7 +29,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ParseException;
 use GuzzleHttp\Post\PostFile;
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Exceptions\MoloniApiException;
 
 if (!defined('_PS_VERSION_')) {

@@ -25,7 +25,7 @@
 
 namespace MoloniOn\Guzzle;
 
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Helpers\Version;
 

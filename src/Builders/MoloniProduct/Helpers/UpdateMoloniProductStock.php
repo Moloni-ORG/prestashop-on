@@ -64,7 +64,7 @@ class UpdateMoloniProductStock
         float $newStock,
         array $moloniProductWarehouses,
         string $reference,
-        ?bool $writeLogs = true,
+        ?bool $writeLogs = true
     ) {
         $this->moloniProductId = $moloniProductId;
         $this->warehouseId = $warehouseId;

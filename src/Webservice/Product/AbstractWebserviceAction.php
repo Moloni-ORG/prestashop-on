@@ -45,7 +45,7 @@ abstract class AbstractWebserviceAction
 
     protected function isAuthenticated(): bool
     {
-        return MoloniApi::hasValidAuthentication();
+        return MoloniApi::hasAuthenticationAndCompany();
     }
 
     /**

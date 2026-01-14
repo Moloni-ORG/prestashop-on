@@ -27,7 +27,10 @@ declare(strict_types=1);
 
 namespace MoloniOn\Form\Settings;
 
+use MoloniOn\Context\Company;
+use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
+use MoloniOn\MoloniContext;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -52,6 +55,9 @@ class SettingsFormType extends TranslatorAwareType
     /** @var SettingsFormDataProvider */
     private $options;
 
+    /** @var Company */
+    private $company;
+
     /**
      * Constructor
      *
@@ -59,8 +65,9 @@ class SettingsFormType extends TranslatorAwareType
      * @param array $locales
      * @param SettingsFormDataProvider $dataProvider
      */
-    public function __construct($translator, array $locales, SettingsFormDataProvider $dataProvider)
+    public function __construct($translator, array $locales, SettingsFormDataProvider $dataProvider, MoloniContext $context)
     {
+        $this->company = $context->company();
         $this->options = $dataProvider;
 
         parent::__construct($translator, $locales);
@@ -90,6 +97,8 @@ class SettingsFormType extends TranslatorAwareType
      */
     private function syncStockToMoloni(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('syncStockToMoloni', ChoiceType::class, [
             'label' => $this->trans('Synchronize stocks', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -101,6 +110,9 @@ class SettingsFormType extends TranslatorAwareType
             'required' => false,
             'choices' => $this->options->getYesNo(),
             'placeholder' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -111,11 +123,13 @@ class SettingsFormType extends TranslatorAwareType
      */
     private function syncStockToMoloniWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('syncStockToMoloniWarehouse', ChoiceType::class, [
             'label' => $this->trans('Warehouse', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>',
+                    'Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -125,6 +139,9 @@ class SettingsFormType extends TranslatorAwareType
             ],
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'required' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -171,6 +188,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function syncStockToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock() && $this->company->hasWebhooks();
+
         $this->builder->add('syncStockToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Synchronize stocks', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -182,6 +201,9 @@ class SettingsFormType extends TranslatorAwareType
             'required' => false,
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -189,6 +211,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function syncStockToPrestashopWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock() && $this->company->hasWebhooks();
+
         $this->builder
             ->add('syncStockToPrestashopWarehouse', ChoiceType::class, [
                 'label' => $this->trans('Warehouse', 'Modules.Molonion.Settings'),
@@ -204,6 +228,9 @@ class SettingsFormType extends TranslatorAwareType
                 ],
                 'required' => false,
                 'placeholder' => false,
+                'disabled' => !$canUseFeature,
+                'disabled_value' => Boolean::NO,
+                'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
             ]);
 
         return $this;
@@ -211,6 +238,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function addProductsToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->hasWebhooks();
+
         $this->builder->add('addProductsToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Create products', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -222,6 +251,9 @@ class SettingsFormType extends TranslatorAwareType
             'choices' => $this->options->getYesNo(),
             'required' => false,
             'placeholder' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -229,6 +261,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function updateProductsToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->hasWebhooks();
+
         $this->builder->add('updateProductsToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Update products', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -240,6 +274,9 @@ class SettingsFormType extends TranslatorAwareType
             'required' => false,
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -695,6 +732,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function documentWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('documentWarehouse', ChoiceType::class, [
             'label' => $this->trans('Document warehouse', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -705,7 +744,10 @@ class SettingsFormType extends TranslatorAwareType
             ],
             'choices' => $this->options->getWarehouses(),
             'required' => true,
-            'placeholder' => false,
+            'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : 'Your Moloni ON subscription does not allow this action.',
         ]);
 
         return $this;
@@ -784,7 +826,7 @@ class SettingsFormType extends TranslatorAwareType
             ->clientPrefix()
             ->clientUpdate()
             ->clientLanguage()
-            // When document stauts is closed
+            // When document status is closed
             ->billOfLading()
             ->loadAddress()
             ->customLoadAddressAddress()

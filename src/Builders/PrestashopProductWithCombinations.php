@@ -39,6 +39,7 @@ use MoloniOn\Exceptions\Product\MoloniProductCategoryException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\LogsTrait;
@@ -187,6 +188,14 @@ class PrestashopProductWithCombinations implements BuilderInterface
      */
     protected $syncFields;
 
+
+    /**
+     * If the company can sync stock
+     *
+     * @var bool
+     */
+    private $canSyncStock;
+
     /**
      * Constructor
      *
@@ -197,6 +206,8 @@ class PrestashopProductWithCombinations implements BuilderInterface
         $this->moloniProduct = $moloniProduct;
 
         $this->syncFields = $syncFields ?? Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
+
+        $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
 
         $this->init();
     }
@@ -583,6 +594,10 @@ class PrestashopProductWithCombinations implements BuilderInterface
      */
     public function setWarehouseId(): PrestashopProductWithCombinations
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
 
         if (empty($warehouseId)) {
@@ -605,6 +620,10 @@ class PrestashopProductWithCombinations implements BuilderInterface
      */
     public function setHasStock(): PrestashopProductWithCombinations
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $this->hasStock = $this->moloniProduct['hasStock'] ?? (bool) Boolean::YES;
 
         return $this;
@@ -617,9 +636,11 @@ class PrestashopProductWithCombinations implements BuilderInterface
      */
     public function setStock(): PrestashopProductWithCombinations
     {
-        if ($this->productHasStock()) {
-            $this->stock = Stock::getMoloniStock($this->moloniProduct, $this->warehouseId);
+        if (!$this->canSyncStock || !$this->productHasStock()) {
+            return $this;
         }
+
+        $this->stock = Stock::getMoloniStock($this->moloniProduct, $this->warehouseId);
 
         return $this;
     }

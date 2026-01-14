@@ -29,6 +29,7 @@ namespace MoloniOn\Actions\ProductsList\Moloni;
 
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Exceptions\MoloniApiException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
 
@@ -64,17 +65,13 @@ class FetchMoloniProductsPaginated
 
     public function run()
     {
-        try {
-            $slug = MoloniApiClient::companies()->queryCompany()['slug'];
-        } catch (MoloniApiException $e) {
-            $slug = '';
-        }
-
         $this->fetchProducts();
 
         if (empty($this->totalProducts)) {
             return;
         }
+
+        $slug = MoloniContext::instance()->company()->get('slug');
 
         foreach ($this->totalProducts as $moloniProduct) {
             $service = new VerifyProductForList($moloniProduct, $this->warehouseId, $slug);

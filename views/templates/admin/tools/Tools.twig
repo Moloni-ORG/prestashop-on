@@ -41,6 +41,7 @@
                 </div>
             </div>
 
+            {% if company.canSyncStock %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
                     <b>{{ 'Synchronize PrestaShop stocks with Moloni ON'|trans({}, 'Modules.Molonion.Tools') }}</b>
@@ -57,7 +58,9 @@
                     </button>
                 </div>
             </div>
+            {% endif %}
 
+            {% if company.canSyncStock %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
                     <b>{{ 'Synchronize Moloni ON stocks with PrestaShop'|trans({}, 'Modules.Molonion.Tools') }}</b>
@@ -74,7 +77,9 @@
                     </button>
                 </div>
             </div>
+            {% endif %}
 
+            {% if company.hasWebhooks %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
                     <b>{{ 'Reinstall webhooks'|trans({}, 'Modules.Molonion.Tools') }}</b>
@@ -89,6 +94,7 @@
                     </a>
                 </div>
             </div>
+            {% endif %}
 
             <div class="d-flex border-top">
                 <div class="ml-py-2">

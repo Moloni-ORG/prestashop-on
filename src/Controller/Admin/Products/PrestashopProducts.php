@@ -29,14 +29,13 @@ namespace MoloniOn\Controller\Admin\Products;
 
 use MoloniOn\Actions\ProductsList\Prestashop\FetchPrestashopProductsPaginated;
 use MoloniOn\Actions\ProductsList\Prestashop\VerifyProductForList;
-use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Builders\MoloniProductSimple;
 use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Enums\MoloniRoutes;
-use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Repository\ProductsRepository;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -154,6 +153,10 @@ class PrestashopProducts extends MoloniController
 
     private function getWarehouse(): int
     {
+        if (!MoloniContext::instance()->company()->canSyncStock()) {
+            return 0;
+        }
+
         $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
 
         if ($warehouseId > 1) {
@@ -165,17 +168,11 @@ class PrestashopProducts extends MoloniController
 
     private function getCommonResponse($prestaProductId): array
     {
-        try {
-            $slug = MoloniApiClient::companies()->queryCompany()['slug'];
-        } catch (MoloniApiException $e) {
-            $slug = '';
-        }
-
         $warehouseId = $this->getWarehouse();
 
         $ps = new \Product($prestaProductId, false, $this->getContextLangId());
 
-        $service = new VerifyProductForList($ps, $warehouseId, $slug);
+        $service = new VerifyProductForList($ps, $warehouseId);
         $service->run();
 
         return [

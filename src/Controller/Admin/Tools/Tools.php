@@ -60,6 +60,7 @@ class Tools extends MoloniController
                 'productsPrestashopRoutes' => MoloniRoutes::PRESTASHOP_PRODUCTS,
                 'productsMoloniRoutes' => MoloniRoutes::MOLONI_PRODUCTS,
                 'logoutRoute' => MoloniRoutes::TOOLS_LOGOUT,
+                'company' => $this->moloniContext->company(),
             ]
         );
     }
