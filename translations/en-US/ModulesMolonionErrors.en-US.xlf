@@ -417,19 +417,19 @@
         <target>Product without stock active in Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="0bc4d32194eb1d78d4daab4b475e50e9">
-        <source>Product stock do not match (Moloni: {0}, Prestashop: {1}).</source>
-        <target>Product stock do not match (Moloni: {0}, Prestashop: {1}).</target>
+      <trans-unit id="151553c3bac4a16870fa72fb792052ba">
+        <source>Product stock do not match (Moloni: {0}, PrestaShop: {1}).</source>
+        <target>Product stock do not match (Moloni: {0}, PrestaShop: {1}).</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="b7aae0f90f41b45cf6b27d2aa544af65">
-        <source>Product combination stock do not match (Moloni: {0}, Prestashop: {1}).</source>
-        <target>Product combination stock do not match (Moloni: {0}, Prestashop: {1}).</target>
+      <trans-unit id="e7e395694fa777151ff7bbe1c990a927">
+        <source>Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).</source>
+        <target>Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="38dd3f5748c30826e8d86100335ab96a">
-        <source>Product does not have a reference set in Prestashop.</source>
-        <target>Product does not have a reference set in Prestashop.</target>
+      <trans-unit id="3701f4957ba8112ced7537190baf1b10">
+        <source>Product does not have a reference set in PrestaShop.</source>
+        <target>Product does not have a reference set in PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8b37fa5b1c70534c680797f226b5328a">

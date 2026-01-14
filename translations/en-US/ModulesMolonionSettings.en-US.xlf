@@ -177,14 +177,19 @@
         <target><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.]]></target>
         <note>Line: </note>
       </trans-unit>
+      <trans-unit id="7ff2a370d7fc5dbe0cf80f0dc0770b21">
+        <source>Your Moloni ON subscription does not allow this action.</source>
+        <target>Your Moloni ON subscription does not allow this action.</target>
+        <note>Line: </note>
+      </trans-unit>
       <trans-unit id="6416e8cb5fc0a208d94fa7f5a300dbc4">
         <source>Warehouse</source>
         <target>Warehouse</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="320424e55c08a5697cae05bc2a3141f9">
-        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>]]></source>
-        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>]]></target>
+      <trans-unit id="33c4e7c1781aca0447f115a1eb380d3b">
+        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>]]></source>
+        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="91a98945c72e1b031c78a064c10feb98">
