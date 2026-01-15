@@ -211,7 +211,7 @@ class Tools extends MoloniController
 
         $company = $this->moloniContext->company();
 
-        if ($company && $company->canSyncStock()) {
+        if ($company && $company->hasWebhooks()) {
             try {
                 (new WebhookDeleteAll())->handle();
             } catch (MoloniException $e) {

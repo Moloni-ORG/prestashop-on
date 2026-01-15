@@ -746,7 +746,7 @@ class SettingsFormType extends TranslatorAwareType
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'disabled' => !$canUseFeature,
             'disabled_value' => Boolean::NO,
-            'help' => $canUseFeature ? '' : 'Your Moloni ON subscription does not allow this action.',
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
