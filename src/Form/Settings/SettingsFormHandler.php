@@ -98,7 +98,7 @@ class SettingsFormHandler implements FormHandlerInterface
 
     private function createWebHooks($submitData): void
     {
-        if (!$this->company->canSyncStock()) {
+        if (!$this->company->hasWebhooks()) {
             return;
         }
 
