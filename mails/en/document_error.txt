@@ -2,9 +2,9 @@
 
 Hi,
 
-Moloni document error
+Moloni ON document error
 
-An error occurred creating an Moloni document.
+An error occurred creating an Moloni ON document.
 Please check plugin logs for more information.
 
 Order ID: {order_id}

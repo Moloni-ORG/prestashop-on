@@ -64,7 +64,7 @@ class UpdateMoloniProductStock
         float $newStock,
         array $moloniProductWarehouses,
         string $reference,
-        ?bool $writeLogs = true,
+        ?bool $writeLogs = true
     ) {
         $this->moloniProductId = $moloniProductId;
         $this->warehouseId = $warehouseId;
@@ -96,7 +96,7 @@ class UpdateMoloniProductStock
         if ((float) $moloniStock === $this->newStock) {
             if ($this->shouldWriteLogs()) {
                 Logs::addStockLog(
-                    ['Stock is already updated in Moloni ({0})', ['{0}' => $this->reference]],
+                    ['Stock is already updated in Moloni ON ({0})', ['{0}' => $this->reference]],
                     ['newStock' => $this->newStock, 'current' => $moloniStock]
                 );
             }
@@ -130,7 +130,7 @@ class UpdateMoloniProductStock
                 || isset($mutation['data']['stockMovementManualExitCreate']['data']['stockMovementId'])
             ) {
                 $message = [
-                    'Stock updated in Moloni (old: {0} | new: {1}) ({2})',
+                    'Stock updated in Moloni ON (old: {0} | new: {1}) ({2})',
                     [
                         '{0}' => $moloniStock,
                         '{1}' => $this->newStock,

@@ -86,7 +86,7 @@ class DummyTranslations
         $this->translator->trans('Failed to update existing property group "{0}"', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Failed to find matching property name for "{0}".', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating stock movement ({0})', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Cannot update product in Moloni. Product types do not match', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Cannot update product in Moloni ON. Product types do not match', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating product ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error updating product ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating stock movement ({0})', [], 'Modules.Molonion.Errors');
@@ -94,7 +94,7 @@ class DummyTranslations
         $this->translator->trans('Company does not have a default warehouse, please select one', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error fetching default company warehouse', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error fetching product by reference: ({0})', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Error creating Prestashop category', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error creating PrestaShop category', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error getting product categories', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating combination ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error updating combination ({0})', [], 'Modules.Molonion.Errors');
@@ -105,16 +105,16 @@ class DummyTranslations
         $this->translator->trans('ID is invalid', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Missing information in database', [], 'Modules.Molonion.Errors');
         $this->translator->trans('An unexpected error occurred', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Could not find product in Moloni ({0})', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Could not find product in Moloni ON ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error fetching product by id ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Could not close {0}, totals do not match', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Created document not found', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Moloni document not found', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Moloni ON document not found', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error getting prestashop order', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error processing order ({0})', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Error updating Prestashop stock', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Error saving Prestashop product', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Error saving Moloni product', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error updating PrestaShop stock', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error saving PrestaShop product', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error saving Moloni ON product', [], 'Modules.Molonion.Errors');
         $this->translator->trans('No document type selected. Please choose one in plugin settings.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error closing {0} document', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating {0} document', [], 'Modules.Molonion.Errors');
@@ -125,25 +125,25 @@ class DummyTranslations
         $this->translator->trans('Document type not found', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Warning processing order ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Order already discarded or created!', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product with reference ({0}) is invisible in Moloni. Please change the product visibility.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product with reference ({0}) is invisible in Moloni ON. Please change the product visibility.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product with reference ({0}) has no taxes applied. Please add an exemption reason in plugin settings.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product already exists', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product not found', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product types do not match.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product without stock active in Moloni.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product stock do not match (Moloni: {0}, Prestashop: {1}).', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product combination stock do not match (Moloni: {0}, Prestashop: {1}).', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product does not have a reference set in Prestashop.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product without stock active in Moloni ON.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product stock do not match (Moloni: {0}, PrestaShop: {1}).', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product does not have a reference set in PrestaShop.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Combination not found ({0}).', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product does not exist in current Moloni company.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product does not exist in current Prestashop store.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Product is invisible in Moloni. Cannot be used in document creation.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product does not exist in current Moloni ON company.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product does not exist in current PrestaShop store.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product is invisible in Moloni ON. Cannot be used in document creation.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error on hook "{0}"', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error fetching fiscal zone tax settings', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Document set is not registered in AT', [], 'Modules.Molonion.Errors');
 
         $this->translator->trans('Error saving product image', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Tax not found in Moloni. Please create the correct tax for {0} ({1} || {2})', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Tax not found in Moloni ON. Please create the correct tax for {0} ({1} || {2})', [], 'Modules.Molonion.Errors');
     }
 
     public function common(): void
@@ -161,23 +161,23 @@ class DummyTranslations
         $this->translator->trans('Warning', [], 'Modules.Molonion.Common');
         $this->translator->trans('Information', [], 'Modules.Molonion.Common');
 
-        $this->translator->trans('Stock is already updated in Moloni ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Stock updated in Moloni (old: {0} | new: {1}) ({2})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Stock is already updated in Moloni ON ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Stock updated in Moloni ON (old: {0} | new: {1}) ({2})', [], 'Modules.Molonion.Common');
         $this->translator->trans('Products export. Part {0}', [], 'Modules.Molonion.Common');
         $this->translator->trans('Products stock export. Part {0}', [], 'Modules.Molonion.Common');
         $this->translator->trans('Products import. Part {0}', [], 'Modules.Molonion.Common');
         $this->translator->trans('Products stock import. Part {0}', [], 'Modules.Molonion.Common');
         $this->translator->trans('{0} document created with success ({1})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Product created in Moloni ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Product updated in Moloni ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Stock is already updated in Prestashop ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Stock updated in Prestashop (old: {0} | new: {1}) ({2})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Product created in Moloni ON ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Product updated in Moloni ON ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Stock is already updated in PrestaShop ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Stock updated in PrestaShop (old: {0} | new: {1}) ({2})', [], 'Modules.Molonion.Common');
         $this->translator->trans('Something went wrong updating stock ({0})', [], 'Modules.Molonion.Common');
 
-        $this->translator->trans('Combination created in Prestashop ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Combination updated in Prestashop ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Product created in Prestashop ({0})', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Product updated in Prestashop ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Combination created in PrestaShop ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Combination updated in PrestaShop ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Product created in PrestaShop ({0})', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Product updated in PrestaShop ({0})', [], 'Modules.Molonion.Common');
         $this->translator->trans('Combinations', [], 'Modules.Molonion.Common');
         $this->translator->trans('Simple', [], 'Modules.Molonion.Common');
     }
@@ -204,8 +204,6 @@ class DummyTranslations
 
     public function admin(): void
     {
-        $this->translator->trans('Moloni Spain', [], 'Modules.Molonion.Admin');
-        $this->translator->trans('Moloni Dev', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Moloni ON', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Automatic document creation with real time stock synchronization and powerful sales analysis.', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Orders', [], 'Modules.Molonion.Admin');

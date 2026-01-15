@@ -51,18 +51,15 @@ class VerifyProductForList
 
     private $warehouseId;
 
-    private $slug;
-
     private $psLanguageId;
     private $psManagesStock;
 
     private $productReferenceFallback;
 
-    public function __construct(array $moloniProduct, int $warehouseId, string $slug)
+    public function __construct(array $moloniProduct, int $warehouseId)
     {
         $this->moloniProduct = $moloniProduct;
         $this->warehouseId = $warehouseId;
-        $this->slug = $slug;
 
         $this->psLanguageId = \Configuration::get('PS_LANG_DEFAULT');
         $this->psManagesStock = \Configuration::get('PS_STOCK_MANAGEMENT');
@@ -76,7 +73,7 @@ class VerifyProductForList
         $this->parsedProduct = [
             'prestashop_id' => 0,
             'moloni_id' => $this->moloniProduct['productId'],
-            'moloni_url' => MoloniContext::instance()->configs()->getAcUrl() . $this->slug . '/productCategories/products/all/' . $this->moloniProduct['productId'],
+            'moloni_url' => MoloniContext::instance()->configs()->getAcUrl() . MoloniContext::instance()->company()->get('slug') . '/productCategories/products/all/' . $this->moloniProduct['productId'],
             'name' => $this->moloniProduct['name'],
             'reference' => $this->moloniProduct['reference'],
             'type' => empty($this->moloniProduct['variants']) ? 'Simple' : 'Variants',
@@ -95,7 +92,7 @@ class VerifyProductForList
     private function verifyPrestashopProduct()
     {
         if (empty($this->prestaProduct)) {
-            $this->parsedProduct['notices'][] = ['Product does not exist in current Prestashop store.'];
+            $this->parsedProduct['notices'][] = ['Product does not exist in current PrestaShop store.'];
             $this->parsedProduct['missing_product'] = true;
 
             return;
@@ -110,10 +107,10 @@ class VerifyProductForList
             return;
         }
 
-        $checkStock = $this->psManagesStock && $this->warehouseId > 0;
+        $checkStock = MoloniContext::instance()->company()->canSyncStock() && $this->psManagesStock && $this->warehouseId > 0;
 
         if ($checkStock && $this->moloniProduct['hasStock'] === false) {
-            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni.'];
+            $this->parsedProduct['notices'][] = ['Product without stock active in Moloni ON.'];
 
             $checkStock = false;
         }
@@ -193,7 +190,7 @@ class VerifyProductForList
 
         if ($prestashopStock !== $moloniProductStock) {
             $this->parsedProduct['notices'][] = [
-                'Product combination stock do not match (Moloni: {0}, Prestashop: {1}).',
+                'Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).',
                 ['{0}' => $moloniProductStock, '{1}' => $prestashopStock],
             ];
 
@@ -208,7 +205,7 @@ class VerifyProductForList
 
         if ($prestashopStock !== $moloniProductStock) {
             $this->parsedProduct['notices'][] = [
-                'Product stock do not match (Moloni: {0}, Prestashop: {1}).',
+                'Product stock do not match (Moloni: {0}, PrestaShop: {1}).',
                 ['{0}' => $moloniProductStock, '{1}' => $prestashopStock],
             ];
 

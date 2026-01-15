@@ -145,7 +145,7 @@ class Orders extends MoloniController
 
             $this->addErrorMessage($msg, $e->getData());
         } catch (\PrestaShopDatabaseException|\PrestaShopException $e) {
-            $msg = $this->trans('Error fetching Prestashop order', 'Modules.Molonion.Errors');
+            $msg = $this->trans('Error fetching PrestaShop order', 'Modules.Molonion.Errors');
             $this->addErrorMessage($msg);
         }
 
@@ -179,7 +179,7 @@ class Orders extends MoloniController
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());
             $this->addErrorMessage($msg, $e->getData());
         } catch (\PrestaShopDatabaseException|\PrestaShopException $e) {
-            $msg = $this->trans('Error fetching Prestashop order', 'Modules.Molonion.Errors');
+            $msg = $this->trans('Error fetching PrestaShop order', 'Modules.Molonion.Errors');
             $this->addErrorMessage($msg);
         }
 

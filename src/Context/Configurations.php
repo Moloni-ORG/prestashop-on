@@ -25,7 +25,7 @@
 
 declare(strict_types=1);
 
-namespace MoloniOn;
+namespace MoloniOn\Context;
 
 use MoloniOn\Exceptions\MoloniException;
 
@@ -40,7 +40,7 @@ final class Configurations
      */
     public function __construct()
     {
-        $directory = dirname(__DIR__);
+        $directory = dirname(__DIR__, 2);
 
         $configFile = "$directory/config/platform.php";
 

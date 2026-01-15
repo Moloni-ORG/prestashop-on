@@ -15,6 +15,10 @@ query companies($options: CompanyOptions) {
                 countryId
                 title
             }
+            limits {
+                active
+                moduleId
+            }
         }
         errors {
             field

@@ -70,7 +70,7 @@ class ExportStocksToMoloni extends ExportProducts
                     $this->syncedProducts[] = $product->reference;
                 } else {
                     $this->errorProducts[] = [
-                        $product->reference => 'Product does not exist in Moloni',
+                        $product->reference => 'Product does not exist in Moloni ON',
                     ];
                 }
             } catch (MoloniProductException $e) {

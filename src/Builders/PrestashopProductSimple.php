@@ -37,6 +37,7 @@ use MoloniOn\Exceptions\Product\MoloniProductCategoryException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\LogsTrait;
@@ -176,6 +177,14 @@ class PrestashopProductSimple implements BuilderInterface
      */
     protected $syncFields;
 
+
+    /**
+     * If the company can sync stock
+     *
+     * @var bool
+     */
+    private $canSyncStock;
+
     /**
      * Constructor
      *
@@ -186,6 +195,8 @@ class PrestashopProductSimple implements BuilderInterface
         $this->moloniProduct = $moloniProduct;
 
         $this->syncFields = $syncFields ?? Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
+
+        $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
 
         $this->init();
     }
@@ -326,7 +337,7 @@ class PrestashopProductSimple implements BuilderInterface
             $this->prestashopProduct->save();
 
             if ($this->shouldWriteLogs()) {
-                Logs::addInfoLog(['Product created in Prestashop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
+                Logs::addInfoLog(['Product created in PrestaShop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
             }
 
             $this->afterSave();
@@ -353,7 +364,7 @@ class PrestashopProductSimple implements BuilderInterface
             $this->prestashopProduct->save();
 
             if ($this->shouldWriteLogs()) {
-                Logs::addInfoLog(['Product updated in Prestashop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
+                Logs::addInfoLog(['Product updated in PrestaShop ({0})', ['{0}' => $this->reference]], ['moloniProduct' => $this->moloniProduct]);
             }
 
             $this->afterSave();
@@ -542,6 +553,10 @@ class PrestashopProductSimple implements BuilderInterface
      */
     public function setWarehouseId(): PrestashopProductSimple
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
 
         if (empty($warehouseId)) {
@@ -564,6 +579,10 @@ class PrestashopProductSimple implements BuilderInterface
      */
     public function setHasStock(): PrestashopProductSimple
     {
+        if (!$this->canSyncStock) {
+            return $this;
+        }
+
         $this->hasStock = $this->moloniProduct['hasStock'] ?? (bool) Boolean::YES;
 
         return $this;

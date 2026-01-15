@@ -29,6 +29,7 @@ use MoloniOn\Api\MoloniApi;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Controller\Admin\MoloniControllerInterface;
 use MoloniOn\Enums\MoloniRoutes;
+use MoloniOn\MoloniContext;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -49,33 +50,46 @@ class AuthenticationListener
     {
         $controller = $event->getController();
 
-        if (is_array($controller) && $controller[0] instanceof MoloniControllerInterface) {
-            $route = $event->getRequest()->get('_route');
-
-            /** @var MoloniController $actionController */
-            $actionController = $controller[0];
-
-            if (MoloniApi::hasValidAuthentication()) {
-                if (MoloniApi::hasValidCompany()) {
-                    if (!MoloniRoutes::isFullyAuthenticatedRoute($route)) {
-                        $event->setController(function () use ($actionController) {
-                            return $actionController->redirectToOrders();
-                        });
-                    }
-                } else {
-                    if (!MoloniRoutes::isPartiallyAuthenticatedRoute($route)) {
-                        $event->setController(function () use ($actionController) {
-                            return $actionController->redirectToCompanySelect();
-                        });
-                    }
-                }
-            } else {
-                if (!MoloniRoutes::isNonAuthenticatedRoute($route)) {
-                    $event->setController(function () use ($actionController) {
-                        return $actionController->redirectToLogin();
-                    });
-                }
-            }
+        if (!is_array($controller)) {
+            return;
         }
+
+        if (!($controller[0] instanceof MoloniControllerInterface)) {
+            return;
+        }
+
+        $route = $event->getRequest()->get('_route');
+
+        /** @var MoloniController $actionController */
+        $actionController = $controller[0];
+
+        if (!MoloniApi::hasValidAuthentication()) {
+            if (!MoloniRoutes::isNonAuthenticatedRoute($route)) {
+                $event->setController(function () use ($actionController) {
+                    return $actionController->redirectToLogin();
+                });
+            }
+
+            return;
+        }
+
+        if (!MoloniApi::hasValidCompany()) {
+            if (!MoloniRoutes::isPartiallyAuthenticatedRoute($route)) {
+                $event->setController(function () use ($actionController) {
+                    return $actionController->redirectToCompanySelect();
+                });
+            }
+
+            return;
+        }
+
+        if (!MoloniRoutes::isFullyAuthenticatedRoute($route)) {
+            $event->setController(function () use ($actionController) {
+                return $actionController->redirectToOrders();
+            });
+        }
+
+        /* Load company to context */
+        MoloniContext::instance()->loadCompany();
     }
 }

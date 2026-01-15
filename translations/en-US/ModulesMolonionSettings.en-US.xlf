@@ -12,9 +12,9 @@
         <target>Receipt</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="75a19f56f1a64cbc25e3e7eb7938c48d">
-        <source>Invoice + Receipt</source>
-        <target>Invoice + Receipt</target>
+      <trans-unit id="ebed9413192967aeea49adf83a7a76ff">
+        <source>Invoice-Receipt</source>
+        <target>Invoice-Receipt</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="56ea0ee77c2c6efe0131dfeea01705f5">
@@ -127,9 +127,9 @@
         <target>Company</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="5780595ea434e445d81969fc7db6b3f1">
-        <source>Moloni company</source>
-        <target>Moloni company</target>
+      <trans-unit id="8b64732516828bd6d84f8777e9313b71">
+        <source>Moloni ON company</source>
+        <target>Moloni ON company</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2cf2c3b318cd7431414db3f2240a199c">
@@ -172,9 +172,14 @@
         <target>Synchronize stocks</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="1bf77d5cdfc80d06696cfac46c782b15">
-        <source><![CDATA[Choose to synchronize the product when a Prestashop product is updated. <br><br> Ex.: Update a product in Prestashop from 0 stock to 20, and a stock movement will be create in Moloni for that product.]]></source>
-        <target><![CDATA[Choose to synchronize the product when a Prestashop product is updated. <br><br> Ex.: Update a product in Prestashop from 0 stock to 20, and a stock movement will be create in Moloni for that product.]]></target>
+      <trans-unit id="034c873e3b885bdc280c00cea501cb34">
+        <source><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.]]></source>
+        <target><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.]]></target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="7ff2a370d7fc5dbe0cf80f0dc0770b21">
+        <source>Your Moloni ON subscription does not allow this action.</source>
+        <target>Your Moloni ON subscription does not allow this action.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6416e8cb5fc0a208d94fa7f5a300dbc4">
@@ -182,9 +187,9 @@
         <target>Warehouse</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="320424e55c08a5697cae05bc2a3141f9">
-        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>]]></source>
-        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>]]></target>
+      <trans-unit id="33c4e7c1781aca0447f115a1eb380d3b">
+        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>]]></source>
+        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="91a98945c72e1b031c78a064c10feb98">
@@ -207,9 +212,9 @@
         <target>Create products</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="99059670de7b17fae5b33ccb3e09910d">
-        <source><![CDATA[Choose if a product should be created in Moloni when it is <b>created</b> in Prestashop. <br><br> Ex.: Insert a new product in Prestashop and that same product will be automaticaly created in Moloni.]]></source>
-        <target><![CDATA[Choose if a product should be created in Moloni when it is <b>created</b> in Prestashop. <br><br> Ex.: Insert a new product in Prestashop and that same product will be automaticaly created in Moloni.]]></target>
+      <trans-unit id="89c8cecf557b2084e70a334f9d4ff7c4">
+        <source><![CDATA[Choose if a product should be created in Moloni ON when it is <b>created</b> in PrestaShop. <br><br> Ex.: Insert a new product in PrestaShop and that same product will be automatically created in Moloni ON.]]></source>
+        <target><![CDATA[Choose if a product should be created in Moloni ON when it is <b>created</b> in PrestaShop. <br><br> Ex.: Insert a new product in PrestaShop and that same product will be automatically created in Moloni ON.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e6daf960d8aa69d30038e6977242cb6d">
@@ -217,19 +222,19 @@
         <target>Update products</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="b3b3e6067ea73818d503f1417035b959">
-        <source><![CDATA[Choose if a product should be updated in Moloni when it is <b>updated</b> in Prestashop. <br><br> Ex.: Update a product in Prestashop and that same product will be automaticaly created or updated in Moloni.]]></source>
-        <target><![CDATA[Choose if a product should be updated in Moloni when it is <b>updated</b> in Prestashop. <br><br> Ex.: Update a product in Prestashop and that same product will be automaticaly created or updated in Moloni.]]></target>
+      <trans-unit id="ed62dbd93c664717c894f1db4f7c5337">
+        <source><![CDATA[Choose if a product should be updated in Moloni ON when it is <b>updated</b> in PrestaShop. <br><br> Ex.: Update a product in PrestaShop and that same product will be automatically created or updated in Moloni ON.]]></source>
+        <target><![CDATA[Choose if a product should be updated in Moloni ON when it is <b>updated</b> in PrestaShop. <br><br> Ex.: Update a product in PrestaShop and that same product will be automatically created or updated in Moloni ON.]]></target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7e78664a5b774bc99c730d57177130dd">
-        <source><![CDATA[Choose to synchronize the product when a Moloni product is updated. <br><br> Ex.: Update a product in Moloni from 0 stock to 20 and the product stock in Prestashop will be updated.]]></source>
-        <target><![CDATA[Choose to synchronize the product when a Moloni product is updated. <br><br> Ex.: Update a product in Moloni from 0 stock to 20 and the product stock in Prestashop will be updated.]]></target>
+      <trans-unit id="b011d531b9af30c86989fffba2173e9e">
+        <source><![CDATA[Choose to synchronize the product when a Moloni ON product is updated. <br><br> Ex.: Update a product in Moloni ON from 0 stock to 20 and the product stock in PrestaShop will be updated.]]></source>
+        <target><![CDATA[Choose to synchronize the product when a Moloni ON product is updated. <br><br> Ex.: Update a product in Moloni ON from 0 stock to 20 and the product stock in PrestaShop will be updated.]]></target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="46cb6642bec896eaad659d18682ffe9d">
-        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni.</b>]]></source>
-        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni.</b>]]></target>
+      <trans-unit id="173fc18811eb6fbb5ec797d9811e3c31">
+        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></source>
+        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b21ee4f18f5fff809c9875ef2a1b9993">
@@ -237,14 +242,14 @@
         <target>Accumulated stock</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="30e114f727b8b2627c4e315113e962a4">
-        <source><![CDATA[Choose if a product should be created in Prestashop when it is <b>created</b> in Moloni. <br><br> Ex.: Insert a new product in Moloni and that same product will be automaticaly created in Prestashop.]]></source>
-        <target><![CDATA[Choose if a product should be created in Prestashop when it is <b>created</b> in Moloni. <br><br> Ex.: Insert a new product in Moloni and that same product will be automaticaly created in Prestashop.]]></target>
+      <trans-unit id="cb33bd79c6a00d75d551556608738d75">
+        <source><![CDATA[Choose if a product should be created in PrestaShop when it is <b>created</b> in Moloni ON. <br><br> Ex.: Insert a new product in Moloni ON and that same product will be automatically created in PrestaShop.]]></source>
+        <target><![CDATA[Choose if a product should be created in PrestaShop when it is <b>created</b> in Moloni ON. <br><br> Ex.: Insert a new product in Moloni ON and that same product will be automatically created in PrestaShop.]]></target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2fc14feb24535a55a14fecda1ef562a9">
-        <source><![CDATA[Choose if a product should be updated in Prestashop when it is <b>updated</b> in Moloni. <br><br> Ex.: Update a product in Moloni and that same product will be automaticaly created or updated in Prestashop.]]></source>
-        <target><![CDATA[Choose if a product should be updated in Prestashop when it is <b>updated</b> in Moloni. <br><br> Ex.: Update a product in Moloni and that same product will be automaticaly created or updated in Prestashop.]]></target>
+      <trans-unit id="cdbb5a2874baff7d5ff8fe119aec76b2">
+        <source><![CDATA[Choose if a product should be updated in PrestaShop when it is <b>updated</b> in Moloni ON. <br><br> Ex.: Update a product in Moloni ON and that same product will be automatically created or updated in PrestaShop.]]></source>
+        <target><![CDATA[Choose if a product should be updated in PrestaShop when it is <b>updated</b> in Moloni ON. <br><br> Ex.: Update a product in Moloni ON and that same product will be automatically created or updated in PrestaShop.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e4846653504c74720ede0f2c8997a46d">
@@ -252,9 +257,9 @@
         <target>Product fields</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="90186e91f9b55188bb9607a54694a2ae">
-        <source><![CDATA[You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni account, or different names.]]></source>
-        <target><![CDATA[You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni account, or different names.]]></target>
+      <trans-unit id="bbae37709bc8a9f767368f537ed8208f">
+        <source><![CDATA[You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni ON account, or different names.]]></source>
+        <target><![CDATA[You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni ON account, or different names.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="277fa74edc699d051126ba16f1c64419">
@@ -262,9 +267,9 @@
         <target>Orders since</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="130ab0dbfe35fcfd18dde2032d6ac80e">
-        <source><![CDATA[By default, we will list all orders that were not converted into Moloni documents. <br><br> If you are migrating from an old invoicing software to Moloni, you may choose to list only orders after a selected date.]]></source>
-        <target><![CDATA[By default, we will list all orders that were not converted into Moloni documents. <br><br> If you are migrating from an old invoicing software to Moloni, you may choose to list only orders after a selected date.]]></target>
+      <trans-unit id="cf81ff678f201e222a6b72de649a943f">
+        <source><![CDATA[By default, we will list all orders that were not converted into Moloni ON documents. <br><br> If you are migrating from an old invoicing software to Moloni ON, you may choose to list only orders after a selected date.]]></source>
+        <target><![CDATA[By default, we will list all orders that were not converted into Moloni ON documents. <br><br> If you are migrating from an old invoicing software to Moloni ON, you may choose to list only orders after a selected date.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="57297718fdb439175177cf6b196172d1">
@@ -282,14 +287,14 @@
         <target>Auto create documents</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="791c33ba7af4efcd8e77e7370c3a87af">
-        <source>When a Prestashop order passes on a status that is select in the "orders" configuration tab, the module will try to automaticaly create a document for that order.</source>
-        <target>When a Prestashop order passes on a status that is select in the "orders" configuration tab, the module will try to automaticaly create a document for that order.</target>
+      <trans-unit id="6ea905c137f016f4d9ebbfdd5c9c5ebd">
+        <source>When a PrestaShop order passes on a status that is select in the "orders" configuration tab, the module will try to automatically create a document for that order.</source>
+        <target>When a PrestaShop order passes on a status that is select in the "orders" configuration tab, the module will try to automatically create a document for that order.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="139192bbbd592a86b82343a52fecbe92">
-        <source>Choose this to automaticaly create documents in Moloni.</source>
-        <target>Choose this to automaticaly create documents in Moloni.</target>
+      <trans-unit id="29080bec16b9aabdf4a20c34ffc32f76">
+        <source>Choose this to automatically create documents in Moloni ON.</source>
+        <target>Choose this to automatically create documents in Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2556183970729e90187cb0ba7c82ed97">
@@ -307,9 +312,9 @@
         <target>Update customer</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="081bc8cb5dfbca5aea85e8790f45abab">
-        <source>Update client when it already exists in Moloni account.</source>
-        <target>Update client when it already exists in Moloni account.</target>
+      <trans-unit id="20c3349f69abec554aa9b774392cf0ae">
+        <source>Update client when it already exists in Moloni ON account.</source>
+        <target>Update client when it already exists in Moloni ON account.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="00ab643bcacb386d73bb44c80575cadb">
@@ -327,9 +332,9 @@
         <target>Document set</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="8e59d9442b92a4436f8f20d790467eb4">
-        <source><![CDATA[Select which Moloni document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni account.]]></source>
-        <target><![CDATA[Select which Moloni document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni account.]]></target>
+      <trans-unit id="36d4956227f255b096b8c131348835b6">
+        <source><![CDATA[Select which Moloni ON document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni ON account.]]></source>
+        <target><![CDATA[Select which Moloni ON document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni ON account.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="208a23b4a66a2500d7f1e5868af58e3b">
@@ -427,9 +432,9 @@
         <target>Send e-mail</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="688da8f7acc04cbe5c77843729f27e93">
-        <source>When a document is inserted and correctly closed in Moloni an e-mail with the document will be sent to the customer.</source>
-        <target>When a document is inserted and correctly closed in Moloni an e-mail with the document will be sent to the customer.</target>
+      <trans-unit id="044b0407ef4ad4d67bb9cbbe988d0352">
+        <source>When a document is inserted and correctly closed in Moloni ON an e-mail with the document will be sent to the customer.</source>
+        <target>When a document is inserted and correctly closed in Moloni ON an e-mail with the document will be sent to the customer.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="248ca08d3a28cd69fafc92d5f8967368">
@@ -437,9 +442,9 @@
         <target>Product details from</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="5f7ed0e651885bb6187820a9d4612c56">
-        <source>Choose if the product should use the name and description set in Moloni or in your store.</source>
-        <target>Choose if the product should use the name and description set in Moloni or in your store.</target>
+      <trans-unit id="76fb73a9eea53857b32b8e81eb240a5e">
+        <source>Choose if the product should use the name and description set in Moloni ON or in your store.</source>
+        <target>Choose if the product should use the name and description set in Moloni ON or in your store.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="a3e2dff2b97277df3671542faa531e3d">
@@ -467,9 +472,9 @@
         <target>Measure unit</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2072a9a4533b321b628092eedceea7c5">
-        <source><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni account.]]></source>
-        <target><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni account.]]></target>
+      <trans-unit id="04875eb8999c4f4e955235fa56506b10">
+        <source><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni ON account.]]></source>
+        <target><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni ON account.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="3a1ae6a6772712b959d8811b849e89d5">
@@ -507,9 +512,9 @@
         <target>Enable reference fallback</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="84897a6b41693465ed50c3b72e472463">
-        <source>When synchronizing products from Moloni if the reference is numeric and no products are found in Prestashop, the plugin will try and find an Prestashop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in Prestashop.</source>
-        <target>When synchronizing products from Moloni if the reference is numeric and no products are found in Prestashop, the plugin will try and find an Prestashop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in Prestashop.</target>
+      <trans-unit id="f39543afdea2623e67ef122c9ebc3598">
+        <source>When synchronizing products from Moloni ON if the reference is numeric and no products are found in PrestaShop, the plugin will try and find an PrestaShop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in PrestaShop.</source>
+        <target>When synchronizing products from Moloni ON if the reference is numeric and no products are found in PrestaShop, the plugin will try and find an PrestaShop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
@@ -542,24 +547,24 @@
         <target>Advanced</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="75ab0072ab96108e88a135f4bf6dbbfd">
-        <source>Automatic actions from Prestashop</source>
-        <target>Automatic actions from Prestashop</target>
+      <trans-unit id="706c635efa09889f3e7d05156a5fa84e">
+        <source>Automatic actions from PrestaShop</source>
+        <target>Automatic actions from PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="39fef457dec2ceab3fa2e1dd13379b45">
-        <source>This actions happen when an action occours in your Prestashop Store.</source>
-        <target>This actions happen when an action occours in your Prestashop Store.</target>
+      <trans-unit id="5dc2173813d14e639d0bc09b58d1f82f">
+        <source>This actions happen when an action occours in your PrestaShop Store.</source>
+        <target>This actions happen when an action occours in your PrestaShop Store.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="58a4dd5dc5a38f53f19100d3596950fc">
-        <source>Automatic actions from Moloni</source>
-        <target>Automatic actions from Moloni</target>
+      <trans-unit id="bd8bb6e4666e12bf0ed6752513fe330f">
+        <source>Automatic actions from Moloni ON</source>
+        <target>Automatic actions from Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f4d61d9bc8d415d59151f9dd6f9f9296">
-        <source>This actions happen when an action occours in your Moloni account.</source>
-        <target>This actions happen when an action occours in your Moloni account.</target>
+      <trans-unit id="4a7ea017d6cdd94440aa3c586d95a662">
+        <source>This actions happen when an action occours in your Moloni ON account.</source>
+        <target>This actions happen when an action occours in your Moloni ON account.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="66591f622dc9b52760904edc862dabda">

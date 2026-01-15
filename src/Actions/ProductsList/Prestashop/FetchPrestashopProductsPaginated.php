@@ -27,9 +27,8 @@ declare(strict_types=1);
 
 namespace MoloniOn\Actions\ProductsList\Prestashop;
 
-use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Helpers\Warehouse;
+use MoloniOn\MoloniContext;
 use MoloniOn\Repository\ProductsRepository;
 use MoloniOn\Tools\Settings;
 
@@ -69,18 +68,12 @@ class FetchPrestashopProductsPaginated
 
     public function run()
     {
-        try {
-            $slug = MoloniApiClient::companies()->queryCompany()['slug'];
-        } catch (MoloniApiException $e) {
-            $slug = '';
-        }
-
         $this->fetchProducts();
 
         foreach ($this->totalProducts as $product) {
             $ps = new \Product($product['id_product'], false, $this->psLanguageId);
 
-            $service = new VerifyProductForList($ps, $this->warehouseId, $slug);
+            $service = new VerifyProductForList($ps, $this->warehouseId);
             $service->run();
 
             $this->products[] = $service->getParsedProduct();
@@ -91,6 +84,10 @@ class FetchPrestashopProductsPaginated
 
     private function getWarehouse(): int
     {
+        if (!MoloniContext::instance()->company()->canSyncStock()) {
+            return 0;
+        }
+
         $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
 
         if ($warehouseId > 1) {

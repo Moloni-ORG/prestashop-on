@@ -9,9 +9,9 @@
         <div class="card-block">
             <div class="d-flex">
                 <div class="ml-py-2">
-                    <b>{{ 'Import products from Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ 'Import products from Moloni ON'|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "Use this tool to create all products from your Moloni account in your Prestashop store."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "Use this tool to create all products from your Moloni ON account in your PrestaShop store."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
@@ -19,16 +19,16 @@
                             class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#import_products_modal">
-                        {{ 'Import products to Prestashop'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'Import products to PrestaShop'|trans({}, 'Modules.Molonion.Tools') }}
                     </button>
                 </div>
             </div>
 
             <div class="d-flex border-top">
                 <div class="ml-py-2">
-                    <b>{{ 'Export products to Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ 'Export products to Moloni ON'|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "Use this tool to create all products in your Prestashop store account in your Moloni account."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "Use this tool to create all products in your PrestaShop store account in your Moloni ON account."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
@@ -36,16 +36,17 @@
                             class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#export_products_modal">
-                        {{ 'Export products to Moloni'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'Export products to Moloni ON'|trans({}, 'Modules.Molonion.Tools') }}
                     </button>
                 </div>
             </div>
 
+            {% if company.canSyncStock %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
-                    <b>{{ 'Synchronize Prestashop stocks with Moloni'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ 'Synchronize PrestaShop stocks with Moloni ON'|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "This tool will search for all the products that were updated in your Moloni account in the last seven days, and will update only the stock of the matching Prestashop products."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "This tool will search for all the products that were updated in your Moloni ON account in the last seven days, and will update only the stock of the matching PrestaShop products."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
@@ -53,16 +54,18 @@
                             class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#import_stocks_modal">
-                        {{ 'Update Prestashop stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'Update PrestaShop stocks'|trans({}, 'Modules.Molonion.Tools') }}
                     </button>
                 </div>
             </div>
+            {% endif %}
 
+            {% if company.canSyncStock %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
-                    <b>{{ 'Synchronize Moloni stocks with Prestashop'|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ 'Synchronize Moloni ON stocks with PrestaShop'|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "This tool will search for all the products in your Prestashop store and update the matching products in your Moloni account."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "This tool will search for all the products in your PrestaShop store and update the matching products in your Moloni ON account."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
@@ -70,17 +73,19 @@
                             class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#export_stocks_modal">
-                        {{ 'Update Moloni stocks'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'Update Moloni ON stocks'|trans({}, 'Modules.Molonion.Tools') }}
                     </button>
                 </div>
             </div>
+            {% endif %}
 
+            {% if company.hasWebhooks %}
             <div class="d-flex border-top">
                 <div class="ml-py-2">
                     <b>{{ 'Reinstall webhooks'|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "This tool is used to recreate the synchronization webhooks that run in Moloni."|trans({}, 'Modules.Molonion.Tools') }}<br>
-                        {{ "You should run this if for example your store URL changes or if the Prestashop access tokens for this module change."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "This tool is used to recreate the synchronization webhooks that run in Moloni ON."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "You should run this if for example your store URL changes or if the PrestaShop access tokens for this module change."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
@@ -89,35 +94,36 @@
                     </a>
                 </div>
             </div>
+            {% endif %}
 
             <div class="d-flex border-top">
                 <div class="ml-py-2">
-                    <b>{{ "List Prestashop products"|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ "List PrestaShop products"|trans({}, 'Modules.Molonion.Tools') }}</b>
 
                     <p class="small-text text-muted">
-                        {{ "List all prestashop products and the corresponding Moloni product."|trans({}, 'Modules.Molonion.Tools') }}<br>
-                        {{ "This page allow to verify if the product stock are updated, if they exist in Moloni or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "List all PrestaShop products and the corresponding Moloni ON product."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "This page allow to verify if the product stock are updated, if they exist in Moloni ON or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
                     <a class="btn btn-primary" href="{{ path(productsPrestashopRoutes) }}">
-                        {{ 'View Prestashop products'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'View PrestaShop products'|trans({}, 'Modules.Molonion.Tools') }}
                     </a>
                 </div>
             </div>
 
             <div class="d-flex border-top">
                 <div class="ml-py-2">
-                    <b>{{ "List Moloni products"|trans({}, 'Modules.Molonion.Tools') }}</b>
+                    <b>{{ "List Moloni ON products"|trans({}, 'Modules.Molonion.Tools') }}</b>
 
                     <p class="small-text text-muted">
-                        {{ "List all Moloni products and the corresponding Prestashop product."|trans({}, 'Modules.Molonion.Tools') }}<br>
-                        {{ "This page allow to verify if the product stock are updated, if they exist in Prestashop or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "List all Moloni ON products and the corresponding PrestaShop product."|trans({}, 'Modules.Molonion.Tools') }}<br>
+                        {{ "This page allow to verify if the product stock are updated, if they exist in PrestaShop or if there are some problems."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">
                     <a class="btn btn-primary" href="{{ path(productsMoloniRoutes) }}">
-                        {{ 'View Moloni products'|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ 'View Moloni ON products'|trans({}, 'Modules.Molonion.Tools') }}
                     </a>
                 </div>
             </div>
@@ -126,7 +132,7 @@
                 <div class="ml-py-2">
                     <b>{{ "Logout"|trans({}, 'Modules.Molonion.Tools') }}</b>
                     <p class="small-text text-muted">
-                        {{ "Logout from the selected Moloni account. We will keep all the data regarding issued documents."|trans({}, 'Modules.Molonion.Tools') }}
+                        {{ "Logout from the selected Moloni ON account. We will keep all the data regarding issued documents."|trans({}, 'Modules.Molonion.Tools') }}
                     </p>
                 </div>
                 <div class="d-flex justify-content-center align-items-center ml-auto">

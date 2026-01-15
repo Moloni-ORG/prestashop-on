@@ -75,14 +75,14 @@ class UpdatePrestaProductStock
             \StockAvailable::setQuantity($this->prestaProductId, $this->attributeId, $this->newStock);
 
             $msg = [
-                'Stock updated in Prestashop (old: {0} | new: {1}) ({2})', [
+                'Stock updated in PrestaShop (old: {0} | new: {1}) ({2})', [
                     '{0}' => $currentStock,
                     '{1}' => $this->newStock,
                     '{2}' => $this->prestaProductReference,
                 ],
             ];
         } else {
-            $msg = ['Stock is already updated in Prestashop ({0})', ['{0}' => $this->prestaProductReference]];
+            $msg = ['Stock is already updated in PrestaShop ({0})', ['{0}' => $this->prestaProductReference]];
             $data = [
                 'newStock' => $this->newStock,
                 'current' => $currentStock,

@@ -76,7 +76,7 @@ class ProductUpdate extends AbstractWebserviceAction
                 }
             }
         } catch (MoloniProductException $e) {
-            Logs::addErrorLog([['Error saving Prestashop product'], [$e->getMessage(), $e->getIdentifiers()]], $e->getData());
+            Logs::addErrorLog([['Error saving PrestaShop product'], [$e->getMessage(), $e->getIdentifiers()]], $e->getData());
         }
     }
 

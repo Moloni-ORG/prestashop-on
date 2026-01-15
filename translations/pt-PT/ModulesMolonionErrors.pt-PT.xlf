@@ -207,9 +207,9 @@
         <target>Erro ao criar movimento de stock ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="cdd9eef3cdeea1f403567afa1ec22dcb">
-        <source>Cannot update product in Moloni. Product types do not match</source>
-        <target>Não é possível atualizar o produto na Moloni. Os tipos de produto não coincidem</target>
+      <trans-unit id="1c019a83a8bb470062ff3f5010ec52ba">
+        <source>Cannot update product in Moloni ON. Product types do not match</source>
+        <target>Não é possível atualizar o produto no Moloni ON. Os tipos de produto não coincidem</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d5e32e768f320b3275f5c018d80d0d55">
@@ -237,9 +237,9 @@
         <target>Erro ao obter armazém padrão da empresa</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="b05f29a9281946093a135ef4db2a04d4">
-        <source>Error creating Prestashop category</source>
-        <target>Erro ao criar categoria Prestashop</target>
+      <trans-unit id="ae0da852983cb71e10f04d45193697f1">
+        <source>Error creating PrestaShop category</source>
+        <target>Erro ao criar categoria PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="5c554f349379f634743aeebf19b0d03e">
@@ -287,9 +287,9 @@
         <target>Ocorreu um erro inesperado</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="a8245690e211475cb8dbda7d8308b0c1">
-        <source>Could not find product in Moloni ({0})</source>
-        <target>Não foi possível encontrar o produto na Moloni ({0})</target>
+      <trans-unit id="1d935434190d740b5d4b807eb2234f0a">
+        <source>Could not find product in Moloni ON ({0})</source>
+        <target>Não foi possível encontrar o produto no Moloni ON({0})</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="1d3e6bc7e027606a1dbdf29906f69b92">
@@ -307,9 +307,9 @@
         <target>Documento criado não encontrado</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2408a75dbe80747ae0a1e2584bc5679c">
-        <source>Moloni document not found</source>
-        <target>Documento Moloni não encontrado</target>
+      <trans-unit id="5cb9b7ad9a446e347fe85aca3ae59baf">
+        <source>Moloni ON document not found</source>
+        <target>Documento Moloni ON não encontrado</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="3328846c311ff7af6907b9a6ee1b6a25">
@@ -322,19 +322,19 @@
         <target>Erro ao processar encomenda ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="6d7e032e7adeb8c7c0f74ffba7c69184">
-        <source>Error updating Prestashop stock</source>
-        <target>Erro ao atualizar stock do Prestashop</target>
+      <trans-unit id="c833ae6e12dc79ef15be298020028d29">
+        <source>Error updating PrestaShop stock</source>
+        <target>Erro ao atualizar stock do PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="1631abd0acb0ffd03a2be4f39b15bd79">
-        <source>Error saving Prestashop product</source>
-        <target>Erro ao guardar produto Prestashop</target>
+      <trans-unit id="444c6eb6ec14991b52bb74f473b4d8ae">
+        <source>Error saving PrestaShop product</source>
+        <target>Erro ao guardar produto PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="6e6578554df412f64b637c7cf1ef9d2e">
-        <source>Error saving Moloni product</source>
-        <target>Erro ao guardar produto Moloni</target>
+      <trans-unit id="928bda6d816ca3c161d618577f5065c8">
+        <source>Error saving Moloni ON product</source>
+        <target>Erro ao guardar produto Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8f18afb308a8e7eaa71151bdcd8ebfd7">
@@ -387,9 +387,9 @@
         <target>Encomenda já descartada ou criada!</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="5787c28b9a287243fbdc6b33a536fe4b">
-        <source>Product with reference ({0}) is invisible in Moloni. Please change the product visibility.</source>
-        <target>Produto com referência ({0}) está invisível na Moloni. Por favor altere a visibilidade do produto.</target>
+      <trans-unit id="85a2c8d9d84dbf6ce4171004904e1e36">
+        <source>Product with reference ({0}) is invisible in Moloni ON. Please change the product visibility.</source>
+        <target>Produto com referência ({0}) está invisível no Moloni ON. Por favor altere a visibilidade do produto.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6adb7f2ed09247b8fe5412ea32c7e9b7">
@@ -412,24 +412,24 @@
         <target>Os tipos de produto não coincidem.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="88803846fca7049b69a92f16e479864b">
-        <source>Product without stock active in Moloni.</source>
-        <target>Produto sem stock ativo na Moloni.</target>
+      <trans-unit id="d747fe88ace17f83e37c003d4f5445eb">
+        <source>Product without stock active in Moloni ON.</source>
+        <target>Produto sem stock ativo no Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="0bc4d32194eb1d78d4daab4b475e50e9">
-        <source>Product stock do not match (Moloni: {0}, Prestashop: {1}).</source>
-        <target>Stock do produto não coincide (Moloni: {0}, Prestashop: {1}).</target>
+      <trans-unit id="151553c3bac4a16870fa72fb792052ba">
+        <source>Product stock do not match (Moloni: {0}, PrestaShop: {1}).</source>
+        <target>Stock do produto não coincide (Moloni: {0}, PrestaShop: {1}).</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="b7aae0f90f41b45cf6b27d2aa544af65">
-        <source>Product combination stock do not match (Moloni: {0}, Prestashop: {1}).</source>
-        <target>Stock da combinação do produto não coincide (Moloni: {0}, Prestashop: {1}).</target>
+      <trans-unit id="e7e395694fa777151ff7bbe1c990a927">
+        <source>Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).</source>
+        <target>Product combination stock do not match (Moloni: {0}, PrestaShop: {1}).</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="38dd3f5748c30826e8d86100335ab96a">
-        <source>Product does not have a reference set in Prestashop.</source>
-        <target>O produto não tem referência definida no Prestashop.</target>
+      <trans-unit id="3701f4957ba8112ced7537190baf1b10">
+        <source>Product does not have a reference set in PrestaShop.</source>
+        <target>O produto não tem referência definida no PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8b37fa5b1c70534c680797f226b5328a">
@@ -437,19 +437,19 @@
         <target>Combinação não encontrada ({0}).</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="34766d5c990eccded6e02a2cacb507bc">
-        <source>Product does not exist in current Moloni company.</source>
-        <target>O produto não existe na empresa Moloni atual.</target>
+      <trans-unit id="69085103903d4a9e52e0b3b2de4a6ca7">
+        <source>Product does not exist in current Moloni ON company.</source>
+        <target>O produto não existe na empresa Moloni ON atual.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="fe13401e7c4d785d943292df287a91d4">
-        <source>Product does not exist in current Prestashop store.</source>
-        <target>O produto não existe na loja Prestashop atual.</target>
+      <trans-unit id="3370f79da38e612f2c82d81d6097e915">
+        <source>Product does not exist in current PrestaShop store.</source>
+        <target>O produto não existe na loja PrestaShop atual.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="801c01c3577f2023467458851b093a4c">
-        <source>Product is invisible in Moloni. Cannot be used in document creation.</source>
-        <target>O produto está invisível na Moloni. Não pode ser usado na criação de documentos.</target>
+      <trans-unit id="00cf0af068af6f4ce02a084cb5a69386">
+        <source>Product is invisible in Moloni ON. Cannot be used in document creation.</source>
+        <target>O produto está invisível no Moloni ON. Não pode ser usado na criação de documentos.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="af25aad0af958e6ced0ba8cfcb2a99cd">
@@ -472,9 +472,9 @@
         <target>Erro ao guardar imagem do produto</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="c2c69a078eccbd696192075d73abd8dd">
-        <source>Tax not found in Moloni. Please create the correct tax for {0} ({1} || {2})</source>
-        <target>Imposto não encontrado na Moloni. Por favor crie o imposto correto para {0} ({1} || {2})</target>
+      <trans-unit id="0be1378216f8182310ac12f6038b927d">
+        <source>Tax not found in Moloni ON. Please create the correct tax for {0} ({1} || {2})</source>
+        <target>Imposto não encontrado no Moloni ON. Por favor crie o imposto correto para {0} ({1} || {2})</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="43412e5b88dc9c0e67396e8ecc56475c">
@@ -482,9 +482,9 @@
         <target>Erro ao obter lista de documentos</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="62b5d95d6f1eb04022fe3c269b6bb15d">
-        <source>Error fetching Prestashop order</source>
-        <target>Erro ao obter encomenda Prestashop</target>
+      <trans-unit id="80cabf9a2334ef12bfcb89678f46f4a4">
+        <source>Error fetching PrestaShop order</source>
+        <target>Erro ao obter encomenda PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="cb1b164d9438d999056c79658de0d71c">

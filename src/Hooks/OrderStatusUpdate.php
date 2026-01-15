@@ -135,6 +135,6 @@ class OrderStatusUpdate extends AbstractHookAction
             return false;
         }
 
-        return MoloniApi::hasValidAuthentication();
+        return MoloniApi::hasAuthenticationAndCompany();
     }
 }

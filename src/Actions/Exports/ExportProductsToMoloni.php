@@ -56,7 +56,7 @@ class ExportProductsToMoloni extends ExportProducts
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
                 $this->errorProducts[] = [
-                    $productData['id_product'] => 'Product has no reference in Prestashop.',
+                    $productData['id_product'] => 'Product has no reference in PrestaShop.',
                 ];
 
                 continue;
@@ -80,7 +80,7 @@ class ExportProductsToMoloni extends ExportProducts
                     $this->syncedProducts[] = $product->reference;
                 } else {
                     $this->errorProducts[] = [
-                        $product->reference => 'Product already exists in Moloni',
+                        $product->reference => 'Product already exists in Moloni ON',
                     ];
                 }
             } catch (MoloniProductException $e) {

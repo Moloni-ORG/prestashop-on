@@ -34,6 +34,7 @@ use MoloniOn\Exceptions\Document\MoloniDocumentException;
 use MoloniOn\Exceptions\Document\MoloniDocumentWarning;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Settings;
 
 if (!defined('_PS_VERSION_')) {
@@ -65,7 +66,7 @@ class OrderCreateDocument extends AbstractOrderAction
             throw new MoloniException('Order already discarded or created!', $this->orderId, $existingOrderDocument->toArray(), false);
         }
 
-        $company = MoloniApiClient::companies()->queryCompany();
+        $company = MoloniContext::instance()->company()->getAll();
 
         if ($this->shouldCreateBillOfLading($documentType)) {
             $billOfLading = new DocumentFromOrder($this->order, $company, $this->entityManager);

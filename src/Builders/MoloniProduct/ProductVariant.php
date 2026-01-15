@@ -165,7 +165,7 @@ class ProductVariant
         ?string $parentName = '',
         ?array $moloniParentProduct = [],
         ?array $propertyPairs = [],
-        ?array $syncFields = null,
+        ?array $syncFields = null
     ) {
         $this->prestashopCombination = $prestashopCombination;
 

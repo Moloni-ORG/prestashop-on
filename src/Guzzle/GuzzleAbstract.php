@@ -26,7 +26,7 @@
 namespace MoloniOn\Guzzle;
 
 use GuzzleHttp\Client;
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 
 if (!defined('_PS_VERSION_')) {
     exit;

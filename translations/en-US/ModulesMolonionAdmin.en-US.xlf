@@ -2,16 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="administration" source-language="en-US" target-language="en-US" datatype="plaintext">
     <body>
-      <trans-unit id="5811d9162f7a838934f757488d6cb918">
-        <source>Moloni Spain</source>
-        <target>Moloni Spain</target>
-        <note>Line: </note>
-      </trans-unit>
-      <trans-unit id="77b0d2ce65bebd13e81e7f595bb4b05b">
-        <source>Moloni Dev</source>
-        <target>Moloni Dev</target>
-        <note>Line: </note>
-      </trans-unit>
       <trans-unit id="790ec8676aa22177dd3f200b289aa37c">
         <source>Moloni ON</source>
         <target>Moloni ON</target>
@@ -24,22 +14,22 @@
       </trans-unit>
       <trans-unit id="7442e29d7d53e549b78d93c46b8cdcfc">
         <source>Orders</source>
-        <target>Orders EN</target>
+        <target>Orders</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f28128b38efbc6134dc40751ee21fd29">
         <source>Documents</source>
-        <target>Documents EN</target>
+        <target>Documents</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f4f70727dc34561dfde1a3c529b6205c">
         <source>Settings</source>
-        <target>Settings EN</target>
+        <target>Settings</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8625e1de7be14c39b1d14dc03d822497">
         <source>Tools</source>
-        <target>Tools EN</target>
+        <target>Tools</target>
         <note>Line: </note>
       </trans-unit>
     </body>

@@ -36,6 +36,7 @@ use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Symfony\Component\HttpFoundation\Response;
@@ -166,15 +167,9 @@ class MoloniProducts extends MoloniController
 
     private function getCommonResponse(array $moloniProduct): array
     {
-        try {
-            $slug = MoloniApiClient::companies()->queryCompany()['slug'];
-        } catch (MoloniApiException $e) {
-            $slug = '';
-        }
-
         $warehouseId = (int) Settings::get('syncStockToPrestashopWarehouse');
 
-        $service = new VerifyProductForList($moloniProduct, $warehouseId, $slug);
+        $service = new VerifyProductForList($moloniProduct, $warehouseId);
         $service->run();
 
         return [

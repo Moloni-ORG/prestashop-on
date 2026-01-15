@@ -60,6 +60,7 @@ class Tools extends MoloniController
                 'productsPrestashopRoutes' => MoloniRoutes::PRESTASHOP_PRODUCTS,
                 'productsMoloniRoutes' => MoloniRoutes::MOLONI_PRODUCTS,
                 'logoutRoute' => MoloniRoutes::TOOLS_LOGOUT,
+                'company' => $this->moloniContext->company(),
             ]
         );
     }
@@ -208,10 +209,14 @@ class Tools extends MoloniController
             return $this->redirectToLogin();
         }
 
-        try {
-            (new WebhookDeleteAll())->handle();
-        } catch (MoloniException $e) {
-            // catch nothing
+        $company = $this->moloniContext->company();
+
+        if ($company && $company->hasWebhooks()) {
+            try {
+                (new WebhookDeleteAll())->handle();
+            } catch (MoloniException $e) {
+                // catch nothing
+            }
         }
 
         return $this->redirectToLogin();

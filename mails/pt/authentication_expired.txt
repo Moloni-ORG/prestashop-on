@@ -2,11 +2,11 @@
 
 Olá,
 
-A autenticação Moloni expirou.
+A autenticação Moloni ON expirou.
 
-Você está a receber este e-mail porque ocorreu um erro ao obter novos ‘tokens’ de autenticação Moloni no seu plugin Prestashop.
+Você está a receber este e-mail porque ocorreu um erro ao obter novos ‘tokens’ de autenticação Moloni ON no seu plugin PrestaShop.
 
-Acesse o plugin Moloni no painel de administração da sua loja Prestashop e confirme o status de autenticação da sua conta.
+Acesse o plugin Moloni ON no painel de administração da sua loja PrestaShop e confirme o status de autenticação da sua conta.
 
 Caso a autenticação tenha expirado, prossiga com o processo de autenticação novamente.
 

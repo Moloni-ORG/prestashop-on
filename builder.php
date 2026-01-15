@@ -23,12 +23,12 @@
  * @noinspection PhpMultipleClassDeclarationsInspection
  */
 
-use MoloniOn\Configurations;
+use MoloniOn\Context\Configurations;
 
 define('_PS_VERSION_', 'BUILDER');
 define('PLUGIN_VERSION', ltrim(getenv('PLUGIN_VERSION') ?: 'v0.0.01', 'v'));
 
-require_once __DIR__ . '/src/Configurations.php';
+require_once __DIR__ . '/src/Context/Configurations.php';
 require_once __DIR__ . '/src/Exceptions/MoloniException.php';
 
 const INCLUDE_DIRS = [

@@ -29,7 +29,6 @@ use MoloniOn\Actions\Documents\DocumentsDownloadPdf;
 use MoloniOn\Actions\Documents\DocumentsListDetails;
 use MoloniOn\Actions\Documents\FetchDocumentById;
 use MoloniOn\Actions\Orders\OrderRestoreDiscard;
-use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Entity\MoloniOnOrderDocuments;
 use MoloniOn\Enums\DocumentTypes;
@@ -69,8 +68,7 @@ class Documents extends MoloniController
             ['documents' => $createdDocuments, 'paginator' => $paginator] =
                 $moloniDocumentRepository->getAllPaginated($page, array_merge($filters, ['company_id' => $this->moloniContext->getCompanyId()]));
 
-            $company = MoloniApiClient::companies()->queryCompany();
-            $documents = (new DocumentsListDetails($createdDocuments, $company, $this->moloniContext->configs()))->handle();
+            $documents = (new DocumentsListDetails($createdDocuments, $this->moloniContext))->handle();
         } catch (\Exception $e) {
             $msg = $this->trans('Error fetching documents list', 'Modules.Molonion.Errors');
 
@@ -114,12 +112,15 @@ class Documents extends MoloniController
             $moloniDocument = (new FetchDocumentById($document->getDocumentId(), $document->getDocumentType()))->handle();
 
             if (empty($moloniDocument)) {
-                throw new MoloniException('Moloni document not found');
+                throw new MoloniException('Moloni ON document not found');
             }
 
-            $company = MoloniApiClient::companies()->queryCompany();
-
-            $link = $this->moloniContext->configs()->getAcUrl() . $company['slug'] . '/' . $document->getDocumentType() . '/view/' . $document->getDocumentId();
+            $link = $this->moloniContext->configs()->getAcUrl()
+                . $this->moloniContext->company()->get('slug')
+                . '/'
+                . $document->getDocumentType()
+                . '/view/'
+                . $document->getDocumentId();
 
             return $this->redirect($link);
         } catch (MoloniException $e) {
@@ -185,7 +186,7 @@ class Documents extends MoloniController
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());
             $this->addErrorMessage($msg, $e->getData());
         } catch (\PrestaShopDatabaseException|\PrestaShopException $e) {
-            $msg = $this->trans('Error fetching Prestashop order', 'Modules.Molonion.Errors');
+            $msg = $this->trans('Error fetching PrestaShop order', 'Modules.Molonion.Errors');
             $this->addErrorMessage($msg);
         }
 

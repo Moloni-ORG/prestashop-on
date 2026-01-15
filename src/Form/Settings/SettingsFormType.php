@@ -27,7 +27,10 @@ declare(strict_types=1);
 
 namespace MoloniOn\Form\Settings;
 
+use MoloniOn\Context\Company;
+use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
+use MoloniOn\MoloniContext;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -52,6 +55,9 @@ class SettingsFormType extends TranslatorAwareType
     /** @var SettingsFormDataProvider */
     private $options;
 
+    /** @var Company */
+    private $company;
+
     /**
      * Constructor
      *
@@ -59,8 +65,9 @@ class SettingsFormType extends TranslatorAwareType
      * @param array $locales
      * @param SettingsFormDataProvider $dataProvider
      */
-    public function __construct($translator, array $locales, SettingsFormDataProvider $dataProvider)
+    public function __construct($translator, array $locales, SettingsFormDataProvider $dataProvider, MoloniContext $context)
     {
+        $this->company = $context->company();
         $this->options = $dataProvider;
 
         parent::__construct($translator, $locales);
@@ -90,17 +97,22 @@ class SettingsFormType extends TranslatorAwareType
      */
     private function syncStockToMoloni(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('syncStockToMoloni', ChoiceType::class, [
             'label' => $this->trans('Synchronize stocks', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose to synchronize the product when a Prestashop product is updated. <br><br> Ex.: Update a product in Prestashop from 0 stock to 20, and a stock movement will be create in Moloni for that product.',
+                    'Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.',
                     'Modules.Molonion.Settings'
                 ),
             ],
             'required' => false,
             'choices' => $this->options->getYesNo(),
             'placeholder' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -111,11 +123,13 @@ class SettingsFormType extends TranslatorAwareType
      */
     private function syncStockToMoloniWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('syncStockToMoloniWarehouse', ChoiceType::class, [
             'label' => $this->trans('Warehouse', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Prestashop.</b>',
+                    'Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in PrestaShop.</b>',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -125,6 +139,9 @@ class SettingsFormType extends TranslatorAwareType
             ],
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'required' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -139,7 +156,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Create products', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose if a product should be created in Moloni when it is <b>created</b> in Prestashop. <br><br> Ex.: Insert a new product in Prestashop and that same product will be automaticaly created in Moloni.',
+                    'Choose if a product should be created in Moloni ON when it is <b>created</b> in PrestaShop. <br><br> Ex.: Insert a new product in PrestaShop and that same product will be automatically created in Moloni ON.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -157,7 +174,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Update products', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose if a product should be updated in Moloni when it is <b>updated</b> in Prestashop. <br><br> Ex.: Update a product in Prestashop and that same product will be automaticaly created or updated in Moloni.',
+                    'Choose if a product should be updated in Moloni ON when it is <b>updated</b> in PrestaShop. <br><br> Ex.: Update a product in PrestaShop and that same product will be automatically created or updated in Moloni ON.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -171,17 +188,22 @@ class SettingsFormType extends TranslatorAwareType
 
     private function syncStockToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock() && $this->company->hasWebhooks();
+
         $this->builder->add('syncStockToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Synchronize stocks', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose to synchronize the product when a Moloni product is updated. <br><br> Ex.: Update a product in Moloni from 0 stock to 20 and the product stock in Prestashop will be updated.',
+                    'Choose to synchronize the product when a Moloni ON product is updated. <br><br> Ex.: Update a product in Moloni ON from 0 stock to 20 and the product stock in PrestaShop will be updated.',
                     'Modules.Molonion.Settings'
                 ),
             ],
             'required' => false,
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -189,12 +211,14 @@ class SettingsFormType extends TranslatorAwareType
 
     private function syncStockToPrestashopWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock() && $this->company->hasWebhooks();
+
         $this->builder
             ->add('syncStockToPrestashopWarehouse', ChoiceType::class, [
                 'label' => $this->trans('Warehouse', 'Modules.Molonion.Settings'),
                 'label_attr' => [
                     'popover' => $this->trans(
-                        'Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni.</b>',
+                        'Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>',
                         'Modules.Molonion.Settings'
                     ),
                 ],
@@ -204,6 +228,9 @@ class SettingsFormType extends TranslatorAwareType
                 ],
                 'required' => false,
                 'placeholder' => false,
+                'disabled' => !$canUseFeature,
+                'disabled_value' => Boolean::NO,
+                'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
             ]);
 
         return $this;
@@ -211,17 +238,22 @@ class SettingsFormType extends TranslatorAwareType
 
     private function addProductsToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->hasWebhooks();
+
         $this->builder->add('addProductsToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Create products', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose if a product should be created in Prestashop when it is <b>created</b> in Moloni. <br><br> Ex.: Insert a new product in Moloni and that same product will be automaticaly created in Prestashop.',
+                    'Choose if a product should be created in PrestaShop when it is <b>created</b> in Moloni ON. <br><br> Ex.: Insert a new product in Moloni ON and that same product will be automatically created in PrestaShop.',
                     'Modules.Molonion.Settings'
                 ),
             ],
             'choices' => $this->options->getYesNo(),
             'required' => false,
             'placeholder' => false,
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -229,17 +261,22 @@ class SettingsFormType extends TranslatorAwareType
 
     private function updateProductsToPrestashop(): SettingsFormType
     {
+        $canUseFeature = $this->company->hasWebhooks();
+
         $this->builder->add('updateProductsToPrestashop', ChoiceType::class, [
             'label' => $this->trans('Update products', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Choose if a product should be updated in Prestashop when it is <b>updated</b> in Moloni. <br><br> Ex.: Update a product in Moloni and that same product will be automaticaly created or updated in Prestashop.',
+                    'Choose if a product should be updated in PrestaShop when it is <b>updated</b> in Moloni ON. <br><br> Ex.: Update a product in Moloni ON and that same product will be automatically created or updated in PrestaShop.',
                     'Modules.Molonion.Settings'
                 ),
             ],
             'required' => false,
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -251,7 +288,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Product fields', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni account, or different names.',
+                    'You can select which fields should be updated when a product update occurs. <br><br> This is useful to have for example different prices on your online store and in your Moloni ON account, or different names.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -272,7 +309,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Orders since', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'By default, we will list all orders that were not converted into Moloni documents. <br><br> If you are migrating from an old invoicing software to Moloni, you may choose to list only orders after a selected date.',
+                    'By default, we will list all orders that were not converted into Moloni ON documents. <br><br> If you are migrating from an old invoicing software to Moloni ON, you may choose to list only orders after a selected date.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -308,13 +345,13 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Auto create documents', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'When a Prestashop order passes on a status that is select in the "orders" configuration tab, the module will try to automaticaly create a document for that order.',
+                    'When a PrestaShop order passes on a status that is select in the "orders" configuration tab, the module will try to automatically create a document for that order.',
                     'Modules.Molonion.Settings'
                 ),
             ],
             'choices' => $this->options->getYesNo(),
             'help' => $this->trans(
-                'Choose this to automaticaly create documents in Moloni.',
+                'Choose this to automatically create documents in Moloni ON.',
                 'Modules.Molonion.Settings'
             ),
             'placeholder' => false,
@@ -346,7 +383,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Update customer', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'Update client when it already exists in Moloni account.',
+                    'Update client when it already exists in Moloni ON account.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -383,7 +420,7 @@ class SettingsFormType extends TranslatorAwareType
                 'label' => $this->trans('Document set', 'Modules.Molonion.Settings'),
                 'label_attr' => [
                     'popover' => $this->trans(
-                        'Select which Moloni document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni account.',
+                        'Select which Moloni ON document set you want to use for your documents. <br><br> You can manage your company document sets directly in your Moloni ON account.',
                         'Modules.Molonion.Settings'
                     ),
                 ],
@@ -585,7 +622,7 @@ class SettingsFormType extends TranslatorAwareType
                 'label' => $this->trans('Send e-mail', 'Modules.Molonion.Settings'),
                 'label_attr' => [
                     'popover' => $this->trans(
-                        'When a document is inserted and correctly closed in Moloni an e-mail with the document will be sent to the customer.',
+                        'When a document is inserted and correctly closed in Moloni ON an e-mail with the document will be sent to the customer.',
                         'Modules.Molonion.Settings'
                     ),
                 ],
@@ -604,7 +641,7 @@ class SettingsFormType extends TranslatorAwareType
                 'label' => $this->trans('Product details from', 'Modules.Molonion.Settings'),
                 'label_attr' => [
                     'popover' => $this->trans(
-                        'Choose if the product should use the name and description set in Moloni or in your store.',
+                        'Choose if the product should use the name and description set in Moloni ON or in your store.',
                         'Modules.Molonion.Settings'
                     ),
                 ],
@@ -684,7 +721,7 @@ class SettingsFormType extends TranslatorAwareType
                 'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
                 'label_attr' => [
                     'popover' => $this->trans(
-                        'Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni account.',
+                        'Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni ON account.',
                         'Modules.Molonion.Settings'
                     ),
                 ],
@@ -695,6 +732,8 @@ class SettingsFormType extends TranslatorAwareType
 
     private function documentWarehouse(): SettingsFormType
     {
+        $canUseFeature = $this->company->canSyncStock();
+
         $this->builder->add('documentWarehouse', ChoiceType::class, [
             'label' => $this->trans('Document warehouse', 'Modules.Molonion.Settings'),
             'label_attr' => [
@@ -704,8 +743,10 @@ class SettingsFormType extends TranslatorAwareType
                 ),
             ],
             'choices' => $this->options->getWarehouses(),
-            'required' => true,
-            'placeholder' => false,
+            'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
+            'disabled' => !$canUseFeature,
+            'disabled_value' => Boolean::NO,
+            'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
         return $this;
@@ -744,7 +785,7 @@ class SettingsFormType extends TranslatorAwareType
             'label' => $this->trans('Enable reference fallback', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
-                    'When synchronizing products from Moloni if the reference is numeric and no products are found in Prestashop, the plugin will try and find an Prestashop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in Prestashop.',
+                    'When synchronizing products from Moloni ON if the reference is numeric and no products are found in PrestaShop, the plugin will try and find an PrestaShop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in PrestaShop.',
                     'Modules.Molonion.Settings'
                 ),
             ],
@@ -784,7 +825,7 @@ class SettingsFormType extends TranslatorAwareType
             ->clientPrefix()
             ->clientUpdate()
             ->clientLanguage()
-            // When document stauts is closed
+            // When document status is closed
             ->billOfLading()
             ->loadAddress()
             ->customLoadAddressAddress()
