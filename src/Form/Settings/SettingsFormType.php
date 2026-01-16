@@ -28,7 +28,6 @@ declare(strict_types=1);
 namespace MoloniOn\Form\Settings;
 
 use MoloniOn\Context\Company;
-use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\MoloniContext;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
@@ -111,7 +110,6 @@ class SettingsFormType extends TranslatorAwareType
             'choices' => $this->options->getYesNo(),
             'placeholder' => false,
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
@@ -140,7 +138,6 @@ class SettingsFormType extends TranslatorAwareType
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'required' => false,
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
@@ -202,7 +199,6 @@ class SettingsFormType extends TranslatorAwareType
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
@@ -229,7 +225,6 @@ class SettingsFormType extends TranslatorAwareType
                 'required' => false,
                 'placeholder' => false,
                 'disabled' => !$canUseFeature,
-                'disabled_value' => Boolean::NO,
                 'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
             ]);
 
@@ -252,7 +247,6 @@ class SettingsFormType extends TranslatorAwareType
             'required' => false,
             'placeholder' => false,
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
@@ -275,7 +269,6 @@ class SettingsFormType extends TranslatorAwareType
             'placeholder' => false,
             'choices' => $this->options->getYesNo(),
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
@@ -745,7 +738,6 @@ class SettingsFormType extends TranslatorAwareType
             'choices' => $this->options->getWarehouses(),
             'placeholder' => $this->trans('Please select an option', 'Modules.Molonion.Settings'),
             'disabled' => !$canUseFeature,
-            'disabled_value' => Boolean::NO,
             'help' => $canUseFeature ? '' : $this->trans('Your Moloni ON subscription does not allow this action.', 'Modules.Molonion.Settings'),
         ]);
 
