@@ -214,7 +214,7 @@
       </trans-unit>
       <trans-unit id="89c8cecf557b2084e70a334f9d4ff7c4">
         <source><![CDATA[Choose if a product should be created in Moloni ON when it is <b>created</b> in PrestaShop. <br><br> Ex.: Insert a new product in PrestaShop and that same product will be automatically created in Moloni ON.]]></source>
-        <target><![CDATA[Escolha se um produto deve ser criado no Moloni ON quando for <b>criado</b> em PrestaShop. <br><br> Ex.: Insira um novo produto em PrestaShop e esse mesmo produto será automaticamente criado no Moloni ON.]]></target>
+        <target><![CDATA[Escolhe se um produto deve ser criado no Moloni ON quando for <b>criado</b> em PrestaShop. <br><br> Ex.: Insere um novo produto em PrestaShop e esse mesmo produto será automaticamente criado no Moloni ON.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e6daf960d8aa69d30038e6977242cb6d">
