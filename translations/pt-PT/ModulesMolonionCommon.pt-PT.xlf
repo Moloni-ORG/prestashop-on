@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="56ea0ee77c2c6efe0131dfeea01705f5">
         <source>Purchase Order</source>
-        <target>Encomenda de Compra</target>
+        <target>Nota de Encomenda</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="62cf105626c8a1597d3585d2f2b87bcf">
@@ -37,9 +37,9 @@
         <target>Orçamento</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2aa1320f04e187f0a7d9f826ad43bd1a">
-        <source>Bills of lading</source>
-        <target>Guias de transporte</target>
+      <trans-unit id="8319f326380f1eb1260360878678ecae">
+        <source>Bill of Lading</source>
+        <target>Guia de Transporte</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="902b0d55fddef6f8d651fe1035b7d4bd">
@@ -217,9 +217,9 @@
         <target>Documentos criados</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="e129ae480280e47ef82fc7702f8321ba">
-        <source>Refresh list</source>
-        <target>Atualizar lista</target>
+      <trans-unit id="63a6a88c066880c5ac42394a22803ca6">
+        <source>Refresh</source>
+        <target>Atualizar</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="9d4ed2062ba34a07f92b48d2a2dff92d">
@@ -252,9 +252,9 @@
         <target>Descarregar pdf</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="edb839a8aee1d27847a44f758fb4a9e5">
-        <source>No information to show!</source>
-        <target>Sem informação para mostrar!</target>
+      <trans-unit id="3f45eb13930dd9634539d460be31c31b">
+        <source>It looks like you still don't have anything here!</source>
+        <target>Parece que ainda não tens nada aqui!</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41">
@@ -279,7 +279,7 @@
       </trans-unit>
       <trans-unit id="1e884e3078d9978e216a027ecd57fb34">
         <source>E-mail</source>
-        <target>Email</target>
+        <target>E-mail</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b2f40690858b404ed10e62bdf422c704">
@@ -332,9 +332,9 @@
         <target>Contribuinte</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f92a5a7c1a5f017b5056a5568e53812b">
-        <source>Select this company</source>
-        <target>Selecionar esta empresa</target>
+      <trans-unit id="e0626222614bdee31951d84c64e5e9ff">
+        <source>Select</source>
+        <target>Selecionar</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="0b61d890295cd01b669ad9d9269fa286">
@@ -447,9 +447,9 @@
         <target>Todos os seus documentos já estão convertidos em documentos!</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4f67fe16b274bf31a67539fbedb8f8d3">
-        <source>Document Type</source>
-        <target>Tipo de Documento</target>
+      <trans-unit id="62668f75fc6977f3d09df632d1585d07">
+        <source>Total value</source>
+        <target>Valor total</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6861d21ea3a14378d5fab68eb542c76f">
@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="8f536f5dd951b1c30c5908b58fd89887">
         <source>Search e-mail</source>
-        <target>Pesquisar email</target>
+        <target>Pesquisar e-mail</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8e1f77e2554d1a930d64101c8a5c6ccb">

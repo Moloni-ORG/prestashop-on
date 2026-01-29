@@ -12,9 +12,9 @@
         <target>Criação automática de documentos com sincronização de estoque em tempo real e análise de vendas poderosa.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7442e29d7d53e549b78d93c46b8cdcfc">
-        <source>Orders</source>
-        <target>Encomendas</target>
+      <trans-unit id="b429b01543ebc27e45fb0447c8828be2">
+        <source>Pending orders</source>
+        <target>Encomendas pendentes</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f28128b38efbc6134dc40751ee21fd29">
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="f4f70727dc34561dfde1a3c529b6205c">
         <source>Settings</source>
-        <target>Definições</target>
+        <target>Configurações</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="8625e1de7be14c39b1d14dc03d822497">

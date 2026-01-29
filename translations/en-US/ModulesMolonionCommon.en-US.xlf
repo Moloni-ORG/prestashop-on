@@ -37,9 +37,9 @@
         <target>Budget</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2aa1320f04e187f0a7d9f826ad43bd1a">
-        <source>Bills of lading</source>
-        <target>Bills of lading</target>
+      <trans-unit id="8319f326380f1eb1260360878678ecae">
+        <source>Bill of Lading</source>
+        <target>Bill of Lading</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="902b0d55fddef6f8d651fe1035b7d4bd">
@@ -217,9 +217,9 @@
         <target>Created documents</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="e129ae480280e47ef82fc7702f8321ba">
-        <source>Refresh list</source>
-        <target>Refresh list</target>
+      <trans-unit id="63a6a88c066880c5ac42394a22803ca6">
+        <source>Refresh</source>
+        <target>Refresh</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="9d4ed2062ba34a07f92b48d2a2dff92d">
@@ -252,9 +252,9 @@
         <target>Download pdf</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="edb839a8aee1d27847a44f758fb4a9e5">
-        <source>No information to show!</source>
-        <target>No information to show!</target>
+      <trans-unit id="3f45eb13930dd9634539d460be31c31b">
+        <source>It looks like you still don't have anything here!</source>
+        <target>It looks like you still don't have anything here!</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41">
@@ -332,9 +332,9 @@
         <target>Vat</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f92a5a7c1a5f017b5056a5568e53812b">
-        <source>Select this company</source>
-        <target>Select this company</target>
+      <trans-unit id="e0626222614bdee31951d84c64e5e9ff">
+        <source>Select</source>
+        <target>Select</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="0b61d890295cd01b669ad9d9269fa286">
@@ -447,9 +447,9 @@
         <target>All your documents are already converted into documents!</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4f67fe16b274bf31a67539fbedb8f8d3">
-        <source>Document Type</source>
-        <target>Document Type</target>
+      <trans-unit id="62668f75fc6977f3d09df632d1585d07">
+        <source>Total value</source>
+        <target>Total value</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6861d21ea3a14378d5fab68eb542c76f">

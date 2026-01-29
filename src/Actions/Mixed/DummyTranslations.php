@@ -155,7 +155,7 @@ class DummyTranslations
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Budget', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Bills of lading', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Bill of Lading', [], 'Modules.Molonion.Common');
 
         $this->translator->trans('Error', [], 'Modules.Molonion.Common');
         $this->translator->trans('Warning', [], 'Modules.Molonion.Common');
@@ -189,9 +189,9 @@ class DummyTranslations
         $this->translator->trans('Invoice-Receipt', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Purchase Order', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Settings');
-        $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Settings');
+        $this->translator->trans('Simplified Invoice', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Budget', [], 'Modules.Molonion.Settings');
-        $this->translator->trans('Bills of lading', [], 'Modules.Molonion.Settings');
+        $this->translator->trans('Bill of Lading', [], 'Modules.Molonion.Settings');
 
         $this->translator->trans('Name', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Price', [], 'Modules.Molonion.Settings');
@@ -206,7 +206,7 @@ class DummyTranslations
     {
         $this->translator->trans('Moloni ON', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Automatic document creation with real time stock synchronization and powerful sales analysis.', [], 'Modules.Molonion.Admin');
-        $this->translator->trans('Orders', [], 'Modules.Molonion.Admin');
+        $this->translator->trans('Pending orders', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Documents', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Settings', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Tools', [], 'Modules.Molonion.Admin');

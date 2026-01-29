@@ -78,7 +78,7 @@ class DocumentTypes
         self::PRO_FORMA_INVOICES => 'Pro Forma Invoice',
         self::SIMPLIFIED_INVOICES => 'Simplified invoice',
         self::ESTIMATE => 'Budget',
-        self::BILLS_OF_LADING => 'Bills of lading',
+        self::BILLS_OF_LADING => 'Bill of Lading',
     ];
 
     public static function getDocumentsTypes(): array
@@ -90,7 +90,7 @@ class DocumentTypes
             'Pro Forma Invoice' => self::PRO_FORMA_INVOICES,
             'Simplified invoice' => self::SIMPLIFIED_INVOICES,
             'Budget' => self::ESTIMATE,
-            'Bills of lading' => self::BILLS_OF_LADING,
+            'Bill of Lading' => self::BILLS_OF_LADING,
         ];
     }
 

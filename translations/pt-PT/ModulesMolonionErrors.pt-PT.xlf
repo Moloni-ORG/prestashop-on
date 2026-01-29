@@ -169,7 +169,7 @@
       </trans-unit>
       <trans-unit id="7dc510b7bcc096ab355238159996832a">
         <source>Shipping has no taxes applied. Please add an exemption reason in plugin settings.</source>
-        <target>O envio não tem impostos aplicados. Por favor adicione um motivo de isenção nas definições do plugin.</target>
+        <target>O envio não tem impostos aplicados. Por favor adicione um motivo de isenção nas configurações do plugin.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d89d8e3d9e49fc18bfae2e6b25736aad">
@@ -339,7 +339,7 @@
       </trans-unit>
       <trans-unit id="8f18afb308a8e7eaa71151bdcd8ebfd7">
         <source>No document type selected. Please choose one in plugin settings.</source>
-        <target>Nenhum tipo de documento selecionado. Por favor escolha um nas definições do plugin.</target>
+        <target>Nenhum tipo de documento selecionado. Por favor escolhe um nas configurações do plugin.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b1f1e0622d835195a43d0804ce9cfe37">
@@ -394,7 +394,7 @@
       </trans-unit>
       <trans-unit id="6adb7f2ed09247b8fe5412ea32c7e9b7">
         <source>Product with reference ({0}) has no taxes applied. Please add an exemption reason in plugin settings.</source>
-        <target>Produto com referência ({0}) não tem impostos aplicados. Por favor adicione um motivo de isenção nas definições do plugin.</target>
+        <target>Produto com referência ({0}) não tem impostos aplicados. Por favor adicione um motivo de isenção nas configurações do plugin.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="a64c7136527063716106461061652181">
@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="4776874d3ab58b9d1fb4c386b97fea69">
         <source>Error fetching fiscal zone tax settings</source>
-        <target>Erro ao obter definições de impostos da zona fiscal</target>
+        <target>Erro ao obter configurações de impostos da zona fiscal</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6d8102dddebcfbf60d19f8a8e2b21dbe">
