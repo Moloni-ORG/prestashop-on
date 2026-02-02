@@ -2,14 +2,14 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="administration" source-language="pt-PT" target-language="pt-PT" datatype="plaintext">
     <body>
-      <trans-unit id="ecf86ca60b1e74dba70847c917f9250a">
-        <source>Discarded order not found!</source>
-        <target>Encomenda descartada não encontrada!</target>
+      <trans-unit id="6fc760085cf1ad8fe1338d7065ce8845">
+        <source>Discarded order not found.</source>
+        <target>Encomenda descartada não encontrada.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2739902b9a94da0a9537256c2aa9c905">
-        <source>Error fetching pdf token</source>
-        <target>Erro ao obter o token do pdf</target>
+      <trans-unit id="d8b5893fa5270f3ff6d446e23d1862b5">
+        <source>Error fetching PDF token</source>
+        <target>Erro ao obter o token do PDF</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="a61cb43682f5cca5e88ac9a0a0c4d8b9">
@@ -17,9 +17,9 @@
         <target>ID inválido</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f5cddd80b6b6b6be80c8927826f4929c">
-        <source>Order does not exist!</source>
-        <target>A encomenda não existe!</target>
+      <trans-unit id="cd817d3f0b7308afc557a2620ad58590">
+        <source>Order does not exist.</source>
+        <target>A encomenda não existe.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d4a34e73bacffab7e6c2421167348c47">
@@ -169,7 +169,7 @@
       </trans-unit>
       <trans-unit id="7dc510b7bcc096ab355238159996832a">
         <source>Shipping has no taxes applied. Please add an exemption reason in plugin settings.</source>
-        <target>O envio não tem impostos aplicados. Por favor adicione um motivo de isenção nas configurações do plugin.</target>
+        <target>O envio não tem impostos aplicados. Por favor adiciona um motivo de isenção nas configurações do plugin.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d89d8e3d9e49fc18bfae2e6b25736aad">
@@ -229,7 +229,7 @@
       </trans-unit>
       <trans-unit id="ad9a4179a1cf78587319d3a40155d3eb">
         <source>Company does not have a default warehouse, please select one</source>
-        <target>A empresa não tem armazém padrão, por favor selecione um</target>
+        <target>A empresa não tem armazém padrão, por favor seleciona um</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f28f7ad3dd61afca50c3cca1832f555a">
@@ -262,19 +262,19 @@
         <target>Erro ao criar atributos do produto</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="8b1e4c54293e841c3c6f2c9ef0762726">
-        <source>Could not fetch pdf link.</source>
-        <target>Não foi possível obter o link do pdf.</target>
+      <trans-unit id="a8f4c3c9b07e4c740b2956a60ca88c9f">
+        <source>Could not fetch PDF link.</source>
+        <target>Não foi possível obter o link do PDF.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="6950aacc327f8fb7df1dcb6558f8e506">
-        <source>Code cannot be empty!</source>
-        <target>O código não pode estar vazio!</target>
+      <trans-unit id="984a9b53165fe5f193398fe00edf6463">
+        <source>Code cannot be empty.</source>
+        <target>O código não pode estar vazio.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="868bba144b611cc4b20e14bfb1da7cb7">
-        <source>You have no companies!!</source>
-        <target>Não tem empresas!!</target>
+      <trans-unit id="35f8fbc8304a2dc9deb603896ef7a1e4">
+        <source>You have no companies.</source>
+        <target>Não tens empresas.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="205483ee01661c8acd2bb746ebce4221">
@@ -314,7 +314,7 @@
       </trans-unit>
       <trans-unit id="3328846c311ff7af6907b9a6ee1b6a25">
         <source>Error getting prestashop order</source>
-        <target>Erro ao obter encomenda do prestashop</target>
+        <target>Erro ao obter encomenda do PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="eedd2d3edfd58263f8bd29bdea21f076">
@@ -382,19 +382,19 @@
         <target>Aviso ao processar encomenda ({0})</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="8cd1d64ea3ee4a452b535a0202709e0b">
-        <source>Order already discarded or created!</source>
-        <target>Encomenda já descartada ou criada!</target>
+      <trans-unit id="a1c1b2ce8e16308c6cf2d3afcf6a6b97">
+        <source>Order already discarded or created.</source>
+        <target>Encomenda já descartada ou criada.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="85a2c8d9d84dbf6ce4171004904e1e36">
         <source>Product with reference ({0}) is invisible in Moloni ON. Please change the product visibility.</source>
-        <target>Produto com referência ({0}) está invisível no Moloni ON. Por favor altere a visibilidade do produto.</target>
+        <target>Produto com referência ({0}) está invisível no Moloni ON. Por favor altera a visibilidade do produto.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6adb7f2ed09247b8fe5412ea32c7e9b7">
         <source>Product with reference ({0}) has no taxes applied. Please add an exemption reason in plugin settings.</source>
-        <target>Produto com referência ({0}) não tem impostos aplicados. Por favor adicione um motivo de isenção nas configurações do plugin.</target>
+        <target>Produto com referência ({0}) não tem impostos aplicados. Por favor adiciona um motivo de isenção nas configurações do plugin.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="a64c7136527063716106461061652181">
@@ -487,9 +487,9 @@
         <target>Erro ao obter encomenda PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="cb1b164d9438d999056c79658de0d71c">
-        <source>Form is not valid!!</source>
-        <target>O formulário não é válido!!</target>
+      <trans-unit id="1645ff41d929185cda0a349c11bba88c">
+        <source>Form is not valid.</source>
+        <target>O formulário não é válido.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="67509542f3351ede1bd24dcdb31fb1df">
@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="3c3d541c3569616652fc8b09aaa2502a">
         <source>Click for more information</source>
-        <target>Clique para mais informações</target>
+        <target>Clica para mais informações</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="24909e87dc242b9dd539e10609b8b050">

@@ -522,7 +522,7 @@ class SettingsFormType extends TranslatorAwareType
     private function billOfLading(): SettingsFormType
     {
         $this->builder->add('billOfLading', ChoiceType::class, [
-            'label' => $this->trans('Create bill of lading', 'Modules.Molonion.Settings'),
+            'label' => $this->trans('Create Bill of Lading', 'Modules.Molonion.Settings'),
             'label_attr' => [
                 'popover' => $this->trans(
                     'Choose if you want to create a Bill of Lading associated with the main document.',
@@ -708,7 +708,7 @@ class SettingsFormType extends TranslatorAwareType
     {
         $this->builder
             ->add('measurementUnit', ChoiceType::class, [
-                'label' => $this->trans('Measure unit', 'Modules.Molonion.Settings'),
+                'label' => $this->trans('Units of measure', 'Modules.Molonion.Settings'),
                 'required' => true,
                 'choices' => $this->options->getMeasurementUnits(),
                 'placeholder' => $this->trans('Select an option', 'Modules.Molonion.Settings'),

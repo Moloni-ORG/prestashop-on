@@ -150,7 +150,7 @@ class Documents extends MoloniController
             $url = (new DocumentsDownloadPdf($documentId, $documentType, $this->moloniContext->configs()))->handle();
 
             if (empty($url)) {
-                throw new MoloniException('Could not fetch pdf link.', [], ['result' => $url]);
+                throw new MoloniException('Could not fetch PDF link.', [], ['result' => $url]);
             }
         } catch (MoloniException $e) {
             $msg = $this->trans($e->getMessage(), 'Modules.Molonion.Errors', $e->getIdentifiers());

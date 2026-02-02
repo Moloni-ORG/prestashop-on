@@ -110,7 +110,7 @@
                                    target="_blank">
                                     <i class="material-icons">file_download</i>
 
-                                    {{ 'Download pdf'|trans({}, 'Modules.Molonion.Common') }}
+                                    {{ 'Download PDF'|trans({}, 'Modules.Molonion.Common') }}
                                 </a>
                             {% endif %}
                         </div>
@@ -123,7 +123,7 @@
     <tr>
         <td colspan="100%">
             {# Empty state #}
-            {% include view_dir ~ 'components/EmptyState.twig' with {'empty_state_text': "It looks like you still don't have anything here!"|trans({}, 'Modules.Molonion.Common')}%}
+            {% include view_dir ~ 'components/EmptyState.twig' with {'empty_state_text': "It looks like you still don't have anything here."|trans({}, 'Modules.Molonion.Common')}%}
         </td>
     </tr>
 {% endif %}

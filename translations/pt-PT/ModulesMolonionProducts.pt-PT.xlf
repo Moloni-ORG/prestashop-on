@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="bc6d316759019ced33237dad80bfd19f">
         <source>Product reference fallback is active. (search by prestashop ID if reference is empty)</source>
-        <target>Fallback de referência de produto está ativo. (procura por ID do Prestashop se a referência estiver vazia)</target>
+        <target>Fallback de referência de produto está ativo. (procura por ID do PrestaShop se a referência estiver vazia)</target>
         <note>Line: </note>
       </trans-unit>
     </body>

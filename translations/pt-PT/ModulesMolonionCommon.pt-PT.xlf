@@ -247,14 +247,14 @@
         <target>Ver encomenda</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="8098187879fc75422fe2d1f351f22003">
-        <source>Download pdf</source>
-        <target>Descarregar pdf</target>
+      <trans-unit id="2607298669ace2fc910321afeb9f8a84">
+        <source>Download PDF</source>
+        <target>Descarregar PDF</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="3f45eb13930dd9634539d460be31c31b">
-        <source>It looks like you still don't have anything here!</source>
-        <target>Parece que ainda não tens nada aqui!</target>
+      <trans-unit id="453f1a610d2b5fed2fc9ce3c9047b5b2">
+        <source>It looks like you still don't have anything here.</source>
+        <target>Parece que ainda não tens nada aqui.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41">
@@ -309,7 +309,7 @@
       </trans-unit>
       <trans-unit id="526d688f37a86d3c3f27d0c5016eb71d">
         <source>Reset</source>
-        <target>Reiniciar</target>
+        <target>Limpar</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="dd7bf230fde8d4836917806aff6a6b27">
@@ -327,8 +327,8 @@
         <target>País</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="bfc1c6031e1fbadc9f486c6b93c34c01">
-        <source>Vat</source>
+      <trans-unit id="43183e955e3019bf7f8c942e016b7b13">
+        <source>VAT</source>
         <target>Contribuinte</target>
         <note>Line: </note>
       </trans-unit>
@@ -337,19 +337,19 @@
         <target>Selecionar</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="0b61d890295cd01b669ad9d9269fa286">
-        <source>Your account does not have access to any eligible company.</source>
-        <target>A sua conta não tem acesso a nenhuma empresa elegível.</target>
+      <trans-unit id="e3208f3f61be94a33fd8712f09223c02">
+        <source>Your account does not have access to any company.</source>
+        <target>A tua conta não tem acesso a nenhuma empresa.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="5904c3e30447e5bb0c4d25fd6a07e434">
-        <source>Please confirm that your account has access to an active company with a plan that allows you to access the plugins.</source>
-        <target>Por favor confirme que a sua conta tem acesso a uma empresa ativa com um plano que permite o acesso aos plugins.</target>
+      <trans-unit id="9d3baa296e042f4ef3682fe05a21c606">
+        <source>Please ensure your account's company has the API Client add-on active.</source>
+        <target>Por favor confirma que a tua conta tem uma empresa com o módulo Cliente API ativo.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7112c932d53a451a6aa64e5e9386efa2">
-        <source>Learn more about our plans at:</source>
-        <target>Saiba mais sobre os nossos planos em:</target>
+      <trans-unit id="1f1da35a1f48b747238f81402abecd44">
+        <source>Learn more at:</source>
+        <target>Sabe mais em:</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="463e58c1d35fb5a4a8d717c99a60d257">
@@ -359,7 +359,7 @@
       </trans-unit>
       <trans-unit id="4c89a4828cdeb4b0e246d7a5f6057d11">
         <source>I don't have an account yet.</source>
-        <target>Não tenho uma conta ainda.</target>
+        <target>Ainda não tenho conta.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="42369faa6a6b243aac58683f3874bf99">
@@ -409,7 +409,7 @@
       </trans-unit>
       <trans-unit id="50b0c23ed36ab3724d19072fa3538c97">
         <source>Do you wish to continue?</source>
-        <target>Deseja continuar?</target>
+        <target>Pretendes continuar?</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="ea4788705e6873b424c65e91c2846b19">
@@ -442,9 +442,9 @@
         <target>Eliminar encomenda</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="c4d0532a2ff3843d9523ab5a5d58f12b">
-        <source>All your documents are already converted into documents!</source>
-        <target>Todos os seus documentos já estão convertidos em documentos!</target>
+      <trans-unit id="83483e62ab98a972ebd4fb86a8b6c32f">
+        <source>All your documents are already converted into documents.</source>
+        <target>Todos os seus documentos já estão convertidos em documentos.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="62668f75fc6977f3d09df632d1585d07">
@@ -479,17 +479,17 @@
       </trans-unit>
       <trans-unit id="44ccb107299fe0d0af59f2ada2bb7e78">
         <source>View in PrestaShop</source>
-        <target>Ver em Prestashop</target>
+        <target>Ver em PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="5e3adfa495c55bb31c0ac92ef05c8262">
         <source>Import product to PrestaShop</source>
-        <target>Importar produto para Prestashop</target>
+        <target>Importar produto para PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="30b71de16dae9989ff87ef72bbddad32">
         <source>Import stock to PrestaShop</source>
-        <target>Importar stock para Prestashop</target>
+        <target>Importar stock para PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987">
@@ -509,7 +509,7 @@
       </trans-unit>
       <trans-unit id="8ba08775d71c47dde3d5674ce660ec6a">
         <source>PrestaShop products</source>
-        <target>Produtos Prestashop</target>
+        <target>Produtos PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6aa61e361ee76557a27da0e391c67e9b">

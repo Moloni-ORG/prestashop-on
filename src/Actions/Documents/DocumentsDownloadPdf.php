@@ -91,7 +91,7 @@ class DocumentsDownloadPdf
                 $query = [];
             }
         } catch (MoloniApiException $e) {
-            throw new MoloniException('Error fetching pdf token', $e->getData());
+            throw new MoloniException('Error fetching PDF token', $e->getData());
         }
 
         return $query;

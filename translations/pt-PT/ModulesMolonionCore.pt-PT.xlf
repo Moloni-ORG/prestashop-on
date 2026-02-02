@@ -7,14 +7,14 @@
         <target>Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="ae22059c109bd08cba6ddc9739a5f6d3">
-        <source>Automatic document creation with real time stock synchronization and powerful sales analysis.</source>
-        <target>Criação automática de documentos com sincronização de stock em tempo real e análise de vendas poderosa.</target>
+      <trans-unit id="7dece8efc8425d80ad2f3cf65210e198">
+        <source>Automatic document creation with real time stock synchronization and sales analysis.</source>
+        <target>Criação automática de documentos com sincronização de stock em tempo real e análise de vendas.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="bb8956c67b82c7444a80c6b2433dd8b4">
         <source>Are you sure you want to uninstall this module?</source>
-        <target>Tem a certeza que pretende desinstalar este módulo?</target>
+        <target>Tens a certeza que pretendes desinstalar este módulo?</target>
         <note>Line: </note>
       </trans-unit>
     </body>

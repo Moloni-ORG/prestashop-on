@@ -62,7 +62,7 @@ class Login extends MoloniController
         $form->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $msg = $this->trans('Form is not valid!!', 'Modules.Molonion.Errors');
+            $msg = $this->trans('Form is not valid.', 'Modules.Molonion.Errors');
 
             $this->addWarningMessage($msg);
 
@@ -107,7 +107,7 @@ class Login extends MoloniController
 
         try {
             if (empty($code)) {
-                throw new MoloniException('Code cannot be empty!');
+                throw new MoloniException('Code cannot be empty.');
             }
 
             MoloniApi::login($code);
@@ -130,7 +130,7 @@ class Login extends MoloniController
                 ->queryCompanies();
 
             if (empty($queryCompanies)) {
-                throw new MoloniException('You have no companies!!');
+                throw new MoloniException('You have no companies.');
             }
 
             foreach ($queryCompanies as $company) {
