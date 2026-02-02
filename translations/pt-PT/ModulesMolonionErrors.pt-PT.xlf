@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="6fc760085cf1ad8fe1338d7065ce8845">
         <source>Discarded order not found.</source>
-        <target>Encomenda descartada não encontrada.</target>
+        <target>Encomenda eliminada não encontrada.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d8b5893fa5270f3ff6d446e23d1862b5">
@@ -384,7 +384,7 @@
       </trans-unit>
       <trans-unit id="a1c1b2ce8e16308c6cf2d3afcf6a6b97">
         <source>Order already discarded or created.</source>
-        <target>Encomenda já descartada ou criada.</target>
+        <target>Encomenda já eliminada ou criada.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="85a2c8d9d84dbf6ce4171004904e1e36">
