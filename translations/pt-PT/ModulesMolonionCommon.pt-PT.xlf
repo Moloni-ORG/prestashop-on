@@ -149,7 +149,7 @@
       </trans-unit>
       <trans-unit id="3cdde9f08aa2ed20b962b648d5d1934d">
         <source>Order restored with success.</source>
-        <target>Encomenda restaurada com sucesso.</target>
+        <target>Encomenda recuperada com sucesso.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="0e3ddcff7b4b131d6748fdd816e6cce9">
@@ -169,7 +169,7 @@
       </trans-unit>
       <trans-unit id="b341ab21c44305cdbc7ad20a96ee2b38">
         <source>Order discarded with success.</source>
-        <target>Encomenda eliminada com sucesso.</target>
+        <target>Encomenda arquivada com sucesso.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2cd5f4dedebdbb0dd22c07d403b150fd">
@@ -229,7 +229,7 @@
       </trans-unit>
       <trans-unit id="1477772fd3936b7943bd02dade7915f3">
         <source>Discarted</source>
-        <target>Eliminado</target>
+        <target>Arquivada</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="0eceeb45861f9585dd7a97a3e36f85c6">
@@ -237,9 +237,9 @@
         <target>Criado</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f1a5f71a34119fe63d7e8ac495e821e6">
-        <source>Revert discard</source>
-        <target>Reverter eliminação</target>
+      <trans-unit id="5289bf157522a5cd34676f2777d27048">
+        <source>Revert</source>
+        <target>Desfazer</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="cb8fe83175bea4ba19d633b1dc6ea656">
@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="9dd4d069db3578f505d7516d90541420">
         <source>Discard order</source>
-        <target>Eliminar encomenda</target>
+        <target>Arquivar encomenda</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="83483e62ab98a972ebd4fb86a8b6c32f">
