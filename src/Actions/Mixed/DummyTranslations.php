@@ -45,10 +45,10 @@ class DummyTranslations
 
     public function errors(): void
     {
-        $this->translator->trans('Discarded order not found!', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Error fetching pdf token', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Discarded order not found.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error fetching PDF token', [], 'Modules.Molonion.Errors');
         $this->translator->trans('ID is invalid', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Order does not exist!', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Order does not exist.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating account', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Data is not valid', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error creating webservice key', [], 'Modules.Molonion.Errors');
@@ -99,9 +99,9 @@ class DummyTranslations
         $this->translator->trans('Error creating combination ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error updating combination ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error when creating product attributes', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Could not fetch pdf link.', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Code cannot be empty!', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('You have no companies!!', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Could not fetch PDF link.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Code cannot be empty.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('You have no companies.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('ID is invalid', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Missing information in database', [], 'Modules.Molonion.Errors');
         $this->translator->trans('An unexpected error occurred', [], 'Modules.Molonion.Errors');
@@ -124,7 +124,7 @@ class DummyTranslations
         $this->translator->trans('Error fetching exchange rate: ({0})', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Document type not found', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Warning processing order ({0})', [], 'Modules.Molonion.Errors');
-        $this->translator->trans('Order already discarded or created!', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Order already discarded or created.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product with reference ({0}) is invisible in Moloni ON. Please change the product visibility.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product with reference ({0}) has no taxes applied. Please add an exemption reason in plugin settings.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Product already exists', [], 'Modules.Molonion.Errors');
@@ -155,7 +155,7 @@ class DummyTranslations
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Common');
         $this->translator->trans('Budget', [], 'Modules.Molonion.Common');
-        $this->translator->trans('Bills of lading', [], 'Modules.Molonion.Common');
+        $this->translator->trans('Bill of Lading', [], 'Modules.Molonion.Common');
 
         $this->translator->trans('Error', [], 'Modules.Molonion.Common');
         $this->translator->trans('Warning', [], 'Modules.Molonion.Common');
@@ -189,9 +189,9 @@ class DummyTranslations
         $this->translator->trans('Invoice-Receipt', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Purchase Order', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Pro Forma Invoice', [], 'Modules.Molonion.Settings');
-        $this->translator->trans('Simplified invoice', [], 'Modules.Molonion.Settings');
+        $this->translator->trans('Simplified Invoice', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Budget', [], 'Modules.Molonion.Settings');
-        $this->translator->trans('Bills of lading', [], 'Modules.Molonion.Settings');
+        $this->translator->trans('Bill of Lading', [], 'Modules.Molonion.Settings');
 
         $this->translator->trans('Name', [], 'Modules.Molonion.Settings');
         $this->translator->trans('Price', [], 'Modules.Molonion.Settings');
@@ -206,7 +206,7 @@ class DummyTranslations
     {
         $this->translator->trans('Moloni ON', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Automatic document creation with real time stock synchronization and powerful sales analysis.', [], 'Modules.Molonion.Admin');
-        $this->translator->trans('Orders', [], 'Modules.Molonion.Admin');
+        $this->translator->trans('Pending orders', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Documents', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Settings', [], 'Modules.Molonion.Admin');
         $this->translator->trans('Tools', [], 'Modules.Molonion.Admin');

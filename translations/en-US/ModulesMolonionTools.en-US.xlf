@@ -37,9 +37,9 @@
         <target>Synchronize PrestaShop stocks with Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4d65e62cb6a99750856e14989cc33cfe">
-        <source>This tool will search for all the products that were updated in your Moloni ON account in the last seven days, and will update only the stock of the matching PrestaShop products.</source>
-        <target>This tool will search for all the products that were updated in your Moloni ON account in the last seven days, and will update only the stock of the matching PrestaShop products.</target>
+      <trans-unit id="077d03e30e4dc543687ec41c16c6b996">
+        <source>This tool searches for all products updated in your Moloni ON account in the last seven days and updates the corresponding product inventory in PrestaShop.</source>
+        <target>This tool searches for all products updated in your Moloni ON account in the last seven days and updates the corresponding product inventory in PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="92fad80c4456f15c67a376aef3914f3d">
@@ -67,14 +67,14 @@
         <target>Reinstall webhooks</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="53a19289ced2d2d65c06d30d1ebb1ebc">
-        <source>This tool is used to recreate the synchronization webhooks that run in Moloni ON.</source>
-        <target>This tool is used to recreate the synchronization webhooks that run in Moloni ON.</target>
+      <trans-unit id="553104f13800d86e72679c09507fcc51">
+        <source>This tool recreates the Moloni ON synchronization webhooks.</source>
+        <target>This tool recreates the Moloni ON synchronization webhooks.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4dd1a1d3ea4a823a6a7e90a57d85ebee">
-        <source>You should run this if for example your store URL changes or if the PrestaShop access tokens for this module change.</source>
-        <target>You should run this if for example your store URL changes or if the PrestaShop access tokens for this module change.</target>
+      <trans-unit id="8227d3d44daf75e4fd115b3f2e8fee2c">
+        <source>You should perform this action if the store URL changes or if the PrestaShop module access tokens are updated.</source>
+        <target>You should perform this action if the store URL changes or if the PrestaShop module access tokens are updated.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6191775cd76c546960703f06e99f86da">

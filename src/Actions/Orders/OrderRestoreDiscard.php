@@ -46,7 +46,7 @@ class OrderRestoreDiscard extends AbstractOrderAction
         $document = $this->documentRepository->findOneBy(['orderId' => $this->orderId, 'documentId' => DocumentIdentifiers::DISCARDED]);
 
         if ($document === null) {
-            throw new MoloniException('Discarded order not found!');
+            throw new MoloniException('Discarded order not found.');
         }
 
         $this->deleteRecord($document);

@@ -63,7 +63,6 @@ class ActivatorAbstract
             'parent_class_name' => 'SELL',
             'name' => [
                 'en' => 'Moloni ON',
-                'es' => 'Moloni ON',
                 'pt' => 'Moloni ON',
             ],
             'wording' => 'Moloni ON',
@@ -74,11 +73,10 @@ class ActivatorAbstract
             'class_name' => 'MoloniOnOrders',
             'parent_class_name' => 'MoloniOn',
             'name' => [
-                'en' => 'Orders',
-                'es' => 'Pedidos pendientes',
-                'pt' => 'Pedidos pendentes',
+                'en' => 'Pending orders',
+                'pt' => 'Encomendas pendentes',
             ],
-            'wording' => 'Orders',
+            'wording' => 'Pending orders',
             'wording_domain' => 'Modules.Molonion.Admin',
             'icon' => '',
         ],
@@ -87,7 +85,6 @@ class ActivatorAbstract
             'parent_class_name' => 'MoloniOn',
             'name' => [
                 'en' => 'Documents',
-                'es' => 'Documentos creados',
                 'pt' => 'Documentos criados',
             ],
             'wording' => 'Documents',
@@ -99,7 +96,6 @@ class ActivatorAbstract
             'parent_class_name' => 'MoloniOn',
             'name' => [
                 'en' => 'Settings',
-                'es' => 'Configuraciones',
                 'pt' => 'Configurações',
             ],
             'wording' => 'Settings',
@@ -111,7 +107,6 @@ class ActivatorAbstract
             'parent_class_name' => 'MoloniOn',
             'name' => [
                 'en' => 'Logs',
-                'es' => 'Registros',
                 'pt' => 'Registos',
             ],
             'wording' => 'Logs',
@@ -123,7 +118,6 @@ class ActivatorAbstract
             'parent_class_name' => 'MoloniOn',
             'name' => [
                 'en' => 'Tools',
-                'es' => 'Herramientas',
                 'pt' => 'Ferramentas',
             ],
             'wording' => 'Tools',

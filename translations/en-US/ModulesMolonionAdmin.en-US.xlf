@@ -12,9 +12,9 @@
         <target>Automatic document creation with real time stock synchronization and powerful sales analysis.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7442e29d7d53e549b78d93c46b8cdcfc">
-        <source>Orders</source>
-        <target>Orders</target>
+      <trans-unit id="b429b01543ebc27e45fb0447c8828be2">
+        <source>Pending orders</source>
+        <target>Pending orders</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f28128b38efbc6134dc40751ee21fd29">

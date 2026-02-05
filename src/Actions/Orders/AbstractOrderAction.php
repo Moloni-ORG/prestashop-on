@@ -86,7 +86,7 @@ abstract class AbstractOrderAction
         $order = new \Order($orderId);
 
         if (empty($order->id)) {
-            throw new MoloniException('Order does not exist!');
+            throw new MoloniException('Order does not exist.');
         }
 
         $this->order = $order;

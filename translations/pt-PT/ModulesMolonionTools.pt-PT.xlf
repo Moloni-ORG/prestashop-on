@@ -14,7 +14,7 @@
       </trans-unit>
       <trans-unit id="796bd18f7e1f426912515f5d36facf79">
         <source>Use this tool to create all products from your Moloni ON account in your PrestaShop store.</source>
-        <target>Use esta ferramenta para criar todos os produtos da sua conta Moloni ON na sua loja PrestaShop.</target>
+        <target>Usa esta ferramenta para criares todos os produtos da tua conta Moloni ON na tua loja PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="57e4f2b0f2af1fde06645f5fffdb45f1">
@@ -29,7 +29,7 @@
       </trans-unit>
       <trans-unit id="a2045527542a253093a34c586876c028">
         <source>Use this tool to create all products in your PrestaShop store account in your Moloni ON account.</source>
-        <target>Use esta ferramenta para criar todos os produtos da sua loja PrestaShop na sua conta Moloni ON.</target>
+        <target>Usa esta ferramenta para criares todos os produtos da tua loja PrestaShop na tua conta Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f0c5e60cc221043299a8d298e0781619">
@@ -37,9 +37,9 @@
         <target>Sincronizar stocks do PrestaShop com o Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4d65e62cb6a99750856e14989cc33cfe">
-        <source>This tool will search for all the products that were updated in your Moloni ON account in the last seven days, and will update only the stock of the matching PrestaShop products.</source>
-        <target>Esta ferramenta irá procurar todos os produtos que foram atualizados na sua conta Moloni ON nos últimos sete dias e irá atualizar apenas o stock dos produtos correspondentes no PrestaShop.</target>
+      <trans-unit id="077d03e30e4dc543687ec41c16c6b996">
+        <source>This tool searches for all products updated in your Moloni ON account in the last seven days and updates the corresponding product inventory in PrestaShop.</source>
+        <target>Esta ferramenta procura todos os produtos atualizados na tua conta Moloni ON nos últimos sete dias e atualiza o stock dos produtos correspondentes no PrestaShop. </target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="92fad80c4456f15c67a376aef3914f3d">
@@ -54,7 +54,7 @@
       </trans-unit>
       <trans-unit id="7a1b6bf4d3798243ec5136d01139de0e">
         <source>This tool will search for all the products in your PrestaShop store and update the matching products in your Moloni ON account.</source>
-        <target>Esta ferramenta irá procurar todos os produtos na sua loja PrestaShop e atualizar os produtos correspondentes na sua conta Moloni ON.</target>
+        <target>Esta ferramenta procura todos os produtos na tua loja PrestaShop e atualiza os produtos correspondentes na tua conta Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="06f084935e1c520b0f323518dc72e41e">
@@ -67,29 +67,29 @@
         <target>Reinstalar webhooks</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="53a19289ced2d2d65c06d30d1ebb1ebc">
-        <source>This tool is used to recreate the synchronization webhooks that run in Moloni ON.</source>
-        <target>Esta ferramenta é usada para recriar os webhooks de sincronização que correm no Moloni ON.</target>
+      <trans-unit id="553104f13800d86e72679c09507fcc51">
+        <source>This tool recreates the Moloni ON synchronization webhooks.</source>
+        <target>Esta ferramenta recria os webhooks de sincronização do Moloni ON. </target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="4dd1a1d3ea4a823a6a7e90a57d85ebee">
-        <source>You should run this if for example your store URL changes or if the PrestaShop access tokens for this module change.</source>
-        <target>Deve executar isto, por exemplo, se o URL da sua loja mudar ou se os tokens de acesso PrestaShop deste módulo mudarem.</target>
+      <trans-unit id="8227d3d44daf75e4fd115b3f2e8fee2c">
+        <source>You should perform this action if the store URL changes or if the PrestaShop module access tokens are updated.</source>
+        <target>Deves executar esta ação se o URL da loja for alterado ou se os tokens de acesso do módulo PrestaShop forem atualizados.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6191775cd76c546960703f06e99f86da">
         <source>List PrestaShop products</source>
-        <target>Listar produtos Prestashop</target>
+        <target>Listar produtos PrestaShop</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2d77fcf867a2f523f2ff6a9e7112d636">
         <source>List all PrestaShop products and the corresponding Moloni ON product.</source>
-        <target>Listar todos os produtos do PrestaShop e o produto correspondente no Moloni ON.</target>
+        <target>Listagem de todos os produtos do PrestaShop e respetiva correspondência no Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="df7085e9ba8e64fea609c043a2163234">
         <source>This page allow to verify if the product stock are updated, if they exist in Moloni ON or if there are some problems.</source>
-        <target>Esta página permite verificar se o stock dos produtos está atualizado, se existem no PrestaShop ou se há algum problema.</target>
+        <target>Esta página permite verificar a sincronização de stock ou identificar eventuais alertas entre as duas plataformas.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="aa9735ad471151382e11ad08d4373627">
@@ -104,12 +104,12 @@
       </trans-unit>
       <trans-unit id="a4bb721be62e4b55f44a2e33eb8b286b">
         <source>List all Moloni ON products and the corresponding PrestaShop product.</source>
-        <target>Listar todos os produtos do Moloni ON e o produto correspondente no PrestaShop.</target>
+        <target>Listagem de todos os produtos do Moloni ON e respetiva correspondência no PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="c78ba458fb21b123f7953ce724234834">
         <source>This page allow to verify if the product stock are updated, if they exist in PrestaShop or if there are some problems.</source>
-        <target>Esta página permite verificar se o stock dos produtos está atualizado, se existem no PrestaShop ou se há algum problema.</target>
+        <target>Esta página permite verificar a sincronização de stock ou identificar eventuais alertas entre as duas plataformas.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="5ad38ea074b3a546f03d2b1c4437dee6">
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="13e71eaf6e1b9f74698db23e3c420439">
         <source>Logout from the selected Moloni ON account. We will keep all the data regarding issued documents.</source>
-        <target>Terminar sessão da conta Moloni ON selecionada. Todos os dados relativos a documentos emitidos serão mantidos.</target>
+        <target>Termina a sessão da tua conta Moloni ON. Os dados relativos a documentos emitidos serão guardados.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2c9c22490dc732786ccb086591856634">
@@ -132,19 +132,19 @@
         <target>Ação em progresso.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="c6701602de1528fd79d5eff3e8eb1edd">
-        <source>Something went wrong!</source>
-        <target>Algo correu mal!</target>
+      <trans-unit id="7c7efec2d1dfd66eb653cf98d4cc865c">
+        <source>Something went wrong.</source>
+        <target>Algo correu mal.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b2e28ca63ef095f6224ee6e2ecb96bf1">
         <source>Please check logs for more information.</source>
-        <target>Por favor, verifique os logs para mais informações.</target>
+        <target>Por favor, verifica os logs para mais informações.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b836cbb696a48e55c89df3e1f5dcadda">
         <source><![CDATA[We are processing your request.<br>Please wait until the process finishes!]]></source>
-        <target><![CDATA[Estamos a processar o seu pedido.<br>Por favor, aguarde até o processo terminar!]]></target>
+        <target><![CDATA[Estamos a processar o teu pedido.<br>Por favor, aguarda até o processo terminar!]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="d3d2e617335f08df83599665eef8a418">
@@ -159,22 +159,22 @@
       </trans-unit>
       <trans-unit id="9102702625c28f417e9fced20e2bb5cb">
         <source>Are you sure you want to continue?</source>
-        <target>Tem a certeza que pretende continuar?</target>
+        <target>Tens a certeza que pretendes continuar?</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="9dab921565313ceda3d81d72970ad62d">
         <source>This will fetch all the products in PrestaShop store and create them in your Moloni ON account.</source>
-        <target>Isto irá buscar todos os produtos da loja PrestaShop e criá-los na sua conta Moloni ON.</target>
+        <target>Isto irá buscar todos os produtos da loja PrestaShop e criá-los na tua conta Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="99cba71e2f9c0f05b795fdcf4fe27800">
         <source>This may take a while, so, please keep this window open until the process finishes.</source>
-        <target>Isto pode demorar algum tempo, por favor mantenha esta janela aberta até o processo terminar.</target>
+        <target>Isto pode demorar algum tempo, por favor mantêm esta janela aberta até o processo terminar.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="88062af3aba20177b6aa8cab54a68753">
         <source>Are you sure you want to continue? </source>
-        <target>Tem a certeza que pretende continuar?</target>
+        <target>Tens a certeza que pretendes continuar?</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="c934a51b465c3328c310affd968d4604">
@@ -184,7 +184,7 @@
       </trans-unit>
       <trans-unit id="a9a318b01553f445633d7456c6d5423f">
         <source>All your Moloni ON products will be created in your PrestaShop store if they do not exist.</source>
-        <target>Todos os seus produtos Moloni ON serão criados na sua loja PrestaShop se não existirem.</target>
+        <target>Todos os seus produtos Moloni ON serão criados na tua loja PrestaShop se não existirem.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="6cada368407ea1c3a5e352895ef4c5ae">
@@ -194,12 +194,12 @@
       </trans-unit>
       <trans-unit id="780f57258401aedb7dfb05664300fc1b">
         <source>This tool will cycle for all your PrestaShop products and will insert manual stock movements in your Moloni ON account to make sure the stocks are equal in both platforms.</source>
-        <target>Esta ferramenta irá percorrer todos os seus produtos PrestaShop e inserir movimentos de stock manuais na sua conta Moloni ON para garantir que os stocks são iguais em ambas as plataformas.</target>
+        <target>Esta ferramenta irá percorrer todos os seus produtos PrestaShop e inserir movimentos de stock manuais na tua conta Moloni ON para garantir que os stocks são iguais em ambas as plataformas.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="dbfbd7163eb2474267efce4cc2bbad5f">
         <source>When the tool is finish, all your Moloni ON stock will be updated to match the stock on your PrestaShop store.</source>
-        <target>Quando a ferramenta terminar, todo o seu stock Moloni ON será atualizado para corresponder ao stock da sua loja PrestaShop.</target>
+        <target>Quando a ferramenta terminar, todo o seu stock Moloni ON será atualizado para corresponder ao stock da tua loja PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="154bea2185f41b0e73d0ecb9b2fb077d">
@@ -214,17 +214,17 @@
       </trans-unit>
       <trans-unit id="d661d39a6cf0971000f79ee7f0475731">
         <source>This tool will fetch all your Moloni ON products and synchronize your PrestaShop stocks with the ones on your Moloni ON account.</source>
-        <target>Esta ferramenta irá buscar todos os seus produtos Moloni ON e sincronizar os stocks do PrestaShop com os da sua conta Moloni ON.</target>
+        <target>Esta ferramenta irá buscar todos os seus produtos Moloni ON e sincronizar os stocks do PrestaShop com os da tua conta Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="f8c63a0169a7a5c4888e9a8c0902682c">
         <source>When the tool is finish, all your PrestaShop stock will be updated to match the stock on your Moloni ON account.</source>
-        <target>Quando a ferramenta terminar, todo o seu stock PrestaShop será atualizado para corresponder ao stock da sua conta Moloni ON.</target>
+        <target>Quando a ferramenta terminar, todo o seu stock PrestaShop será atualizado para corresponder ao stock da tua conta Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="3714d8ced882d0a4372c1f32704d5b92">
         <source>Please keep this window open until the process finishes.</source>
-        <target>Por favor mantenha esta janela aberta até o processo terminar.</target>
+        <target>Por favor mantêm esta janela aberta até o processo terminar.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="fa62fe0fe0c35bcf2a3f3afcf8e2d6b3">
@@ -239,7 +239,7 @@
       </trans-unit>
       <trans-unit id="1a299291abb24001b9d354bcf12f78f3">
         <source>Please wait, exporting in progress</source>
-        <target>Por favor aguarde, exportação em progresso</target>
+        <target>Por favor aguarda, exportação em progresso</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="254cec87ba5d0dac94cf0bee486d7c6f">
@@ -254,7 +254,7 @@
       </trans-unit>
       <trans-unit id="b7c454456bb33f0e7f09c65b8b47957d">
         <source>Please wait, importing in progress</source>
-        <target>Por favor aguarde, importação em progresso</target>
+        <target>Por favor aguarda, importação em progresso</target>
         <note>Line: </note>
       </trans-unit>
     </body>

@@ -27,9 +27,9 @@
         <target>Pro Forma Invoice</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="1954f6efb99d0bf2ce2d1f142d494626">
-        <source>Simplified invoice</source>
-        <target>Simplified invoice</target>
+      <trans-unit id="18a0629701b1c754b5ead525503b6fef">
+        <source>Simplified Invoice</source>
+        <target>Simplified Invoice</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="822bead6c149ffacbe7a12c44c3958ed">
@@ -37,9 +37,9 @@
         <target>Budget</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="2aa1320f04e187f0a7d9f826ad43bd1a">
-        <source>Bills of lading</source>
-        <target>Bills of lading</target>
+      <trans-unit id="8319f326380f1eb1260360878678ecae">
+        <source>Bill of Lading</source>
+        <target>Bill of Lading</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="49ee3087348e8d44e1feda1917443987">
@@ -172,9 +172,9 @@
         <target>Synchronize stocks</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="034c873e3b885bdc280c00cea501cb34">
-        <source><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.]]></source>
-        <target><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement will be create in Moloni ON for that product.]]></target>
+      <trans-unit id="6de4693b13da3ac3e6cd5b22b5e56e25">
+        <source><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement is created in Moloni ON for that product.]]></source>
+        <target><![CDATA[Choose to synchronize the product when a PrestaShop product is updated. <br><br> Ex.: Update a product in PrestaShop from 0 stock to 20, and a stock movement is created in Moloni ON for that product.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="7ff2a370d7fc5dbe0cf80f0dc0770b21">
@@ -202,9 +202,9 @@
         <target>Warehouses</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="407deaabede956257901211b1e2ab6d2">
-        <source>Please select an option</source>
-        <target>Please select an option</target>
+      <trans-unit id="59d5d61e9e9b2dc33a0211623cc4fe11">
+        <source>Select an option</source>
+        <target>Select an option</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e67570b749b341140a0e22d03c7aeda1">
@@ -232,9 +232,9 @@
         <target><![CDATA[Choose to synchronize the product when a Moloni ON product is updated. <br><br> Ex.: Update a product in Moloni ON from 0 stock to 20 and the product stock in PrestaShop will be updated.]]></target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="173fc18811eb6fbb5ec797d9811e3c31">
-        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></source>
-        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. <br><br> This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></target>
+      <trans-unit id="0d688e1ad7c8d6b0344cce1cc95cdaf9">
+        <source><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></source>
+        <target><![CDATA[Select which warehouse will be used during the product insert process or during the product stock synchronization process. This warehouse will be used when a product is inserted or updated <b>in Moloni ON.</b>]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="b21ee4f18f5fff809c9875ef2a1b9993">
@@ -287,9 +287,9 @@
         <target>Auto create documents</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="6ea905c137f016f4d9ebbfdd5c9c5ebd">
-        <source>When a PrestaShop order passes on a status that is select in the "orders" configuration tab, the module will try to automatically create a document for that order.</source>
-        <target>When a PrestaShop order passes on a status that is select in the "orders" configuration tab, the module will try to automatically create a document for that order.</target>
+      <trans-unit id="cc2cdd701d6fb4aaf7a5eebcf1c6d69b">
+        <source><![CDATA[When a PrestaShop order transitions to a selected state in the Settings > Orders tab, the module automatically attempts to create a document for that order.]]></source>
+        <target><![CDATA[When a PrestaShop order transitions to a selected state in the Settings > Orders tab, the module automatically attempts to create a document for that order.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="29080bec16b9aabdf4a20c34ffc32f76">
@@ -302,9 +302,9 @@
         <target>Customer code prefix</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="07770268b9b97ab66c05b36c3dcaf1c0">
-        <source><![CDATA[A customer needs to have a unique identifier in Moloni, and you can use this option to add a prefix to that identifier. <br><br> If you set a prefix of "PS_", your customer numbers will be incremented for example as PS_1, PS_2, PS_3, etc. <br><br> This is useful to easily identify which customers were created by this module.]]></source>
-        <target><![CDATA[A customer needs to have a unique identifier in Moloni, and you can use this option to add a prefix to that identifier. <br><br> If you set a prefix of "PS_", your customer numbers will be incremented for example as PS_1, PS_2, PS_3, etc. <br><br> This is useful to easily identify which customers were created by this module.]]></target>
+      <trans-unit id="9ff019ebfdafe645aca1916e53cdd70d">
+        <source><![CDATA[Each client must have a unique code, and by adding this prefix, for example 'PS', the client code will be displayed as 'PS_1'. <br><br> This tool allows for easy identification of clients created by the integration.]]></source>
+        <target><![CDATA[Each client must have a unique code, and by adding this prefix, for example 'PS', the client code will be displayed as 'PS_1'. <br><br> This tool allows for easy identification of clients created by the integration.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="77d539e5a8800ce533c4768ccd282250">
@@ -372,9 +372,9 @@
         <target>Taxes Fiscal zone</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="7b131c895969d29b679a12352510d659">
-        <source>Select which fiscal zone should be used for new taxes that need to be created.</source>
-        <target>Select which fiscal zone should be used for new taxes that need to be created.</target>
+      <trans-unit id="2d80cb6106dc50b38d944ed11a96b7a7">
+        <source>Select the tax zone to be used for the taxes created.</source>
+        <target>Select the tax zone to be used for the taxes created.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="cdeb74a8fcf416f7347e08629457b065">
@@ -382,9 +382,9 @@
         <target>Show shipping information</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="9be72add23936ccab2f32ea464f061ea">
-        <source>If the seleceted document type shipping information is optional, you can use this option to choose if you want to include it or not.</source>
-        <target>If the seleceted document type shipping information is optional, you can use this option to choose if you want to include it or not.</target>
+      <trans-unit id="a6775c89a5001af255345565862fd774">
+        <source>You can choose to include or omit shipping information whenever it is optional for the selected document type.</source>
+        <target>You can choose to include or omit shipping information whenever it is optional for the selected document type.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2c1c32524355166b4ea3b01f52c6ac0d">
@@ -402,9 +402,9 @@
         <target>Loading address</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="a115089d93422da623a6d016d5f97487">
-        <source><![CDATA[Select which shipping address should be used for your shipping documents <br> You can select between your company address, your store addresses or set a custom one.]]></source>
-        <target><![CDATA[Select which shipping address should be used for your shipping documents <br> You can select between your company address, your store addresses or set a custom one.]]></target>
+      <trans-unit id="9ca768d43b393e8ff03dc2dc3cbac0c8">
+        <source><![CDATA[Select the shipping address to be used on shipping documents. <br> You can choose between the Moloni ON address, PrestaShop addresses, or set a custom address.]]></source>
+        <target><![CDATA[Select the shipping address to be used on shipping documents. <br> You can choose between the Moloni ON address, PrestaShop addresses, or set a custom address.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="dd7bf230fde8d4836917806aff6a6b27">
@@ -422,9 +422,9 @@
         <target>City</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="fb9e838d470b2c27c2c128d127165f9e">
-        <source>Please select a country</source>
-        <target>Please select a country</target>
+      <trans-unit id="5fe7ca009ef1c0aa5c0d782a8be37e0e">
+        <source>Select a country</source>
+        <target>Select a country</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="e31c0c465a632294c280582e7d982aa9">
@@ -442,9 +442,9 @@
         <target>Product details from</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="76fb73a9eea53857b32b8e81eb240a5e">
-        <source>Choose if the product should use the name and description set in Moloni ON or in your store.</source>
-        <target>Choose if the product should use the name and description set in Moloni ON or in your store.</target>
+      <trans-unit id="90f90754ef17c52a846571028ce55e31">
+        <source>You choose whether the product should use the name and description defined in Moloni ON or PrestaShop.</source>
+        <target>You choose whether the product should use the name and description defined in Moloni ON or PrestaShop.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="a3e2dff2b97277df3671542faa531e3d">
@@ -452,9 +452,9 @@
         <target>Product exemption reason</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="9123b9cb4d1004d5321562257360f418">
-        <source><![CDATA[This exemption reason will be used when a <b>product</b> does not have a defined tax on the order that you are trying to issue.]]></source>
-        <target><![CDATA[This exemption reason will be used when a <b>product</b> does not have a defined tax on the order that you are trying to issue.]]></target>
+      <trans-unit id="cc684ccef30fad96047a501229d25e62">
+        <source><![CDATA[This exemption will be used when a <b>product</b> does not have a tax defined in the order.]]></source>
+        <target><![CDATA[This exemption will be used when a <b>product</b> does not have a tax defined in the order.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="119f6c623d1af3a3b309ae63fb575d9d">
@@ -462,9 +462,9 @@
         <target>Shipping exemption reason</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="e5087b9fadb800a95206178a4cd425be">
-        <source><![CDATA[This exemption reason will be used when your order <b>shipping</b> does not have a defined tax on the order that you are trying to issue.]]></source>
-        <target><![CDATA[This exemption reason will be used when your order <b>shipping</b> does not have a defined tax on the order that you are trying to issue.]]></target>
+      <trans-unit id="1e541872900cf3ab956e68592f38f937">
+        <source><![CDATA[This exemption will be used when the <b>shipping</b> of your order does not have any tax associated with it.]]></source>
+        <target><![CDATA[This exemption will be used when the <b>shipping</b> of your order does not have any tax associated with it.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="0b60040b717a3696401bb5aaeb4925ae">
@@ -472,9 +472,9 @@
         <target>Measure unit</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="04875eb8999c4f4e955235fa56506b10">
-        <source><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni ON account.]]></source>
-        <target><![CDATA[Choose which measurement unit should be used by default on your Products. <br><br> You can manage your measurement units in your Moloni ON account.]]></target>
+      <trans-unit id="9a87a1fb2f48b5245cb9a04c523d49ee">
+        <source><![CDATA[Choose the unit of measurement that should be used by default for your products. <br><br> You can manage units of measurement in your Moloni ON account.]]></source>
+        <target><![CDATA[Choose the unit of measurement that should be used by default for your products. <br><br> You can manage units of measurement in your Moloni ON account.]]></target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="3a1ae6a6772712b959d8811b849e89d5">
@@ -482,9 +482,9 @@
         <target>Document warehouse</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="182de22798396a20f49de2172f3d1c1a">
-        <source>Choose which warehouse should be used when issuing documents.</source>
-        <target>Choose which warehouse should be used when issuing documents.</target>
+      <trans-unit id="74af011fcfb43e70e2bac3a16721a437">
+        <source>Choose the warehouse that should be used when issuing documents.</source>
+        <target>Choose the warehouse that should be used when issuing documents.</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="c281f92b77ba329f692077d23636f5c9">
