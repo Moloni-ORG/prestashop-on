@@ -30,10 +30,6 @@ namespace MoloniOn\Builders\Document;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Builders\Document\Helpers\GetOrderProductTax;
 use MoloniOn\Builders\Interfaces\BuilderItemInterface;
-use MoloniOn\Builders\MoloniProduct\Helpers\Variants\FindVariant;
-use MoloniOn\Builders\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\ProductInformation;
@@ -43,6 +39,12 @@ use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
+use MoloniOn\Services\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
+use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
+use MoloniOn\Services\Tax\TaxFromRate;
 use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -123,7 +125,7 @@ class OrderProduct implements BuilderItemInterface
     /**
      * Taxes builder
      *
-     * @var OrderProductTax[]
+     * @var TaxFromRate[]
      */
     protected $taxes;
 
@@ -225,22 +227,25 @@ class OrderProduct implements BuilderItemInterface
     {
         SyncLogs::prestashopProductAddTimeout((int) $this->orderProduct['product_id']);
 
+        $isVariant = false;
+
         try {
             $product = new \Product($this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-            }
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-            $productBuilder->insert();
+            $service = $isVariant
+                ? new CreateVariantProduct($product)
+                : new CreateSimpleProduct($product);
+
+            $service->run();
+            $service->saveLog();
         } catch (MoloniProductException $e) {
             throw new MoloniDocumentProductException($e->getMessage(), $e->getIdentifiers(), $e->getData());
         }
 
         // Has variants, we need id of variant alone
-        if ($productBuilder instanceof MoloniProductWithVariants) {
+        if ($isVariant) {
             /** @var MoloniOnProductAssociations|null $association */
             $association = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
 
@@ -250,10 +255,10 @@ class OrderProduct implements BuilderItemInterface
 
             $this->productId = $association->getMlVariantId();
         } else {
-            $this->productId = $productBuilder->getMoloniProductId();
+            $this->productId = $service->getMoloniProductId();
         }
 
-        $this->moloniProduct = $productBuilder->getMoloniProduct();
+        $this->moloniProduct = $service->getMoloniProduct();
     }
 
     /**
@@ -668,13 +673,14 @@ class OrderProduct implements BuilderItemInterface
         SyncLogs::prestashopProductAddTimeout((int) $psParent->id);
 
         try {
-            $productBuilder = new MoloniProductWithVariants($psParent);
-            $productBuilder->update();
+            $service = new UpdateVariantProduct($psParent, $mlProduct);
+            $service->run();
+            $service->saveLog();
         } catch (MoloniProductException $e) {
             throw new MoloniDocumentProductException($e->getMessage(), $e->getIdentifiers(), $e->getData());
         }
 
-        $variant = $productBuilder->getVariant($combinationId);
+        $variant = $service->getVariant($combinationId);
 
         if (empty($variant)) {
             throw new MoloniDocumentProductException('Could not find variant after update.');

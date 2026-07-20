@@ -28,11 +28,11 @@ declare(strict_types=1);
 namespace MoloniOn\Actions\ProductsList\Prestashop;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Builders\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
 

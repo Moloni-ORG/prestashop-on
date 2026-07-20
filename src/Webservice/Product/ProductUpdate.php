@@ -25,11 +25,12 @@
 
 namespace MoloniOn\Webservice\Product;
 
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\StockSync;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Update\UpdateCombinationsProduct;
+use MoloniOn\Services\PrestashopProduct\Update\UpdateSimpleProduct;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -59,20 +60,21 @@ class ProductUpdate extends AbstractWebserviceAction
                 return;
             }
 
-            if (empty($product['variants'])) {
-                $productBuilder = new PrestashopProductSimple($product);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($product);
-            }
+            $isCombinations = !empty($product['variants']);
 
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($product);
+            $prestaProductId = (int) $prestashopProduct->id;
 
             if ($prestaProductId > 0) {
                 if (!SyncLogs::prestashopProductHasTimeout($prestaProductId)) {
                     SyncLogs::moloniProductAddTimeout($this->productId);
                     SyncLogs::prestashopProductAddTimeout($prestaProductId);
 
-                    $productBuilder->update();
+                    $service = $isCombinations
+                        ? new UpdateCombinationsProduct($product, $prestashopProduct)
+                        : new UpdateSimpleProduct($product, $prestashopProduct);
+                    $service->run();
+                    $service->saveLog();
                 }
             }
         } catch (MoloniProductException $e) {

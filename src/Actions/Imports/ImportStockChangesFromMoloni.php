@@ -26,10 +26,10 @@
 namespace MoloniOn\Actions\Imports;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\SyncLogs;
 
@@ -78,17 +78,14 @@ class ImportStockChangesFromMoloni extends ImportProducts
             SyncLogs::moloniProductAddTimeout((int) $product['productId']);
 
             try {
-                if (empty($product['variants'])) {
-                    $builder = new PrestashopProductSimple($product);
-                } else {
-                    $builder = new PrestashopProductWithCombinations($product);
-                }
+                $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($product);
 
-                if ($builder->getPrestashopProductId() > 0) {
-                    SyncLogs::prestashopProductAddTimeout($builder->getPrestashopProductId());
+                if ((int) $prestashopProduct->id > 0) {
+                    SyncLogs::prestashopProductAddTimeout((int) $prestashopProduct->id);
 
-                    $builder->disableLogs();
-                    $builder->updateStock();
+                    // Bulk import: skip saveLog() to avoid flooding the logs
+                    $service = new SyncProductStock($product, $prestashopProduct);
+                    $service->run();
 
                     $this->syncedProducts[] = $product['reference'];
                 } else {

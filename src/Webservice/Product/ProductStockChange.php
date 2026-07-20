@@ -25,11 +25,11 @@
 
 namespace MoloniOn\Webservice\Product;
 
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\StockSync;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -65,19 +65,16 @@ class ProductStockChange extends AbstractWebserviceAction
                 return;
             }
 
-            if (empty($product['variants'])) {
-                $productBuilder = new PrestashopProductSimple($product);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($product);
-            }
-
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($product);
+            $prestaProductId = (int) $prestashopProduct->id;
 
             if ($prestaProductId > 0 && !SyncLogs::prestashopProductHasTimeout($prestaProductId)) {
                 SyncLogs::moloniProductAddTimeout($this->productId);
                 SyncLogs::prestashopProductAddTimeout($prestaProductId);
 
-                $productBuilder->updateStock();
+                $service = new SyncProductStock($product, $prestashopProduct);
+                $service->run();
+                $service->saveLog();
             }
         } catch (MoloniProductException $e) {
             Logs::addErrorLog([['Error updating PrestaShop stock'], [$e->getMessage(), $e->getIdentifiers()]], $e->getData());

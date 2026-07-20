@@ -26,10 +26,13 @@
 namespace MoloniOn\Hooks;
 
 use MoloniOn\Api\MoloniApi;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Update\UpdateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -59,20 +62,28 @@ class ProductSave extends AbstractHookAction
             SyncLogs::prestashopProductAddTimeout($this->productId);
             $product = new \Product($this->productId, true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-            }
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-            if ($productBuilder->getMoloniProductId() !== 0) {
-                SyncLogs::moloniProductAddTimeout($productBuilder->getMoloniProductId());
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+            if (!empty($moloniProduct)) {
+                SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
 
                 if ((int) Settings::get('updateProductsToMoloni') === Boolean::YES) {
-                    $productBuilder->update();
+                    $service = $isVariant
+                        ? new UpdateVariantProduct($product, $moloniProduct)
+                        : new UpdateSimpleProduct($product, $moloniProduct);
+
+                    $service->run();
+                    $service->saveLog();
                 }
             } elseif ((int) Settings::get('addProductsToMoloni') === Boolean::YES) {
-                $productBuilder->insert();
+                $service = $isVariant
+                    ? new CreateVariantProduct($product)
+                    : new CreateSimpleProduct($product);
+
+                $service->run();
+                $service->saveLog();
             }
         } catch (MoloniProductException $e) {
             Logs::addErrorLog(

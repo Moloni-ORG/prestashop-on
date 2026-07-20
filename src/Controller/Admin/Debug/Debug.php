@@ -26,10 +26,6 @@
 namespace MoloniOn\Controller\Admin\Debug;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Entity\MoloniOnOrderDocuments;
 use MoloniOn\Entity\MoloniOnProductAssociations;
@@ -37,6 +33,18 @@ use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Repository\MoloniOnOrderDocumentsRepository;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
+use MoloniOn\Services\MoloniProduct\Update\UpdateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
+use MoloniOn\Services\PrestashopProduct\Create\CreateCombinationsProduct;
+use MoloniOn\Services\PrestashopProduct\Create\CreateSimpleProduct as PrestashopCreateSimpleProduct;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Stock\SyncProductStock as PrestashopSyncProductStock;
+use MoloniOn\Services\PrestashopProduct\Update\UpdateCombinationsProduct;
+use MoloniOn\Services\PrestashopProduct\Update\UpdateSimpleProduct as PrestashopUpdateSimpleProduct;
 use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\SyncLogs;
 use Product;
@@ -159,18 +167,15 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, $variables);
             }
 
-            if (empty($moloniProduct['variants'])) {
-                $productBuilder = new PrestashopProductSimple($moloniProduct);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($moloniProduct);
-            }
-
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($moloniProduct);
+            $prestaProductId = (int) $prestashopProduct->id;
 
             if ($prestaProductId > 0) {
                 SyncLogs::prestashopProductAddTimeout($prestaProductId);
 
-                $productBuilder->updateStock();
+                $service = new PrestashopSyncProductStock($moloniProduct, $prestashopProduct);
+                $service->run();
+                $service->saveLog();
             }
 
             $response = [
@@ -210,18 +215,19 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, $variables);
             }
 
-            if (empty($moloniProduct['variants'])) {
-                $productBuilder = new PrestashopProductSimple($moloniProduct);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($moloniProduct);
-            }
+            $isCombinations = !empty($moloniProduct['variants']);
 
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($moloniProduct);
+            $prestaProductId = (int) $prestashopProduct->id;
 
             if ($prestaProductId > 0) {
                 SyncLogs::prestashopProductAddTimeout($prestaProductId);
 
-                $productBuilder->update();
+                $service = $isCombinations
+                    ? new UpdateCombinationsProduct($moloniProduct, $prestashopProduct)
+                    : new PrestashopUpdateSimpleProduct($moloniProduct, $prestashopProduct);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product does not exist', null, ['prestashopId' => $prestaProductId, 'moloniId' => $productId]);
             }
@@ -263,16 +269,17 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, $variables);
             }
 
-            if (empty($moloniProduct['variants'])) {
-                $productBuilder = new PrestashopProductSimple($moloniProduct);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($moloniProduct);
-            }
+            $isCombinations = !empty($moloniProduct['variants']);
 
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($moloniProduct);
+            $prestaProductId = (int) $prestashopProduct->id;
 
             if ($prestaProductId === 0) {
-                $productBuilder->insert();
+                $service = $isCombinations
+                    ? new CreateCombinationsProduct($moloniProduct, $prestashopProduct)
+                    : new PrestashopCreateSimpleProduct($moloniProduct, $prestashopProduct);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product already exists', null, ['prestashopId' => $prestaProductId, 'moloniId' => $productId]);
             }
@@ -308,18 +315,14 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-            }
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
-            $moloniProductId = $productBuilder->getMoloniProductId();
+            if (!empty($moloniProduct)) {
+                SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
 
-            if ($moloniProductId > 0) {
-                SyncLogs::moloniProductAddTimeout($moloniProductId);
-
-                $productBuilder->updateStock();
+                $service = new SyncProductStock($product, $moloniProduct);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product does not exist', null, [$productId]);
             }
@@ -355,18 +358,18 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-            }
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-            $moloniProductId = $productBuilder->getMoloniProductId();
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
-            if ($moloniProductId > 0) {
-                SyncLogs::moloniProductAddTimeout($moloniProductId);
+            if (!empty($moloniProduct)) {
+                SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
 
-                $productBuilder->update();
+                $service = $isVariant
+                    ? new UpdateVariantProduct($product, $moloniProduct)
+                    : new UpdateSimpleProduct($product, $moloniProduct);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product does not exist', null, [$productId]);
             }
@@ -402,14 +405,16 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-            }
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-            if ($productBuilder->getMoloniProductId() === 0) {
-                $productBuilder->insert();
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+            if (empty($moloniProduct)) {
+                $service = $isVariant
+                    ? new CreateVariantProduct($product)
+                    : new CreateSimpleProduct($product);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product already exists', null, [$productId]);
             }

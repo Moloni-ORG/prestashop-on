@@ -25,9 +25,9 @@
 
 namespace MoloniOn\Actions\Exports;
 
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\SyncLogs;
 
@@ -55,17 +55,14 @@ class ExportStocksToMoloni extends ExportProducts
             $product = new \Product($productData['id_product'], true, $this->languageId);
 
             try {
-                if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                    $productBuilder = new MoloniProductWithVariants($product);
-                } else {
-                    $productBuilder = new MoloniProductSimple($product);
-                }
+                $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
-                if ($productBuilder->getMoloniProductId() > 0) {
-                    SyncLogs::moloniProductAddTimeout($productBuilder->getMoloniProductId());
+                if (!empty($moloniProduct)) {
+                    SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
 
-                    $productBuilder->disableLogs();
-                    $productBuilder->updateStock();
+                    // Bulk export: skip saveLog() to avoid flooding the logs
+                    $service = new SyncProductStock($product, $moloniProduct);
+                    $service->run();
 
                     $this->syncedProducts[] = $product->reference;
                 } else {

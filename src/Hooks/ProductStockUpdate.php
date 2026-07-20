@@ -28,11 +28,11 @@ declare(strict_types=1);
 namespace MoloniOn\Hooks;
 
 use MoloniOn\Api\MoloniApi;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -67,22 +67,27 @@ class ProductStockUpdate extends AbstractHookAction
             SyncLogs::prestashopProductAddTimeout($this->productId);
             $product = new \Product($this->productId, true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                if (!$this->variantId) {
-                    return;
-                }
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-                $productBuilder = new MoloniProductWithVariants($product);
-                if ($productBuilder->getMoloniProductId() !== 0) {
-                    $productBuilder->updateStock($this->variantId, $this->newQty);
-                }
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
-                if ($productBuilder->getMoloniProductId() !== 0) {
-                    $productBuilder->setStock($this->newQty);
-                    $productBuilder->updateStock();
-                }
+            if ($isVariant && !$this->variantId) {
+                return;
             }
+
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+            if (empty($moloniProduct)) {
+                return;
+            }
+
+            $service = new SyncProductStock(
+                $product,
+                $moloniProduct,
+                $isVariant ? $this->variantId : 0,
+                $this->newQty
+            );
+
+            $service->run();
+            $service->saveLog();
         } catch (MoloniProductException $e) {
             Logs::addErrorLog(
                 [['Error saving Moloni ON product'], [$e->getMessage(), $e->getIdentifiers()]],

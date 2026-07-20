@@ -25,8 +25,8 @@
 
 namespace MoloniOn\Builders\Document\Helpers;
 
-use MoloniOn\Builders\Document\OrderProductTax;
 use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\Services\Tax\TaxFromRate;
 use Tax;
 
 if (!defined('_PS_VERSION_')) {
@@ -53,22 +53,17 @@ class GetOrderProductTax
     /**
      * Handler
      *
-     * @return OrderProductTax|null
+     * @return TaxFromRate|null
      *
      * @throws MoloniException
      */
-    public function handle(): ?OrderProductTax
+    public function handle(): ?TaxFromRate
     {
         $taxValue = (float) ($this->orderProduct['tax_rate'] ?? 0);
 
         if ($taxValue > 0) {
-            $taxBuilder = new OrderProductTax($taxValue, $this->fiscalZone, 1);
-
-            $taxBuilder->search();
-
-            if ($taxBuilder->getTaxId() === 0) {
-                $taxBuilder->insert();
-            }
+            $taxBuilder = new TaxFromRate($taxValue, $this->fiscalZone, 1);
+            $taxBuilder->getOrCreate();
 
             return $taxBuilder;
         }
@@ -79,7 +74,7 @@ class GetOrderProductTax
 
             $roundOne = round($taxValue, 1);
 
-            $taxBuilder = new OrderProductTax($roundOne, $this->fiscalZone, 1);
+            $taxBuilder = new TaxFromRate($roundOne, $this->fiscalZone, 1);
             $taxBuilder->search();
 
             if ($taxBuilder->getTaxId() > 0) {
@@ -88,7 +83,7 @@ class GetOrderProductTax
 
             $roundZero = round($taxValue, 0);
 
-            $taxBuilder = new OrderProductTax($roundZero, $this->fiscalZone, 1);
+            $taxBuilder = new TaxFromRate($roundZero, $this->fiscalZone, 1);
             $taxBuilder->search();
 
             if ($taxBuilder->getTaxId() > 0) {

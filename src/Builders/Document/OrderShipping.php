@@ -33,6 +33,7 @@ use MoloniOn\Exceptions\Document\MoloniDocumentShippingException;
 use MoloniOn\Exceptions\Document\MoloniDocumentShippingTaxException;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\Services\Tax\TaxFromRate;
 use MoloniOn\Tools\Settings;
 use Order;
 
@@ -108,7 +109,7 @@ class OrderShipping implements BuilderItemInterface
     /**
      * Taxes builder
      *
-     * @var OrderShippingTax|null
+     * @var TaxFromRate|null
      */
     protected $taxes;
 
@@ -445,16 +446,10 @@ class OrderShipping implements BuilderItemInterface
         $taxRate = (float) $this->order->carrier_tax_rate;
 
         if ($taxRate > 0) {
-            $taxBuilder = new OrderShippingTax($taxRate, $this->ficalZone, 1);
+            $taxBuilder = new TaxFromRate($taxRate, $this->ficalZone, 1);
 
             try {
-                $taxBuilder
-                    ->search();
-
-                if ($taxBuilder->getTaxId() === 0) {
-                    $taxBuilder
-                        ->insert();
-                }
+                $taxBuilder->getOrCreate();
             } catch (MoloniException $e) {
                 throw new MoloniDocumentShippingTaxException($e->getMessage(), $e->getIdentifiers(), $e->getData());
             }

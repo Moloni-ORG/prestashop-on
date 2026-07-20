@@ -26,11 +26,13 @@
 namespace MoloniOn\Actions\Imports;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Enums\StockSync;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\PrestashopProduct\Create\CreateCombinationsProduct;
+use MoloniOn\Services\PrestashopProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\SyncLogs;
 
@@ -78,19 +80,21 @@ class ImportProductsFromMoloni extends ImportProducts
             SyncLogs::moloniProductAddTimeout((int) $product['productId']);
 
             try {
-                if (empty($product['variants'])) {
-                    $builder = new PrestashopProductSimple($product);
-                } else {
-                    $builder = new PrestashopProductWithCombinations($product);
-                }
+                $isCombinations = !empty($product['variants']);
 
-                if ($builder->getPrestashopProductId() === 0) {
-                    $builder->disableLogs();
-                    $builder->insert();
+                $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($product);
 
-                    SyncLogs::prestashopProductAddTimeout($builder->getPrestashopProductId());
+                if ((int) $prestashopProduct->id === 0) {
+                    // Bulk import: skip saveLog() to avoid flooding the logs
+                    $service = $isCombinations
+                        ? new CreateCombinationsProduct($product, $prestashopProduct)
+                        : new CreateSimpleProduct($product, $prestashopProduct);
+                    $service->run();
 
-                    $builder->updateStock();
+                    SyncLogs::prestashopProductAddTimeout($service->getPrestashopProductId());
+
+                    $stockService = new SyncProductStock($product, $service->getPrestashopProduct());
+                    $stockService->run();
 
                     $this->syncedProducts[] = $product['reference'];
                 } else {
