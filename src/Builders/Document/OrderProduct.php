@@ -27,6 +27,7 @@ declare(strict_types=1);
 
 namespace MoloniOn\Builders\Document;
 
+use Combination;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Builders\Document\Helpers\GetOrderProductTax;
 use MoloniOn\Builders\Interfaces\BuilderItemInterface;
@@ -40,7 +41,9 @@ use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProductFromCombination;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\CombinationReference;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
 use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
@@ -228,15 +231,25 @@ class OrderProduct implements BuilderItemInterface
         SyncLogs::prestashopProductAddTimeout((int) $this->orderProduct['product_id']);
 
         $isVariant = false;
+        $combinationAsSimple = false;
 
         try {
             $product = new \Product($this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
 
             $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
-            $service = $isVariant
-                ? new CreateVariantProduct($product)
-                : new CreateSimpleProduct($product);
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                /* No Product Properties module: create the combination as a simple product */
+                $combinationAsSimple = true;
+
+                $combination = new Combination((int) $this->orderProduct['product_attribute_id']);
+
+                $service = new CreateSimpleProductFromCombination($product, $combination);
+            } elseif ($isVariant) {
+                $service = new CreateVariantProduct($product);
+            } else {
+                $service = new CreateSimpleProduct($product);
+            }
 
             $service->run();
             $service->saveLog();
@@ -245,7 +258,7 @@ class OrderProduct implements BuilderItemInterface
         }
 
         // Has variants, we need id of variant alone
-        if ($isVariant) {
+        if ($isVariant && !$combinationAsSimple) {
             /** @var MoloniOnProductAssociations|null $association */
             $association = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
 
@@ -269,15 +282,20 @@ class OrderProduct implements BuilderItemInterface
     public function search(): OrderProduct
     {
         if ((int) $this->orderProduct['product_attribute_id'] > 0) {
-            /** @var MoloniOnProductAssociations|null $moloniVariantId */
-            $moloniVariantId = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
+            if (!MoloniContext::instance()->company()->hasProperties()) {
+                /* No Product Properties module: combination lives in Moloni as a simple product */
+                $this->getCombinationAsSimple();
+            } else {
+                /** @var MoloniOnProductAssociations|null $moloniVariantId */
+                $moloniVariantId = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
 
-            if ($moloniVariantId !== null) {
-                $this->getById($moloniVariantId->getMlVariantId());
-            }
+                if ($moloniVariantId !== null) {
+                    $this->getById($moloniVariantId->getMlVariantId());
+                }
 
-            if (empty($this->moloniProduct)) {
-                $this->getByProductParent();
+                if (empty($this->moloniProduct)) {
+                    $this->getByProductParent();
+                }
             }
         } else {
             $this->getByReference();
@@ -554,12 +572,16 @@ class OrderProduct implements BuilderItemInterface
     /**
      * Search product by reference
      *
+     * @param string|null $reference Reference to search (defaults to the order line reference)
+     *
      * @return OrderProduct
      *
      * @throws MoloniDocumentProductException
      */
-    protected function getByReference(): OrderProduct
+    protected function getByReference(?string $reference = null): OrderProduct
     {
+        $reference = $reference ?? $this->reference;
+
         $variables = [
             'options' => [
                 'filter' => [
@@ -571,7 +593,7 @@ class OrderProduct implements BuilderItemInterface
                     [
                         'field' => 'reference',
                         'comparison' => 'eq',
-                        'value' => $this->reference,
+                        'value' => $reference,
                     ],
                 ],
                 'includeVariants' => true,
@@ -587,7 +609,41 @@ class OrderProduct implements BuilderItemInterface
                 $this->moloniProduct = $query[0];
             }
         } catch (MoloniApiException $e) {
-            throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $this->reference], $e->getData());
+            throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $reference], $e->getData());
+        }
+
+        return $this;
+    }
+
+    /**
+     * Search a combination represented as a simple product in Moloni.
+     *
+     * Used when the company has no Product Properties module: each ordered
+     * combination is mapped to its own simple Moloni product. We first try the
+     * stored association (created when the combination was invoiced), then fall
+     * back to a reference lookup; when nothing is found the product id stays 0
+     * and the caller creates it via insert().
+     *
+     * @return OrderProduct
+     *
+     * @throws MoloniDocumentProductException
+     */
+    protected function getCombinationAsSimple(): OrderProduct
+    {
+        $combinationId = (int) $this->orderProduct['product_attribute_id'];
+
+        /** @var MoloniOnProductAssociations|null $association */
+        $association = ProductAssociations::findByPrestashopCombinationId($combinationId);
+
+        if ($association !== null && $association->getMlVariantId() <= 0 && $association->getMlProductId() > 0) {
+            $this->getById($association->getMlProductId());
+        }
+
+        if (empty($this->moloniProduct)) {
+            $product = new Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
+            $combination = new Combination($combinationId);
+
+            $this->getByReference(CombinationReference::get($product, $combination));
         }
 
         return $this;
