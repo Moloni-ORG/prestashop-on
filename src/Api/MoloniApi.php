@@ -241,8 +241,10 @@ class MoloniApi
         $accessToken = '';
 
         if (self::$app) {
-            if (!empty(self::$app->getCompanyId()) && isset($operations['variables']) && !isset($operations['variables']['companyId'])) {
-                $operations['variables']['companyId'] = self::$app->getCompanyId();
+            $companyId = self::$app->getCompanyId();
+
+            if (!empty($companyId) && isset($operations['variables']) && !isset($operations['variables']['companyId'])) {
+                $operations['variables']['companyId'] = $companyId;
             }
 
             $accessToken = self::$app->getAccessToken();

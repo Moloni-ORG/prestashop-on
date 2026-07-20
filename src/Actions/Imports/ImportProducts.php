@@ -61,6 +61,13 @@ abstract class ImportProducts
         $this->page = $page;
     }
 
+    /**
+     * Runs the import for the current page.
+     *
+     * @throws \MoloniOn\Exceptions\MoloniException
+     */
+    abstract public function handle(): void;
+
     public function getCurrentPercentage(): int
     {
         if ($this->totalResults === 0) {

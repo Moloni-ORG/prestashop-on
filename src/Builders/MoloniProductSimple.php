@@ -47,6 +47,7 @@ use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\LogsTrait;
+use MoloniOn\Traits\MoloniProductReferenceTrait;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -55,6 +56,7 @@ if (!defined('_PS_VERSION_')) {
 class MoloniProductSimple implements BuilderInterface
 {
     use LogsTrait;
+    use MoloniProductReferenceTrait;
 
     /**
      * Moloni roduct
@@ -897,15 +899,7 @@ class MoloniProductSimple implements BuilderInterface
             $query = MoloniApiClient::products()
                 ->queryProducts($variables);
 
-            $exactMatches = array_filter($query, function ($product) {
-                return isset($product['reference']) && $product['reference'] === $this->reference;
-            });
-
-            if (count($exactMatches) > 1) {
-                throw new MoloniProductException('Multiple Moloni products share the reference ({0}). Please remove the duplicates in Moloni ON.', ['{0}' => $this->reference], ['products' => $exactMatches]);
-            }
-
-            $this->moloniProduct = reset($exactMatches) ?: [];
+            $this->moloniProduct = $this->findExactReferenceMatch($query, $this->reference);
         } catch (MoloniApiException $e) {
             throw new MoloniProductException('Error fetching product by reference: ({0})', ['{0}' => $this->reference], $e->getData());
         }

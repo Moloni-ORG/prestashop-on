@@ -34,13 +34,12 @@ trait DiscountsTrait
     protected function calculateOriginalPrice(?float $discountedPrice = 0, ?float $discountedPercentage = 0)
     {
         $originalPrice = $discountedPrice;
-        $divisor = 1 - ($discountedPercentage / 100);
 
-        // Guard the divisor: at a 100% (or greater) reduction the original price
-        // cannot be reconstructed from the discounted price, so avoid dividing
-        // by zero/negative and keep the discounted price as best effort.
-        if ($discountedPercentage > 0 && $divisor > 0) {
-            $originalPrice = $discountedPrice / $divisor;
+        // At a 100% (or greater) reduction the original price cannot be
+        // reconstructed from the discounted price, so keep the discounted price
+        // as best effort and avoid dividing by zero/negative.
+        if ($discountedPercentage > 0 && $discountedPercentage < 100) {
+            $originalPrice = $discountedPrice / (1 - ($discountedPercentage / 100));
         }
 
         return $originalPrice;

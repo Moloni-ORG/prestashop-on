@@ -27,6 +27,7 @@ namespace MoloniOn\Controller\Admin\Tools;
 
 use MoloniOn\Actions\Exports\ExportProductsToMoloni;
 use MoloniOn\Actions\Exports\ExportStocksToMoloni;
+use MoloniOn\Actions\Imports\ImportProducts;
 use MoloniOn\Actions\Imports\ImportProductsFromMoloni;
 use MoloniOn\Actions\Imports\ImportStockChangesFromMoloni;
 use MoloniOn\Actions\Tools\WebhookCreate;
@@ -69,64 +70,39 @@ class Tools extends MoloniController
     {
         $page = (int) PrestashopTools::getValue('page', 1);
 
-        $response = [
-            'valid' => true,
-            'post' => [
-                'page' => $page,
-            ],
-        ];
-
-        $tool = new ImportProductsFromMoloni($page);
-
-        try {
-            $tool->handle();
-        } catch (MoloniException $e) {
-            return new Response(json_encode(['valid' => false]), Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        $response['hasMore'] = $tool->getHasMore();
-
-        $response['overlayContent'] = $this->displayView(
-            'tools/overlays/blocks/ProductImportContent.twig',
-            [
-                'hasMore' => $tool->getHasMore(),
-                'totalResults' => $tool->getTotalResults(),
-                'currentPercentage' => $tool->getCurrentPercentage(),
-            ]
-        );
-
-        return new Response(json_encode($response));
+        return $this->runImportTool(new ImportProductsFromMoloni($page), $page);
     }
 
     public function importStocks(): Response
     {
         $page = (int) PrestashopTools::getValue('page', 1);
 
-        $response = [
-            'valid' => true,
-            'post' => [
-                'page' => $page,
-            ],
-        ];
+        return $this->runImportTool(new ImportStockChangesFromMoloni($page), $page);
+    }
 
-        $tool = new ImportStockChangesFromMoloni($page);
-
+    private function runImportTool(ImportProducts $tool, int $page): Response
+    {
         try {
             $tool->handle();
         } catch (MoloniException $e) {
             return new Response(json_encode(['valid' => false]), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $response['hasMore'] = $tool->getHasMore();
-
-        $response['overlayContent'] = $this->displayView(
-            'tools/overlays/blocks/ProductImportContent.twig',
-            [
-                'hasMore' => $tool->getHasMore(),
-                'totalResults' => $tool->getTotalResults(),
-                'currentPercentage' => $tool->getCurrentPercentage(),
-            ]
-        );
+        $response = [
+            'valid' => true,
+            'post' => [
+                'page' => $page,
+            ],
+            'hasMore' => $tool->getHasMore(),
+            'overlayContent' => $this->displayView(
+                'tools/overlays/blocks/ProductImportContent.twig',
+                [
+                    'hasMore' => $tool->getHasMore(),
+                    'totalResults' => $tool->getTotalResults(),
+                    'currentPercentage' => $tool->getCurrentPercentage(),
+                ]
+            ),
+        ];
 
         return new Response(json_encode($response));
     }
