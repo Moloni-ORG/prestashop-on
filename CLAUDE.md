@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Working style
+
+- **Always ask when in doubt — never guess.** If a requirement, API contract, expected behavior,
+  or the right approach is unclear or ambiguous, ask the user a clarifying question before acting.
+  Do not assume, invent, or guess at intent, values, or missing details.
+
 ## What this is
 
 `molonion` is a **PrestaShop module** that integrates PrestaShop stores with **Moloni ON**

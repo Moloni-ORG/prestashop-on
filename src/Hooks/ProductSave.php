@@ -28,6 +28,7 @@ namespace MoloniOn\Hooks;
 use MoloniOn\Api\MoloniApi;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
 use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
@@ -63,6 +64,15 @@ class ProductSave extends AbstractHookAction
             $product = new \Product($this->productId, true, \Configuration::get('PS_LANG_DEFAULT'));
 
             $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                Logs::addWarningLog(
+                    'Product with combinations not synced to Moloni ON: the Product Properties module is not active in your Moloni ON company.',
+                    ['module' => 'productsServices.productProperties']
+                );
+
+                return;
+            }
 
             $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
