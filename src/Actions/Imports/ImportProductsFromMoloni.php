@@ -40,6 +40,9 @@ if (!defined('_PS_VERSION_')) {
 
 class ImportProductsFromMoloni extends ImportProducts
 {
+    /**
+     * @throws MoloniApiException
+     */
     public function handle(): void
     {
         $props = [
@@ -58,7 +61,9 @@ class ImportProductsFromMoloni extends ImportProducts
         try {
             $query = MoloniApiClient::products()->queryProducts($props, true);
         } catch (MoloniApiException $e) {
-            return;
+            Logs::addErrorLog(['Error importing products. Part {0}', ['{0}' => $this->page]], $e->getData());
+
+            throw $e;
         }
 
         $this->totalResults = (int) ($query['data']['products']['options']['pagination']['count'] ?? 0);

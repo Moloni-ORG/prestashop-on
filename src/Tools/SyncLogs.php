@@ -184,7 +184,7 @@ class SyncLogs
     private static function addTimeout(
         ?int $moloniId = 0,
         ?int $prestashopId = 0,
-        ?int $type = SyncLogsType::PRODUCT
+        ?int $type = SyncLogsType::PRODUCT,
     ): void {
         $syncLog = new MoloniOnSyncLogs();
         $syncLog->setMoloniId($moloniId);

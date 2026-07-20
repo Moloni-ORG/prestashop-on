@@ -66,6 +66,23 @@ class Install extends ActivatorAbstract
         $this->createCommon();
     }
 
+    /**
+     * Applies the database schema for a module upgrade.
+     *
+     * Schema files use "CREATE TABLE IF NOT EXISTS", so this is idempotent: it
+     * creates any tables added in a newer version and leaves existing tables
+     * untouched. Column changes for a specific release must be added as
+     * explicit ALTER statements in that release's upgrade/upgrade-x.y.z.php.
+     *
+     * @return void
+     *
+     * @throws MoloniActivatorException
+     */
+    public function upgradeDatabase(): void
+    {
+        $this->installDatabase();
+    }
+
     //        PRIVATES        //
 
     /**

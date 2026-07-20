@@ -74,22 +74,40 @@ class ProductAssociations
 
     public static function findByMoloniParentId($parentId): array
     {
-        return self::$associationRepository->findBy(['mlProductId' => $parentId]);
+        return self::$associationRepository->findBy([
+            'mlProductId' => $parentId,
+            'companyId' => self::$context->getCompanyId(),
+        ]);
     }
 
     public static function findByMoloniVariantId($variantId): ?object
     {
-        return self::$associationRepository->findOneBy(['mlVariantId' => $variantId], ['id' => 'DESC']);
+        return self::$associationRepository->findOneBy(
+            [
+                'mlVariantId' => $variantId,
+                'companyId' => self::$context->getCompanyId(),
+            ],
+            ['id' => 'DESC']
+        );
     }
 
     public static function findByPrestashopProductId($productId): array
     {
-        return self::$associationRepository->findBy(['psProductId' => $productId]);
+        return self::$associationRepository->findBy([
+            'psProductId' => $productId,
+            'companyId' => self::$context->getCompanyId(),
+        ]);
     }
 
     public static function findByPrestashopCombinationId($combinationId): ?object
     {
-        return self::$associationRepository->findOneBy(['psCombinationId' => $combinationId], ['id' => 'DESC']);
+        return self::$associationRepository->findOneBy(
+            [
+                'psCombinationId' => $combinationId,
+                'companyId' => self::$context->getCompanyId(),
+            ],
+            ['id' => 'DESC']
+        );
     }
 
     //          CRUD          //

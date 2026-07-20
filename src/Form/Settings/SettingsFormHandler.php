@@ -58,7 +58,6 @@ class SettingsFormHandler implements FormHandlerInterface
      */
     protected $hookDispatcher;
 
-
     /**
      * @var Company
      */
@@ -68,7 +67,7 @@ class SettingsFormHandler implements FormHandlerInterface
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
         SettingsFormDataProvider $formDataProvider,
-        MoloniContext $context
+        MoloniContext $context,
     ) {
         $this->formFactory = $formFactory;
         $this->hookDispatcher = $hookDispatcher;

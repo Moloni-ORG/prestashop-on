@@ -36,7 +36,6 @@ use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
-use MoloniOn\MoloniContext;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Symfony\Component\HttpFoundation\Response;

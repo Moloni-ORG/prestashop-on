@@ -155,6 +155,13 @@ class OrderShipping implements BuilderItemInterface
     protected $orderShipping;
 
     /**
+     * Moloni product data
+     *
+     * @var array
+     */
+    protected $moloniProduct = [];
+
+    /**
      * Constructor
      *
      * @param \Order $order
@@ -527,6 +534,7 @@ class OrderShipping implements BuilderItemInterface
                 ->queryProducts($variables);
 
             if (!empty($query)) {
+                $this->moloniProduct = $query[0];
                 $this->productId = (int) $query[0]['productId'];
             }
         } catch (MoloniApiException $e) {

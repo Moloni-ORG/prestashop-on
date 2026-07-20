@@ -241,8 +241,12 @@ class OrderProduct implements BuilderItemInterface
 
         // Has variants, we need id of variant alone
         if ($productBuilder instanceof MoloniProductWithVariants) {
-            /** @var MoloniOnProductAssociations $association */
+            /** @var MoloniOnProductAssociations|null $association */
             $association = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
+
+            if ($association === null) {
+                throw new MoloniDocumentProductException('Could not find variant association after inserting product ({0})', ['{0}' => $this->reference]);
+            }
 
             $this->productId = $association->getMlVariantId();
         } else {

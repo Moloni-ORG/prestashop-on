@@ -43,9 +43,6 @@ include_once __DIR__ . '/src/Webservice/WebserviceSpecificManagementMoloniOnReso
 
 class CoreModule extends Module
 {
-    /** @var bool */
-    protected $openForHookQuantityUpdate = false;
-
     /**
      * Plugin settings shortcut
      *
@@ -245,8 +242,6 @@ class CoreModule extends Module
             $this->getContext();
 
             new ProductSave($params['id_product']);
-
-            $this->openForHookQuantityUpdate = true;
         } catch (Exception $e) {
             // Do nothing
         }
@@ -265,8 +260,6 @@ class CoreModule extends Module
             $this->getContext();
 
             new ProductSave($params['id_product']);
-
-            $this->openForHookQuantityUpdate = true;
         } catch (Exception $e) {
             // Do nothing
         }
@@ -274,10 +267,6 @@ class CoreModule extends Module
 
     public function hookActionUpdateQuantity($params): bool
     {
-        if (!$this->openForHookQuantityUpdate) {
-            return true;
-        }
-
         try {
             $this->getContext();
 
@@ -305,15 +294,15 @@ class CoreModule extends Module
         try {
             /** @var MoloniContext|false $context */
             $context = $this->getContext();
+
+            if (!$context) {
+                return;
+            }
+
+            new OrderStatusUpdate($params['id_order'], $params['newOrderStatus'], $context);
         } catch (Exception $e) {
             // Do nothing
         }
-
-        if (!$context) {
-            return;
-        }
-
-        new OrderStatusUpdate($params['id_order'], $params['newOrderStatus'], $context);
     }
 
     /**

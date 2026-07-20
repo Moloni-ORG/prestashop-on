@@ -177,7 +177,6 @@ class PrestashopProductSimple implements BuilderInterface
      */
     protected $syncFields;
 
-
     /**
      * If the company can sync stock
      *

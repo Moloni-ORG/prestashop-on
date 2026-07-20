@@ -165,7 +165,7 @@ class ProductVariant
         ?string $parentName = '',
         ?array $moloniParentProduct = [],
         ?array $propertyPairs = [],
-        ?array $syncFields = null
+        ?array $syncFields = null,
     ) {
         $this->prestashopCombination = $prestashopCombination;
 
@@ -465,7 +465,7 @@ class ProductVariant
      */
     public function setStock(?float $newStock = null): ProductVariant
     {
-        if ($newStock) {
+        if ($newStock !== null) {
             $this->stock = $newStock;
 
             return $this;

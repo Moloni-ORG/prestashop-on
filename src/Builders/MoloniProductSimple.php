@@ -196,7 +196,6 @@ class MoloniProductSimple implements BuilderInterface
      */
     protected $prestashopProduct;
 
-
     /**
      * If the company can sync stock
      *
@@ -611,7 +610,7 @@ class MoloniProductSimple implements BuilderInterface
             return $this;
         }
 
-        if ($newStock) {
+        if ($newStock !== null) {
             $this->stock = $newStock;
 
             return $this;
@@ -898,11 +897,15 @@ class MoloniProductSimple implements BuilderInterface
             $query = MoloniApiClient::products()
                 ->queryProducts($variables);
 
-            if (!empty($query)) {
-                $moloniProduct = $query[0];
+            $exactMatches = array_filter($query, function ($product) {
+                return isset($product['reference']) && $product['reference'] === $this->reference;
+            });
 
-                $this->moloniProduct = $moloniProduct;
+            if (count($exactMatches) > 1) {
+                throw new MoloniProductException('Multiple Moloni products share the reference ({0}). Please remove the duplicates in Moloni ON.', ['{0}' => $this->reference], ['products' => $exactMatches]);
             }
+
+            $this->moloniProduct = reset($exactMatches) ?: [];
         } catch (MoloniApiException $e) {
             throw new MoloniProductException('Error fetching product by reference: ({0})', ['{0}' => $this->reference], $e->getData());
         }

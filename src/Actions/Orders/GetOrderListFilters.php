@@ -49,7 +49,7 @@ class GetOrderListFilters
         if (empty($this->filters['order_state'])) {
             $this->filters['order_state'] = Settings::get('orderStatusToShow');
         } else {
-            $this->filters['order_state'] = [$this->filters['order_state']];
+            $this->filters['order_state'] = [(int) $this->filters['order_state']];
         }
 
         return $this->filters;

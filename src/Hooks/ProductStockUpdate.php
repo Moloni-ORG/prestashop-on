@@ -109,7 +109,7 @@ class ProductStockUpdate extends AbstractHookAction
             return false;
         }
 
-        if (SyncLogs::prestashopProductStockHasTimeout($this->productId)) {
+        if (SyncLogs::prestashopProductHasTimeout($this->productId)) {
             return false;
         }
 

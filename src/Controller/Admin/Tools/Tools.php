@@ -77,7 +77,12 @@ class Tools extends MoloniController
         ];
 
         $tool = new ImportProductsFromMoloni($page);
-        $tool->handle();
+
+        try {
+            $tool->handle();
+        } catch (MoloniException $e) {
+            return new Response(json_encode(['valid' => false]), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         $response['hasMore'] = $tool->getHasMore();
 
@@ -105,7 +110,12 @@ class Tools extends MoloniController
         ];
 
         $tool = new ImportStockChangesFromMoloni($page);
-        $tool->handle();
+
+        try {
+            $tool->handle();
+        } catch (MoloniException $e) {
+            return new Response(json_encode(['valid' => false]), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         $response['hasMore'] = $tool->getHasMore();
 
