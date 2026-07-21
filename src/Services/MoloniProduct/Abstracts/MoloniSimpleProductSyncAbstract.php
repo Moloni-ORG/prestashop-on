@@ -25,8 +25,10 @@
 
 namespace MoloniOn\Services\MoloniProduct\Abstracts;
 
+use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Services\MoloniProduct\Helpers\UpdateMoloniSimpleProductImage;
+use MoloniOn\Tools\ProductAssociations;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -146,6 +148,39 @@ abstract class MoloniSimpleProductSyncAbstract extends MoloniProductSyncAbstract
         if (!empty($this->coverImage) && $this->shouldSyncImage()) {
             new UpdateMoloniSimpleProductImage($this->coverImage, $this->getMoloniProductId());
         }
+
+        $this->mapSimpleAssociation();
+    }
+
+    /**
+     * (Re)map this simple product to its Moloni counterpart in the associations
+     * table (variant and combination = 0), so future syncs match by stored id
+     * instead of only by reference.
+     *
+     * @return void
+     */
+    protected function mapSimpleAssociation(): void
+    {
+        $moloniProductId = $this->getMoloniProductId();
+        $prestashopProductId = (int) $this->prestashopProduct->id;
+
+        if ($moloniProductId <= 0 || $prestashopProductId <= 0) {
+            return;
+        }
+
+        ProductAssociations::deleteByPrestashopId($prestashopProductId);
+        ProductAssociations::deleteByMoloniId($moloniProductId);
+
+        ProductAssociations::add(
+            $moloniProductId,
+            (string) $this->reference,
+            0,
+            $prestashopProductId,
+            (string) $this->prestashopProduct->reference,
+            0,
+            '',
+            Boolean::YES
+        );
     }
 
     /**

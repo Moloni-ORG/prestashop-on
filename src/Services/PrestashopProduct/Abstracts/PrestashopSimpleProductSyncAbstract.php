@@ -25,7 +25,9 @@
 
 namespace MoloniOn\Services\PrestashopProduct\Abstracts;
 
+use MoloniOn\Enums\Boolean;
 use MoloniOn\Services\PrestashopProduct\Helpers\UpdatePrestaProductImage;
+use MoloniOn\Tools\ProductAssociations;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -73,5 +75,38 @@ abstract class PrestashopSimpleProductSyncAbstract extends PrestashopProductSync
         if (!empty($this->imagePath) && $this->shouldSyncImage()) {
             new UpdatePrestaProductImage($this->prestashopProduct->id, $this->imagePath);
         }
+
+        $this->mapSimpleAssociation();
+    }
+
+    /**
+     * (Re)map this simple product to its Moloni counterpart in the associations
+     * table (variant and combination = 0), so future syncs match by stored id
+     * instead of only by reference.
+     *
+     * @return void
+     */
+    protected function mapSimpleAssociation(): void
+    {
+        $moloniProductId = (int) ($this->moloniProduct['productId'] ?? 0);
+        $prestashopProductId = (int) $this->prestashopProduct->id;
+
+        if ($moloniProductId <= 0 || $prestashopProductId <= 0) {
+            return;
+        }
+
+        ProductAssociations::deleteByPrestashopId($prestashopProductId);
+        ProductAssociations::deleteByMoloniId($moloniProductId);
+
+        ProductAssociations::add(
+            $moloniProductId,
+            (string) ($this->moloniProduct['reference'] ?? ''),
+            0,
+            $prestashopProductId,
+            (string) $this->prestashopProduct->reference,
+            0,
+            '',
+            Boolean::YES
+        );
     }
 }

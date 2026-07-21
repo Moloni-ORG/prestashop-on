@@ -32,7 +32,9 @@ use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
+use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Traits\AttributesTrait;
 
 if (!defined('_PS_VERSION_')) {
@@ -244,6 +246,19 @@ class VerifyProductForList
 
     private function findByReference()
     {
+        /* Prefer a stored simple mapping: matches even after the reference changed */
+        $association = ProductAssociations::findSimpleByPrestashopProductId((int) $this->prestaProduct->id);
+
+        if ($association !== null) {
+            $moloniProduct = FindMoloniProductByReference::byId((int) $association->getMlProductId());
+
+            if (!empty($moloniProduct)) {
+                $this->moloniProduct = $moloniProduct;
+
+                return;
+            }
+        }
+
         $reference = $this->prestaProduct->reference;
 
         if (empty($reference)) {

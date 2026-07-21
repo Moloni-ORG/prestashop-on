@@ -31,6 +31,7 @@ use Combination;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
+use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Traits\AttributesTrait;
 
 if (!defined('_PS_VERSION_')) {
@@ -156,6 +157,19 @@ class VerifyProductForList
 
     private function findByReference()
     {
+        /* Prefer a stored simple mapping: matches even after the reference changed */
+        $association = ProductAssociations::findSimpleByMoloniProductId((int) $this->moloniProduct['productId']);
+
+        if ($association !== null) {
+            $product = new \Product((int) $association->getPsProductId(), true, $this->psLanguageId);
+
+            if (\Validate::isLoadedObject($product)) {
+                $this->prestaProduct = $product;
+
+                return;
+            }
+        }
+
         $productId = (int) \Product::getIdByReference($this->moloniProduct['reference']);
 
         if (!empty($productId)) {

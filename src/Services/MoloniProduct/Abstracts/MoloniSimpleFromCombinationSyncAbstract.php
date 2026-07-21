@@ -250,6 +250,17 @@ abstract class MoloniSimpleFromCombinationSyncAbstract extends MoloniSimpleProdu
     }
 
     /**
+     * A combination-as-simple product is mapped per combination in afterSave(),
+     * so the generic "true simple" mapping (combination = 0) must not run.
+     *
+     * @return void
+     */
+    protected function mapSimpleAssociation(): void
+    {
+        // Intentionally empty: mapping is handled per combination in afterSave().
+    }
+
+    /**
      * Build the combination's attribute names (e.g. "M, Blue")
      *
      * @return string

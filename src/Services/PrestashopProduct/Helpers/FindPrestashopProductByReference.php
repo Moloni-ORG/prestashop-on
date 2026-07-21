@@ -25,6 +25,8 @@
 
 namespace MoloniOn\Services\PrestashopProduct\Helpers;
 
+use MoloniOn\Tools\ProductAssociations;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -47,14 +49,29 @@ class FindPrestashopProductByReference
      */
     public static function fromMoloniProduct(array $moloniProduct): \Product
     {
+        $languageId = \Configuration::get('PS_LANG_DEFAULT');
+
+        /* Prefer a stored simple mapping: matches even after the reference changed */
+        $moloniProductId = (int) ($moloniProduct['productId'] ?? 0);
+
+        if ($moloniProductId > 0) {
+            $association = ProductAssociations::findSimpleByMoloniProductId($moloniProductId);
+
+            if ($association !== null) {
+                $product = new \Product((int) $association->getPsProductId(), true, $languageId);
+
+                if (\Validate::isLoadedObject($product)) {
+                    return $product;
+                }
+            }
+        }
+
         $reference = (string) ($moloniProduct['reference'] ?? '');
 
         if ($reference === '') {
             /* No reference: never match by an empty reference (would bind an unrelated product) */
             return new \Product();
         }
-
-        $languageId = \Configuration::get('PS_LANG_DEFAULT');
 
         $productId = (int) \Product::getIdByReference($reference);
 

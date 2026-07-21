@@ -28,6 +28,7 @@ namespace MoloniOn\Services\MoloniProduct\Helpers;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Traits\MoloniProductReferenceTrait;
 
 if (!defined('_PS_VERSION_')) {
@@ -66,7 +67,44 @@ class FindMoloniProductByReference
      */
     public static function fromPrestashopProduct(\Product $prestashopProduct): array
     {
+        /* Prefer a stored simple mapping: matches even after the reference changed */
+        $association = ProductAssociations::findSimpleByPrestashopProductId((int) $prestashopProduct->id);
+
+        if ($association !== null) {
+            $moloniProduct = self::byId((int) $association->getMlProductId());
+
+            if (!empty($moloniProduct)) {
+                return $moloniProduct;
+            }
+        }
+
         return (new self(ProductReference::fromPrestashopProduct($prestashopProduct)))->handle();
+    }
+
+    /**
+     * Fetch a Moloni product by its id.
+     *
+     * Returns an empty array when the product no longer exists, so callers fall
+     * back to a reference search instead of trusting a stale mapping.
+     *
+     * @param int $moloniProductId
+     *
+     * @return array
+     */
+    public static function byId(int $moloniProductId): array
+    {
+        if ($moloniProductId <= 0) {
+            return [];
+        }
+
+        try {
+            $query = MoloniApiClient::products()
+                ->queryProduct(['productId' => $moloniProductId]);
+        } catch (MoloniApiException $e) {
+            return [];
+        }
+
+        return $query['data']['product']['data'] ?? [];
     }
 
     /**

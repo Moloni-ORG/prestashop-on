@@ -110,6 +110,43 @@ class ProductAssociations
         );
     }
 
+    /**
+     * Find the mapping of a simple (no combination) PrestaShop product.
+     *
+     * A combination id of 0 identifies the "true simple" row, so this never
+     * matches a variant or a combination-as-simple mapping.
+     */
+    public static function findSimpleByPrestashopProductId($productId): ?object
+    {
+        return self::$associationRepository->findOneBy(
+            [
+                'psProductId' => $productId,
+                'psCombinationId' => 0,
+                'companyId' => self::$context->getCompanyId(),
+            ],
+            ['id' => 'DESC']
+        );
+    }
+
+    /**
+     * Find the mapping of a simple (no variant) Moloni product.
+     *
+     * Requires both the variant and the combination to be 0 so it only matches
+     * a true simple <-> simple mapping, never a combination-as-simple row.
+     */
+    public static function findSimpleByMoloniProductId($productId): ?object
+    {
+        return self::$associationRepository->findOneBy(
+            [
+                'mlProductId' => $productId,
+                'mlVariantId' => 0,
+                'psCombinationId' => 0,
+                'companyId' => self::$context->getCompanyId(),
+            ],
+            ['id' => 'DESC']
+        );
+    }
+
     //          CRUD          //
 
     public static function add($mlProductId, $mlProductReference, $mlVariantId, $psProductId, $psProductReference, $psCombinationId, $psCombinationReference, $active): void
