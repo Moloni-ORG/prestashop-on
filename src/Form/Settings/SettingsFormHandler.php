@@ -105,15 +105,15 @@ class SettingsFormHandler implements FormHandlerInterface
             (new WebhookDeleteAll())->handle();
             $action = new WebhookCreate();
 
-            if ($submitData['syncStockToPrestashop'] === Boolean::YES) {
+            if (($submitData['syncStockToPrestashop'] ?? Boolean::NO) === Boolean::YES) {
                 $action->handle('Product', 'stockChanged');
             }
 
-            if ($submitData['addProductsToPrestashop'] === Boolean::YES) {
+            if (($submitData['addProductsToPrestashop'] ?? Boolean::NO) === Boolean::YES) {
                 $action->handle('Product', 'create');
             }
 
-            if ($submitData['updateProductsToPrestashop'] === Boolean::YES) {
+            if (($submitData['updateProductsToPrestashop'] ?? Boolean::NO) === Boolean::YES) {
                 $action->handle('Product', 'update');
             }
         } catch (MoloniException $e) {

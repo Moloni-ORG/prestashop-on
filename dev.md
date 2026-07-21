@@ -59,15 +59,15 @@ npm run build-prod
 
 ## 4. Start the Store Using Docker
 
-1. Copy the `docker-compose.yml` file to the folder **one level above the project root** (the directory where the project was originally cloned).
-
-2. From that directory, run:
+From the **root of the project**, run:
 
 ```bash
 docker compose up -d
 ```
 
-This will start the PrestaShop store, database, and all required services in the background.
+This will start the PrestaShop store, database, and all required services in the background. The
+project directory is bind-mounted into the container at `/var/www/html/modules/molonion`, so changes
+you make locally are reflected inside the store.
 
 ---
 
@@ -91,7 +91,7 @@ http://localhost:8080/administration
 1. `composer install` (project root)
 2. `npm install` (inside `.dev`)
 3. `npm run build-prod` (inside `.dev`, required after JS/CSS changes)
-4. `docker compose up -d` (parent directory of project)
+4. `docker compose up -d` (project root)
 5. Open `http://localhost:8080/administration`
 
 ---

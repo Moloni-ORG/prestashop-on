@@ -35,7 +35,7 @@ services:
       - prestashop_network
     volumes:
       - site:/var/www/html
-      - ./molonion:/var/www/html/modules/molonion
+      - .:/var/www/html/modules/molonion
 networks:
     prestashop_network:
 volumes:
