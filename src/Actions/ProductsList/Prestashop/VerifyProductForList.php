@@ -33,7 +33,6 @@ use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
-use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
 
 if (!defined('_PS_VERSION_')) {
@@ -65,11 +64,6 @@ class VerifyProductForList
     private $warehouseId;
 
     /**
-     * @var int
-     */
-    private $productReferenceFallback;
-
-    /**
      * Constructor
      *
      * @param \Product $prestaProduct
@@ -79,8 +73,6 @@ class VerifyProductForList
     {
         $this->prestaProduct = $prestaProduct;
         $this->warehouseId = $warehouseId;
-
-        $this->productReferenceFallback = (int) Settings::get('productReferenceFallback');
     }
 
     public function run(): void
@@ -102,7 +94,7 @@ class VerifyProductForList
     private function verifyMoloniProduct()
     {
         if (empty($this->moloniProduct)) {
-            if (empty($this->prestaProduct->reference) && $this->productReferenceFallback === Boolean::NO) {
+            if (empty($this->prestaProduct->reference)) {
                 $this->parsedProduct['notices'][] = ['Product does not have a reference set in PrestaShop.'];
                 $this->parsedProduct['missing_product'] = false;
             } else {
@@ -253,10 +245,6 @@ class VerifyProductForList
     private function findByReference()
     {
         $reference = $this->prestaProduct->reference;
-
-        if (empty($reference) && $this->productReferenceFallback === Boolean::YES) {
-            $reference = $this->prestaProduct->id;
-        }
 
         if (empty($reference)) {
             return;

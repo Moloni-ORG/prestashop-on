@@ -63,7 +63,6 @@ class MoloniProducts extends MoloniController
                 'filters' => $filters,
                 'paginator' => $service->getPaginator(),
                 'companyName' => Settings::get('companyName'),
-                'productReferenceFallbackActive' => (int) Settings::get('productReferenceFallback'),
                 'importStockRoute' => MoloniRoutes::MOLONI_PRODUCTS_IMPORT_STOCK,
                 'importProductRoute' => MoloniRoutes::MOLONI_PRODUCTS_IMPORT_PRODUCT,
                 'toolsRoute' => MoloniRoutes::TOOLS,

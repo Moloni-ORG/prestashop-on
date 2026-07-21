@@ -25,9 +25,6 @@
 
 namespace MoloniOn\Services\PrestashopProduct\Helpers;
 
-use MoloniOn\Enums\Boolean;
-use MoloniOn\Tools\Settings;
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -37,7 +34,7 @@ if (!defined('_PS_VERSION_')) {
  *
  * Extracted from the old product builders so orchestrators can decide between a
  * create and an update service before instantiating one. Returns an existing
- * loaded product, a reference-fallback match, or a fresh empty product.
+ * loaded product or a fresh empty product.
  */
 class FindPrestashopProductByReference
 {
@@ -63,10 +60,6 @@ class FindPrestashopProductByReference
 
         if ($productId > 0) {
             return new \Product($productId, true, $languageId);
-        }
-
-        if ((int) Settings::get('productReferenceFallback') === Boolean::YES && is_numeric($reference)) {
-            return new \Product((int) $reference, true, $languageId);
         }
 
         return new \Product();

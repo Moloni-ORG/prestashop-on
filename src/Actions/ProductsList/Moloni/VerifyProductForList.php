@@ -28,11 +28,9 @@ declare(strict_types=1);
 namespace MoloniOn\Actions\ProductsList\Moloni;
 
 use Combination;
-use MoloniOn\Enums\Boolean;
 use MoloniOn\Helpers\Stock;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\PrestashopProduct\Helpers\Combinations\FindOrCreateCombination;
-use MoloniOn\Tools\Settings;
 use MoloniOn\Traits\AttributesTrait;
 
 if (!defined('_PS_VERSION_')) {
@@ -54,8 +52,6 @@ class VerifyProductForList
     private $psLanguageId;
     private $psManagesStock;
 
-    private $productReferenceFallback;
-
     public function __construct(array $moloniProduct, int $warehouseId)
     {
         $this->moloniProduct = $moloniProduct;
@@ -63,7 +59,6 @@ class VerifyProductForList
 
         $this->psLanguageId = \Configuration::get('PS_LANG_DEFAULT');
         $this->psManagesStock = \Configuration::get('PS_STOCK_MANAGEMENT');
-        $this->productReferenceFallback = (int) Settings::get('productReferenceFallback');
     }
 
     //         PUBLICS         //
@@ -165,16 +160,6 @@ class VerifyProductForList
 
         if (!empty($productId)) {
             $this->prestaProduct = new \Product($productId, true, $this->psLanguageId);
-
-            return;
-        }
-
-        if ($this->productReferenceFallback === Boolean::YES && is_numeric($this->moloniProduct['reference'])) {
-            $tryAndMatch = new \Product((int) $this->moloniProduct['reference'], true, $this->psLanguageId);
-
-            if (!empty($tryAndMatch->id)) {
-                $this->prestaProduct = $tryAndMatch;
-            }
         }
     }
 

@@ -68,7 +68,6 @@ class PrestashopProducts extends MoloniController
                 'filters' => $filters,
                 'paginator' => $service->getPaginator(),
                 'companyName' => Settings::get('companyName'),
-                'productReferenceFallbackActive' => (int) Settings::get('productReferenceFallback'),
                 'exportStockRoute' => MoloniRoutes::PRESTASHOP_PRODUCTS_EXPORT_STOCK,
                 'exportProductRoute' => MoloniRoutes::PRESTASHOP_PRODUCTS_EXPORT_PRODUCT,
                 'toolsRoute' => MoloniRoutes::TOOLS,

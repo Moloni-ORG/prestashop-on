@@ -144,6 +144,13 @@ class DummyTranslations
 
         $this->translator->trans('Error saving product image', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Tax not found in Moloni ON. Please create the correct tax for {0} ({1} || {2})', [], 'Modules.Molonion.Errors');
+
+        $this->translator->trans('Unexpected response paginating request', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Could not find variant association after inserting product ({0})', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Product skipped: the Product Properties module is not active in your Moloni ON company.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error importing products. Part {0}', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Error importing products stock. Part {0}', [], 'Modules.Molonion.Errors');
     }
 
     public function common(): void

@@ -507,16 +507,6 @@
         <target>exemplo@email.com</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="bd55e1389452643550cd1dd80b4310b0">
-        <source>Enable reference fallback</source>
-        <target>Ativar fallback de referência</target>
-        <note>Line: </note>
-      </trans-unit>
-      <trans-unit id="f39543afdea2623e67ef122c9ebc3598">
-        <source>When synchronizing products from Moloni ON if the reference is numeric and no products are found in PrestaShop, the plugin will try and find an PrestaShop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in PrestaShop.</source>
-        <target>Ao sincronizar produtos do Moloni ON, se a referência for numérica e não forem encontrados produtos no PrestaShop, o plugin tentará encontrar um produto PrestaShop com um ID que corresponda à referência numérica. Isto é útil se os produtos não tiverem referência definida no PrestaShop.</target>
-        <note>Line: </note>
-      </trans-unit>
       <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
         <source>Save</source>
         <target>Guardar</target>
