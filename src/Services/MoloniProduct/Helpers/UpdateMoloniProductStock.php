@@ -85,8 +85,8 @@ class UpdateMoloniProductStock
         $moloniStock = 0;
 
         foreach ($this->moloniProductWarehouses as $warehouse) {
-            if ($warehouse['warehouseId'] === $this->warehouseId) {
-                $moloniStock = $warehouse['stock'];
+            if ((int) $warehouse['warehouseId'] === $this->warehouseId) {
+                $moloniStock = (float) $warehouse['stock'];
                 break;
             }
         }

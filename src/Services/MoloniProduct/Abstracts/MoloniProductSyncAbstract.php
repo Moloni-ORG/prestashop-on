@@ -39,6 +39,7 @@ use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Exceptions\Product\MoloniProductTaxException;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Helpers\ProductReference;
 use MoloniOn\Services\MoloniProduct\Interfaces\MoloniProductServiceInterface;
 use MoloniOn\Services\MoloniProduct\ProductCategory;
 use MoloniOn\Services\Tax\TaxFromRate;
@@ -402,13 +403,7 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
      */
     public function setReference(): self
     {
-        $reference = $this->prestashopProduct->reference;
-
-        if (empty($reference)) {
-            $reference = (string) $this->prestashopProduct->id;
-        }
-
-        $this->reference = $reference;
+        $this->reference = ProductReference::fromPrestashopProduct($this->prestashopProduct);
 
         return $this;
     }
@@ -584,17 +579,7 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
             return $this;
         }
 
-        $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
-
-        if (in_array($warehouseId, [0, 1])) {
-            $warehouseId = Warehouse::getCompanyDefaultWarehouse();
-
-            if (empty($warehouseId)) {
-                throw new MoloniProductException('Company does not have a default warehouse, please select one');
-            }
-        }
-
-        $this->warehouseId = $warehouseId;
+        $this->warehouseId = Warehouse::resolveMoloniStockWarehouse();
 
         return $this;
     }

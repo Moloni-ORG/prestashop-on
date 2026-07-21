@@ -483,17 +483,7 @@ abstract class PrestashopProductSyncAbstract implements PrestashopProductService
             return $this;
         }
 
-        $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
-
-        if (empty($warehouseId)) {
-            $warehouseId = Warehouse::getCompanyDefaultWarehouse();
-
-            if (empty($warehouseId)) {
-                $warehouseId = 1;
-            }
-        }
-
-        $this->warehouseId = (int) $warehouseId;
+        $this->warehouseId = Warehouse::resolvePrestashopStockWarehouse();
 
         return $this;
     }

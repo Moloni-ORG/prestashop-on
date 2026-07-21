@@ -44,6 +44,7 @@ use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProductFromCombination;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
 use MoloniOn\Services\MoloniProduct\Helpers\CombinationReference;
+use MoloniOn\Services\MoloniProduct\Helpers\ProductReference;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
 use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
@@ -52,6 +53,7 @@ use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use MoloniOn\Traits\DiscountsTrait;
+use MoloniOn\Traits\MoloniProductReferenceTrait;
 use Product;
 
 if (!defined('_PS_VERSION_')) {
@@ -61,6 +63,7 @@ if (!defined('_PS_VERSION_')) {
 class OrderProduct implements BuilderItemInterface
 {
     use DiscountsTrait;
+    use MoloniProductReferenceTrait;
 
     /**
      * Product id in Moloni
@@ -242,7 +245,7 @@ class OrderProduct implements BuilderItemInterface
                 /* No Product Properties module: create the combination as a simple product */
                 $combinationAsSimple = true;
 
-                $combination = new Combination((int) $this->orderProduct['product_attribute_id']);
+                $combination = new \Combination((int) $this->orderProduct['product_attribute_id']);
 
                 $service = new CreateSimpleProductFromCombination($product, $combination);
             } elseif ($isVariant) {
@@ -604,9 +607,12 @@ class OrderProduct implements BuilderItemInterface
             $query = MoloniApiClient::products()
                 ->queryProducts($variables);
 
-            if (!empty($query)) {
-                $this->productId = (int) $query[0]['productId'];
-                $this->moloniProduct = $query[0];
+            // Moloni's "reference eq" can return partial/substring matches; keep only the exact one
+            $match = $this->findExactReferenceMatch($query, $reference);
+
+            if (!empty($match)) {
+                $this->productId = (int) $match['productId'];
+                $this->moloniProduct = $match;
             }
         } catch (MoloniApiException $e) {
             throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $reference], $e->getData());
@@ -640,8 +646,8 @@ class OrderProduct implements BuilderItemInterface
         }
 
         if (empty($this->moloniProduct)) {
-            $product = new Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
-            $combination = new Combination($combinationId);
+            $product = new \Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
+            $combination = new \Combination($combinationId);
 
             $this->getByReference(CombinationReference::get($product, $combination));
         }
@@ -661,7 +667,7 @@ class OrderProduct implements BuilderItemInterface
         /** Let's try to find Moloni product by parent */
         $combinationId = (int) $this->orderProduct['product_attribute_id'];
         $psParent = new \Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
-        $reference = empty($psParent->reference) ? $psParent->id : $psParent->reference;
+        $reference = ProductReference::fromPrestashopProduct($psParent);
 
         $variables = [
             'options' => [
@@ -687,12 +693,13 @@ class OrderProduct implements BuilderItemInterface
             throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $reference], $e->getData());
         }
 
+        // Moloni's "reference eq" can return partial/substring matches; keep only the exact one
+        $mlProduct = $this->findExactReferenceMatch($query, $reference);
+
         /* Product really does not exist, can return */
-        if (empty($query)) {
+        if (empty($mlProduct)) {
             return $this;
         }
-
-        $mlProduct = $query[0];
 
         /* For some reason the prodcut is simple in Moloni, use that one */
         if (empty($mlProduct['variants'])) {

@@ -66,13 +66,7 @@ class FindMoloniProductByReference
      */
     public static function fromPrestashopProduct(\Product $prestashopProduct): array
     {
-        $reference = $prestashopProduct->reference;
-
-        if (empty($reference)) {
-            $reference = (string) $prestashopProduct->id;
-        }
-
-        return (new self($reference))->handle();
+        return (new self(ProductReference::fromPrestashopProduct($prestashopProduct)))->handle();
     }
 
     /**

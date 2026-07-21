@@ -33,7 +33,6 @@ use MoloniOn\Services\MoloniProduct\Helpers\UpdateMoloniProductStock;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
 use MoloniOn\Services\MoloniProduct\Interfaces\MoloniProductServiceInterface;
 use MoloniOn\Tools\Logs;
-use MoloniOn\Tools\Settings;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -130,7 +129,7 @@ class SyncProductStock implements MoloniProductServiceInterface
             return;
         }
 
-        $this->warehouseId = $this->resolveWarehouseId();
+        $this->warehouseId = Warehouse::resolveMoloniStockWarehouse();
 
         if (!empty($this->moloniProduct['variants'])) {
             $this->syncVariants();
@@ -270,26 +269,6 @@ class SyncProductStock implements MoloniProductServiceInterface
         } catch (MoloniApiException $e) {
             throw new MoloniProductException('Error creating stock movement ({0})', ['{0}' => $reference], $e->getData());
         }
-    }
-
-    /**
-     * Resolve the warehouse to sync stock to
-     *
-     * @throws MoloniProductException
-     */
-    private function resolveWarehouseId(): int
-    {
-        $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
-
-        if (in_array($warehouseId, [0, 1])) {
-            $warehouseId = Warehouse::getCompanyDefaultWarehouse();
-
-            if (empty($warehouseId)) {
-                throw new MoloniProductException('Company does not have a default warehouse, please select one');
-            }
-        }
-
-        return $warehouseId;
     }
 
     /**

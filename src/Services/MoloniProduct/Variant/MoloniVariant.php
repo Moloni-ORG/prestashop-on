@@ -330,8 +330,8 @@ class MoloniVariant
         $isIsbnFav = false;
         $isUpcaFav = false;
 
-        if (isset($this->moloniProduct['identifications']) && !empty($this->moloniProduct['identifications'])) {
-            foreach ($this->moloniProduct['identifications'] as $identification) {
+        if (isset($this->moloniVariant['identifications']) && !empty($this->moloniVariant['identifications'])) {
+            foreach ($this->moloniVariant['identifications'] as $identification) {
                 switch ($identification['type']) {
                     case 'ISBN':
                         $isIsbnFav = $identification['favorite'];

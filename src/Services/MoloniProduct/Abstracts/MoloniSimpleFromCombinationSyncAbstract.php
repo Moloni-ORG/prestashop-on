@@ -203,6 +203,28 @@ abstract class MoloniSimpleFromCombinationSyncAbstract extends MoloniSimpleProdu
     }
 
     /**
+     * Set product image (combination image, falling back to the product default)
+     *
+     * @return $this
+     */
+    public function setCoverImage(): self
+    {
+        $languageId = (int) \Configuration::get('PS_LANG_DEFAULT');
+        $shopId = (int) \Shop::getContextShopID();
+
+        $coverImage = \Image::getBestImageAttribute(
+            $shopId,
+            $languageId,
+            (int) $this->prestashopCombination->id_product,
+            (int) $this->prestashopCombination->id
+        );
+
+        $this->coverImage = $coverImage ?: [];
+
+        return $this;
+    }
+
+    /**
      * Actions run after a save: keep the base image sync and (re)map the
      * combination to the created/updated simple product.
      *

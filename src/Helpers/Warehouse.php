@@ -29,6 +29,8 @@ namespace MoloniOn\Helpers;
 
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Exceptions\MoloniApiException;
+use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Tools\Settings;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -36,6 +38,54 @@ if (!defined('_PS_VERSION_')) {
 
 class Warehouse
 {
+    /**
+     * Resolve the warehouse to sync stock TO Moloni (PrestaShop -> Moloni).
+     *
+     * Uses the configured warehouse; when unset (0/1) falls back to the company
+     * default and requires one to exist.
+     *
+     * @return int
+     *
+     * @throws MoloniProductException
+     */
+    public static function resolveMoloniStockWarehouse(): int
+    {
+        $warehouseId = (int) Settings::get('syncStockToMoloniWarehouse');
+
+        if (in_array($warehouseId, [0, 1])) {
+            $warehouseId = self::getCompanyDefaultWarehouse();
+
+            if (empty($warehouseId)) {
+                throw new MoloniProductException('Company does not have a default warehouse, please select one');
+            }
+        }
+
+        return $warehouseId;
+    }
+
+    /**
+     * Resolve the warehouse to read stock FROM Moloni (Moloni -> PrestaShop).
+     *
+     * Uses the configured warehouse; when unset falls back to the company
+     * default, then to warehouse 1.
+     *
+     * @return int
+     */
+    public static function resolvePrestashopStockWarehouse(): int
+    {
+        $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
+
+        if (empty($warehouseId)) {
+            $warehouseId = self::getCompanyDefaultWarehouse();
+
+            if (empty($warehouseId)) {
+                $warehouseId = 1;
+            }
+        }
+
+        return (int) $warehouseId;
+    }
+
     public static function getCompanyDefaultWarehouse(): int
     {
         $params = [

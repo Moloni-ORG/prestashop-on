@@ -26,19 +26,15 @@
 namespace MoloniOn\Hooks;
 
 use MoloniOn\Api\MoloniApi;
-use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
-use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductById;
 use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Update\UpdateSimpleProduct;
-use MoloniOn\Services\MoloniProduct\Update\UpdateSimpleProductFromCombination;
 use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
 use MoloniOn\Tools\Logs;
-use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 
@@ -70,9 +66,8 @@ class ProductSave extends AbstractHookAction
             $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
-                /* No Product Properties module: combinations live in Moloni as simple products (created when invoiced) */
-                $this->updateCombinationsAsSimple($product);
-
+                /* No Product Properties module: skip products with combinations.
+                   They only enter Moloni as simple products when invoiced (see OrderProduct). */
                 return;
             }
 
@@ -102,59 +97,6 @@ class ProductSave extends AbstractHookAction
                 [['Error saving Moloni ON product'], [$e->getMessage(), $e->getIdentifiers()]],
                 $e->getData()
             );
-        }
-    }
-
-    /**
-     * Company has no Product Properties module: each combination lives in Moloni
-     * as a standalone simple product, created on demand when invoiced. Here we
-     * only update the ones that already exist (never create new ones).
-     *
-     * @param \Product $product
-     *
-     * @return void
-     *
-     * @throws MoloniProductException
-     */
-    private function updateCombinationsAsSimple(\Product $product): void
-    {
-        if ((int) Settings::get('updateProductsToMoloni') === Boolean::NO) {
-            return;
-        }
-
-        $combinations = $product->getAttributeCombinations(null, false);
-
-        $handled = [];
-
-        foreach ($combinations as $combinationRow) {
-            $combinationId = (int) $combinationRow['id_product_attribute'];
-
-            if (isset($handled[$combinationId])) {
-                continue;
-            }
-
-            $handled[$combinationId] = true;
-
-            /** @var MoloniOnProductAssociations|null $association */
-            $association = ProductAssociations::findByPrestashopCombinationId($combinationId);
-
-            if ($association === null || $association->getMlVariantId() > 0 || $association->getMlProductId() <= 0) {
-                continue;
-            }
-
-            $moloniProduct = FindMoloniProductById::handle($association->getMlProductId());
-
-            if (empty($moloniProduct)) {
-                continue;
-            }
-
-            SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
-
-            $combination = new \Combination($combinationId);
-
-            $service = new UpdateSimpleProductFromCombination($product, $combination, $moloniProduct);
-            $service->run();
-            $service->saveLog();
         }
     }
 

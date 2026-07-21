@@ -28,15 +28,12 @@ declare(strict_types=1);
 namespace MoloniOn\Hooks;
 
 use MoloniOn\Api\MoloniApi;
-use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
-use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductById;
 use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
-use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Product;
@@ -77,9 +74,7 @@ class ProductStockUpdate extends AbstractHookAction
             }
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
-                /* No Product Properties module: the combination is a standalone simple product in Moloni */
-                $this->syncCombinationAsSimpleStock($product);
-
+                /* No Product Properties module: skip products with combinations (outbound). */
                 return;
             }
 
@@ -104,38 +99,6 @@ class ProductStockUpdate extends AbstractHookAction
                 $e->getData()
             );
         }
-    }
-
-    /**
-     * Company has no Product Properties module: the combination is a standalone
-     * simple product in Moloni. Sync its stock through the stored association
-     * (created when the combination was invoiced); do nothing when it was never
-     * created.
-     *
-     * @param \Product $product
-     *
-     * @return void
-     *
-     * @throws MoloniProductException
-     */
-    private function syncCombinationAsSimpleStock(\Product $product): void
-    {
-        /** @var MoloniOnProductAssociations|null $association */
-        $association = ProductAssociations::findByPrestashopCombinationId($this->variantId);
-
-        if ($association === null || $association->getMlVariantId() > 0 || $association->getMlProductId() <= 0) {
-            return;
-        }
-
-        $moloniProduct = FindMoloniProductById::handle($association->getMlProductId());
-
-        if (empty($moloniProduct)) {
-            return;
-        }
-
-        $service = new SyncProductStock($product, $moloniProduct, 0, $this->newQty);
-        $service->run();
-        $service->saveLog();
     }
 
     /**

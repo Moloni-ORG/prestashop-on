@@ -50,7 +50,13 @@ class FindPrestashopProductByReference
      */
     public static function fromMoloniProduct(array $moloniProduct): \Product
     {
-        $reference = $moloniProduct['reference'] ?? '';
+        $reference = (string) ($moloniProduct['reference'] ?? '');
+
+        if ($reference === '') {
+            /* No reference: never match by an empty reference (would bind an unrelated product) */
+            return new \Product();
+        }
+
         $languageId = \Configuration::get('PS_LANG_DEFAULT');
 
         $productId = (int) \Product::getIdByReference($reference);

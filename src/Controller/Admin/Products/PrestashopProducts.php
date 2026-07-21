@@ -90,6 +90,12 @@ class PrestashopProducts extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);
+            }
+
             $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
             if (!empty($moloniProduct)) {
@@ -127,6 +133,10 @@ class PrestashopProducts extends MoloniController
             }
 
             $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);
+            }
 
             $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 

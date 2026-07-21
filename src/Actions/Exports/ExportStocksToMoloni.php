@@ -26,6 +26,7 @@
 namespace MoloniOn\Actions\Exports;
 
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
@@ -45,6 +46,9 @@ class ExportStocksToMoloni extends ExportProducts
 
         $this->totalResults = count($products);
 
+        $hasProperties = MoloniContext::instance()->company()->hasProperties();
+        $skippedVariants = [];
+
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
                 continue;
@@ -55,6 +59,14 @@ class ExportStocksToMoloni extends ExportProducts
             $product = new \Product($productData['id_product'], true, $this->languageId);
 
             try {
+                $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+                if ($isVariant && !$hasProperties) {
+                    $skippedVariants[] = $product->reference;
+
+                    continue;
+                }
+
                 $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
                 if (!empty($moloniProduct)) {
@@ -75,6 +87,13 @@ class ExportStocksToMoloni extends ExportProducts
                     $product->reference => $e->getData(),
                 ];
             }
+        }
+
+        if (!empty($skippedVariants)) {
+            Logs::addWarningLog(
+                'Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.',
+                ['module' => 'productsServices.productProperties', 'references' => $skippedVariants]
+            );
         }
 
         $logMsg = ['Products stock export. Part {0}', ['{0}' => $this->page]];

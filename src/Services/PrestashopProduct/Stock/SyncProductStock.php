@@ -33,7 +33,6 @@ use MoloniOn\Services\PrestashopProduct\Helpers\UpdatePrestaProductStock;
 use MoloniOn\Services\PrestashopProduct\Interfaces\PrestashopProductServiceInterface;
 use MoloniOn\Services\PrestashopProduct\ProductCombination;
 use MoloniOn\Tools\Logs;
-use MoloniOn\Tools\Settings;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -116,7 +115,7 @@ class SyncProductStock implements PrestashopProductServiceInterface
             return;
         }
 
-        $this->warehouseId = $this->resolveWarehouseId();
+        $this->warehouseId = Warehouse::resolvePrestashopStockWarehouse();
 
         if (!empty($this->moloniProduct['variants'])) {
             $this->syncCombinations();
@@ -176,25 +175,5 @@ class SyncProductStock implements PrestashopProductServiceInterface
                 $this->results[] = $result;
             }
         }
-    }
-
-    /**
-     * Resolve the warehouse to read stock from
-     *
-     * @return int
-     */
-    private function resolveWarehouseId(): int
-    {
-        $warehouseId = Settings::get('syncStockToPrestashopWarehouse');
-
-        if (empty($warehouseId)) {
-            $warehouseId = Warehouse::getCompanyDefaultWarehouse();
-
-            if (empty($warehouseId)) {
-                $warehouseId = 1;
-            }
-        }
-
-        return (int) $warehouseId;
     }
 }

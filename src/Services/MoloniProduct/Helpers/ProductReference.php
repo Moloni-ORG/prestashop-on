@@ -23,27 +23,35 @@
  * @noinspection PhpMultipleClassDeclarationsInspection
  */
 
-namespace MoloniOn\Services\MoloniProduct\Update;
-
-use MoloniOn\Exceptions\Product\MoloniProductException;
-use MoloniOn\Services\MoloniProduct\Abstracts\MoloniSimpleFromCombinationSyncAbstract;
+namespace MoloniOn\Services\MoloniProduct\Helpers;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class UpdateSimpleProductFromCombination extends MoloniSimpleFromCombinationSyncAbstract
+/**
+ * Derives the reference used to represent a PrestaShop product in Moloni ON.
+ *
+ * The same derivation must be used wherever a product is looked up or written
+ * (product sync services, finder, document builder) so a product always
+ * resolves to the same Moloni reference: its PrestaShop reference, or its id as
+ * a stable fallback when the reference is empty.
+ */
+class ProductReference
 {
     /**
-     * Runner
+     * @param \Product $product
      *
-     * @return void
-     *
-     * @throws MoloniProductException
+     * @return string
      */
-    public function run(): void
+    public static function fromPrestashopProduct(\Product $product): string
     {
-        $this->build();
-        $this->update();
+        $reference = $product->reference;
+
+        if (empty($reference)) {
+            $reference = (string) $product->id;
+        }
+
+        return (string) $reference;
     }
 }
