@@ -125,7 +125,17 @@ class WebserviceSpecificManagementMoloniOnResource implements WebserviceSpecific
      */
     public function manage()
     {
-        $this->bootContext();
+        try {
+            $this->bootContext();
+        } catch (\Throwable $e) {
+            /* Infrastructure failure (kernel/cache/container). Acknowledge so Moloni does not
+               retry-storm, and surface the cause in the PHP error log for diagnosis. */
+            error_log('[molonion] inbound webservice context bootstrap failed: ' . $e->getMessage());
+
+            $this->output = 'Acknowledge';
+
+            return $this->wsObject->getOutputEnabled();
+        }
 
         $request = file_get_contents('php://input');
         $request = json_decode($request, true);
