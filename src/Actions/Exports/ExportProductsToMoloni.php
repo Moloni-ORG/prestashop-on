@@ -25,9 +25,11 @@
 
 namespace MoloniOn\Actions\Exports;
 
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\SyncLogs;
 
@@ -53,6 +55,9 @@ class ExportProductsToMoloni extends ExportProducts
 
         $this->totalResults = count($products);
 
+        $hasProperties = MoloniContext::instance()->company()->hasProperties();
+        $skippedVariants = [];
+
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
                 $this->errorProducts[] = [
@@ -67,15 +72,23 @@ class ExportProductsToMoloni extends ExportProducts
             $product = new \Product($productData['id_product'], true, $this->languageId);
 
             try {
-                if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                    $productBuilder = new MoloniProductWithVariants($product);
-                } else {
-                    $productBuilder = new MoloniProductSimple($product);
+                $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+                if ($isVariant && !$hasProperties) {
+                    $skippedVariants[] = $product->reference;
+
+                    continue;
                 }
 
-                if ($productBuilder->getMoloniProductId() === 0) {
-                    $productBuilder->disableLogs();
-                    $productBuilder->insert();
+                $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+                if (empty($moloniProduct)) {
+                    // Bulk export: skip saveLog() to avoid flooding the logs
+                    $service = $isVariant
+                        ? new CreateVariantProduct($product)
+                        : new CreateSimpleProduct($product);
+
+                    $service->run();
 
                     $this->syncedProducts[] = $product->reference;
                 } else {
@@ -88,6 +101,13 @@ class ExportProductsToMoloni extends ExportProducts
                     $product->reference => $e->getData(),
                 ];
             }
+        }
+
+        if (!empty($skippedVariants)) {
+            Logs::addWarningLog(
+                'Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.',
+                ['module' => 'productsServices.productProperties', 'references' => $skippedVariants]
+            );
         }
 
         $logMsg = ['Products export. Part {0}', ['{0}' => $this->page]];

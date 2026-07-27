@@ -49,25 +49,23 @@ class Remove extends ActivatorAbstract
      */
     public function uninstall(): bool
     {
-        return $this->destroyCommon();
+        $this->removeHooks();
+        $this->removeLogin();
+
+        return true;
     }
 
     /**
      * Disable plugin
      *
+     * Disabling is reversible, so it must keep the stored authentication and
+     * company. Only uninstall clears them (via removeLogin).
+     *
      * @return bool
      */
     public function disable(): bool
     {
-        return $this->destroyCommon();
-    }
-
-    //        PRIVATES        //
-
-    private function destroyCommon(): bool
-    {
         $this->removeHooks();
-        $this->removeLogin();
 
         return true;
     }

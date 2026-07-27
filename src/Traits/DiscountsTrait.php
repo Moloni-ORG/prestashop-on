@@ -35,7 +35,10 @@ trait DiscountsTrait
     {
         $originalPrice = $discountedPrice;
 
-        if ($discountedPercentage > 0) {
+        // At a 100% (or greater) reduction the original price cannot be
+        // reconstructed from the discounted price, so keep the discounted price
+        // as best effort and avoid dividing by zero/negative.
+        if ($discountedPercentage > 0 && $discountedPercentage < 100) {
             $originalPrice = $discountedPrice / (1 - ($discountedPercentage / 100));
         }
 

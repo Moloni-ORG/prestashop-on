@@ -460,7 +460,7 @@ class MoloniApiClient
 
     public static function timezones(): Timezones
     {
-        if (self::$timezones) {
+        if (!self::$timezones) {
             self::$timezones = new Timezones();
         }
 

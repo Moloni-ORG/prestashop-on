@@ -25,11 +25,13 @@
 
 namespace MoloniOn\Webservice\Product;
 
-use MoloniOn\Builders\PrestashopProductSimple;
-use MoloniOn\Builders\PrestashopProductWithCombinations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\StockSync;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Services\PrestashopProduct\Create\CreateCombinationsProduct;
+use MoloniOn\Services\PrestashopProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\PrestashopProduct\Helpers\FindPrestashopProductByReference;
+use MoloniOn\Services\PrestashopProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
@@ -59,22 +61,24 @@ class ProductCreate extends AbstractWebserviceAction
                 return;
             }
 
-            if (empty($product['variants'])) {
-                $productBuilder = new PrestashopProductSimple($product);
-            } else {
-                $productBuilder = new PrestashopProductWithCombinations($product);
-            }
+            $isCombinations = !empty($product['variants']);
 
-            $prestaProductId = $productBuilder->getPrestashopProductId();
+            $prestashopProduct = FindPrestashopProductByReference::fromMoloniProduct($product);
 
-            if ($prestaProductId === 0) {
+            if ((int) $prestashopProduct->id === 0) {
                 SyncLogs::moloniProductAddTimeout($this->productId);
 
-                $productBuilder->insert();
+                $service = $isCombinations
+                    ? new CreateCombinationsProduct($product, $prestashopProduct)
+                    : new CreateSimpleProduct($product, $prestashopProduct);
+                $service->run();
+                $service->saveLog();
 
-                SyncLogs::prestashopProductAddTimeout($productBuilder->getPrestashopProductId());
+                SyncLogs::prestashopProductAddTimeout($service->getPrestashopProductId());
 
-                $productBuilder->updateStock();
+                $stockService = new SyncProductStock($product, $service->getPrestashopProduct());
+                $stockService->run();
+                $stockService->saveLog();
             }
         } catch (MoloniProductException $e) {
             Logs::addErrorLog([['Error saving PrestaShop product'], [$e->getMessage(), $e->getIdentifiers()]], $e->getData());

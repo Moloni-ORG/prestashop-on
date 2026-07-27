@@ -157,6 +157,10 @@ abstract class Endpoint
                 throw new MoloniApiException('Error paginating request', [], ['query' => $query, 'variables' => $variables, 'result' => $queryResult]);
             }
 
+            if (!isset($queryResult['data'][$key]['data'], $queryResult['data'][$key]['options']['pagination'])) {
+                throw new MoloniApiException('Unexpected response paginating request', [], ['query' => $query, 'variables' => $variables, 'result' => $queryResult]);
+            }
+
             $querySize = $queryResult['data'][$key]['options']['pagination'];
 
             /** @noinspection SlowArrayOperationsInLoopInspection */

@@ -25,7 +25,6 @@
 
 namespace MoloniOn\Actions\Orders;
 
-use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Builders\DocumentFromOrder;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\DocumentStatus;

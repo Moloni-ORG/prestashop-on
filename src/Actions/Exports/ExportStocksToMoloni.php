@@ -25,9 +25,10 @@
 
 namespace MoloniOn\Actions\Exports;
 
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Logs;
 use MoloniOn\Tools\SyncLogs;
 
@@ -45,6 +46,9 @@ class ExportStocksToMoloni extends ExportProducts
 
         $this->totalResults = count($products);
 
+        $hasProperties = MoloniContext::instance()->company()->hasProperties();
+        $skippedVariants = [];
+
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
                 continue;
@@ -55,17 +59,22 @@ class ExportStocksToMoloni extends ExportProducts
             $product = new \Product($productData['id_product'], true, $this->languageId);
 
             try {
-                if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                    $productBuilder = new MoloniProductWithVariants($product);
-                } else {
-                    $productBuilder = new MoloniProductSimple($product);
+                $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+                if ($isVariant && !$hasProperties) {
+                    $skippedVariants[] = $product->reference;
+
+                    continue;
                 }
 
-                if ($productBuilder->getMoloniProductId() > 0) {
-                    SyncLogs::moloniProductAddTimeout($productBuilder->getMoloniProductId());
+                $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
-                    $productBuilder->disableLogs();
-                    $productBuilder->updateStock();
+                if (!empty($moloniProduct)) {
+                    SyncLogs::moloniProductAddTimeout((int) $moloniProduct['productId']);
+
+                    // Bulk export: skip saveLog() to avoid flooding the logs
+                    $service = new SyncProductStock($product, $moloniProduct);
+                    $service->run();
 
                     $this->syncedProducts[] = $product->reference;
                 } else {
@@ -78,6 +87,13 @@ class ExportStocksToMoloni extends ExportProducts
                     $product->reference => $e->getData(),
                 ];
             }
+        }
+
+        if (!empty($skippedVariants)) {
+            Logs::addWarningLog(
+                'Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.',
+                ['module' => 'productsServices.productProperties', 'references' => $skippedVariants]
+            );
         }
 
         $logMsg = ['Products stock export. Part {0}', ['{0}' => $this->page]];

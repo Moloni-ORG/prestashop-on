@@ -120,7 +120,9 @@ class OrdersRepository
         }
 
         if (!empty($filters['order_state'])) {
-            $query->andWhere($expr->in('o.current_state', $filters['order_state']));
+            $query
+                ->andWhere('o.current_state IN (:order_state)')
+                ->setParameter('order_state', $filters['order_state'], Connection::PARAM_INT_ARRAY);
         }
 
         if (!empty($filters['order_reference'])) {

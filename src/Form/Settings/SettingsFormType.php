@@ -771,24 +771,6 @@ class SettingsFormType extends TranslatorAwareType
         return $this;
     }
 
-    private function productReferenceFallback(): SettingsFormType
-    {
-        $this->builder->add('productReferenceFallback', ChoiceType::class, [
-            'label' => $this->trans('Enable reference fallback', 'Modules.Molonion.Settings'),
-            'label_attr' => [
-                'popover' => $this->trans(
-                    'When synchronizing products from Moloni ON if the reference is numeric and no products are found in PrestaShop, the plugin will try and find an PrestaShop product by an ID that matches the numeric reference. This is useful if products do not have a reference set in PrestaShop.',
-                    'Modules.Molonion.Settings'
-                ),
-            ],
-            'choices' => $this->options->getYesNo(),
-            'placeholder' => false,
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
     private function saveButton(): SettingsFormType
     {
         $this->builder->add('saveChanges', SubmitType::class, [
@@ -858,8 +840,7 @@ class SettingsFormType extends TranslatorAwareType
     {
         $this
             ->companyName()
-            ->alertEmail()
-            ->productReferenceFallback();
+            ->alertEmail();
 
         return $this;
     }

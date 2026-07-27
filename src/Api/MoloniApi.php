@@ -238,11 +238,19 @@ class MoloniApi
      */
     public static function postWithFile(?array $operations = [], ?string $map = '', ?array $files = []): array
     {
-        if (isset($operations['variables']) && !isset($operations['variables']['companyId'])) {
-            $operations['variables']['companyId'] = self::$app->getCompanyId();
+        $accessToken = '';
+
+        if (self::$app) {
+            $companyId = self::$app->getCompanyId();
+
+            if (!empty($companyId) && isset($operations['variables']) && !isset($operations['variables']['companyId'])) {
+                $operations['variables']['companyId'] = $companyId;
+            }
+
+            $accessToken = self::$app->getAccessToken();
         }
 
-        $response = self::$guzzle->postWithFile($operations, $map, $files, self::$app->getAccessToken());
+        $response = self::$guzzle->postWithFile($operations, $map, $files, $accessToken);
 
         return $response ?? [];
     }

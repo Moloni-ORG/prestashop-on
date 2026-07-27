@@ -65,12 +65,12 @@ final class Company
 
     public function getCompanyId(): int
     {
-        return (int)$this->company['companyId'];
+        return (int) $this->company['companyId'];
     }
 
     public function getCountry(): int
     {
-        return (int)$this->company['country']['countryId'];
+        return (int) $this->company['country']['countryId'];
     }
 
     // Permissions //

@@ -40,8 +40,17 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
     public function addAssociation($mlProductId, $mlProductReference, $mlVariantId, $psProductId, $psProductReference, $psCombinationId, $psCombinationReference, $active): void
     {
         $entityManager = $this->getEntityManager();
+        $companyId = MoloniContext::instance()->getCompanyId();
 
-        $association = new MoloniOnProductAssociations();
+        /* Upsert on the unique key (company, product, combination): re-mapping a
+           product updates its row instead of violating the constraint (a failed
+           flush would otherwise close the EntityManager and break the caller) */
+        $association = $this->findOneBy([
+            'companyId' => $companyId,
+            'psProductId' => $psProductId ?? 0,
+            'psCombinationId' => $psCombinationId ?? 0,
+        ]) ?? new MoloniOnProductAssociations();
+
         $association->setMlProductId($mlProductId ?? 0);
         $association->setMlProductReference($mlProductReference ?? '');
         $association->setMlVariantId($mlVariantId ?? 0);
@@ -50,7 +59,7 @@ class MoloniOnProductAssociationsRepository extends EntityRepository
         $association->setPsCombinationId($psCombinationId ?? 0);
         $association->setPsCombinationReference($psCombinationReference ?? '');
         $association->setActive($active ?? 1);
-        $association->setCompanyId(MoloniContext::instance()->getCompanyId());
+        $association->setCompanyId($companyId);
 
         try {
             $entityManager->persist($association);

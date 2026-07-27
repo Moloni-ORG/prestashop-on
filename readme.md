@@ -78,7 +78,6 @@ After installation, open the module settings in the Back Office:
    - Sync stock from Moloni ON → PrestaShop and choose the warehouse
    - Automatically create/update products in both directions
    - Choose which product fields are synchronized
-   - Enable reference fallback for product matching
 
    Advanced
    - Alert email for error notifications

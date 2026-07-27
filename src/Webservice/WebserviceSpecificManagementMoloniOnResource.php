@@ -26,6 +26,7 @@
 use MoloniOn\Webservice\Product\ProductCreate;
 use MoloniOn\Webservice\Product\ProductStockChange;
 use MoloniOn\Webservice\Product\ProductUpdate;
+use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -42,6 +43,9 @@ class WebserviceSpecificManagementMoloniOnResource implements WebserviceSpecific
     /** @var WebserviceRequest */
     protected $wsObject;
 
+    /** @var \AppKernel|null Kernel booted to serve the request (kept referenced for the request lifetime) */
+    protected $kernel;
+
     /**
      * Interface method
      *
@@ -49,7 +53,7 @@ class WebserviceSpecificManagementMoloniOnResource implements WebserviceSpecific
      *
      * @return $this
      */
-    public function setObjectOutput($obj): WebserviceSpecificManagementMoloniResource
+    public function setObjectOutput($obj): self
     {
         $this->objOutput = $obj;
 
@@ -73,7 +77,7 @@ class WebserviceSpecificManagementMoloniOnResource implements WebserviceSpecific
      *
      * @return $this
      */
-    public function setWsObject($obj): WebserviceSpecificManagementMoloniResource
+    public function setWsObject($obj): self
     {
         $this->wsObject = $obj;
 
@@ -89,11 +93,50 @@ class WebserviceSpecificManagementMoloniOnResource implements WebserviceSpecific
     }
 
     /**
+     * Ensures the module context is bootstrapped for this request.
+     *
+     * PrestaShop's /api dispatcher does not boot the Symfony kernel, so the
+     * `molonion.context` service (and the static tools it initialises: Settings,
+     * SyncLogs, MoloniApi, ProductAssociations) would be missing here. Reuse the
+     * running kernel's container when present, otherwise boot one, then get the
+     * context service (it wires up those statics on construction).
+     *
+     * @return void
+     */
+    protected function bootContext(): void
+    {
+        $container = SymfonyContainer::getInstance();
+
+        if ($container === null) {
+            require_once _PS_ROOT_DIR_ . '/app/AppKernel.php';
+
+            $this->kernel = new \AppKernel(_PS_MODE_DEV_ ? 'dev' : 'prod', (bool) _PS_MODE_DEV_);
+            $this->kernel->boot();
+
+            $container = $this->kernel->getContainer();
+        }
+
+        $container->get('molonion.context');
+    }
+
+    /**
      * Manages the incoming requests
      * Switches between operations
      */
     public function manage()
     {
+        try {
+            $this->bootContext();
+        } catch (\Throwable $e) {
+            /* Infrastructure failure (kernel/cache/container). Acknowledge so Moloni does not
+               retry-storm, and surface the cause in the PHP error log for diagnosis. */
+            error_log('[molonion] inbound webservice context bootstrap failed: ' . $e->getMessage());
+
+            $this->output = 'Acknowledge';
+
+            return $this->wsObject->getOutputEnabled();
+        }
+
         $request = file_get_contents('php://input');
         $request = json_decode($request, true);
 

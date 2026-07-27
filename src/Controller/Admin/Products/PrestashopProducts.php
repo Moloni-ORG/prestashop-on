@@ -29,14 +29,16 @@ namespace MoloniOn\Controller\Admin\Products;
 
 use MoloniOn\Actions\ProductsList\Prestashop\FetchPrestashopProductsPaginated;
 use MoloniOn\Actions\ProductsList\Prestashop\VerifyProductForList;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
 use MoloniOn\Repository\ProductsRepository;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
+use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,7 +68,6 @@ class PrestashopProducts extends MoloniController
                 'filters' => $filters,
                 'paginator' => $service->getPaginator(),
                 'companyName' => Settings::get('companyName'),
-                'productReferenceFallbackActive' => (int) Settings::get('productReferenceFallback'),
                 'exportStockRoute' => MoloniRoutes::PRESTASHOP_PRODUCTS_EXPORT_STOCK,
                 'exportProductRoute' => MoloniRoutes::PRESTASHOP_PRODUCTS_EXPORT_PRODUCT,
                 'toolsRoute' => MoloniRoutes::TOOLS,
@@ -88,14 +89,18 @@ class PrestashopProducts extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);
             }
 
-            if ($productBuilder->getMoloniProductId() > 0) {
-                $productBuilder->updateStock();
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+            if (!empty($moloniProduct)) {
+                $service = new SyncProductStock($product, $moloniProduct);
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product does not exist in Moloni ON', null, [$productId]);
             }
@@ -126,14 +131,21 @@ class PrestashopProducts extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
-            } else {
-                $productBuilder = new MoloniProductSimple($product);
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);
             }
 
-            if ($productBuilder->getMoloniProductId() === 0) {
-                $productBuilder->insert();
+            $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
+
+            if (empty($moloniProduct)) {
+                $service = $isVariant
+                    ? new CreateVariantProduct($product)
+                    : new CreateSimpleProduct($product);
+
+                $service->run();
+                $service->saveLog();
             } else {
                 throw new MoloniProductException('Product already exists', null, [$productId]);
             }

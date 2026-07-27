@@ -27,13 +27,10 @@ declare(strict_types=1);
 
 namespace MoloniOn\Builders\Document;
 
+use Combination;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Builders\Document\Helpers\GetOrderProductTax;
 use MoloniOn\Builders\Interfaces\BuilderItemInterface;
-use MoloniOn\Builders\MoloniProduct\Helpers\Variants\FindVariant;
-use MoloniOn\Builders\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
-use MoloniOn\Builders\MoloniProductSimple;
-use MoloniOn\Builders\MoloniProductWithVariants;
 use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\ProductInformation;
@@ -43,10 +40,20 @@ use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
+use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProductFromCombination;
+use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
+use MoloniOn\Services\MoloniProduct\Helpers\CombinationReference;
+use MoloniOn\Services\MoloniProduct\Helpers\ProductReference;
+use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
+use MoloniOn\Services\MoloniProduct\Helpers\Variants\GetOrUpdatePropertyGroup;
+use MoloniOn\Services\MoloniProduct\Update\UpdateVariantProduct;
+use MoloniOn\Services\Tax\TaxFromRate;
 use MoloniOn\Tools\ProductAssociations;
 use MoloniOn\Tools\Settings;
 use MoloniOn\Tools\SyncLogs;
 use MoloniOn\Traits\DiscountsTrait;
+use MoloniOn\Traits\MoloniProductReferenceTrait;
 use Product;
 
 if (!defined('_PS_VERSION_')) {
@@ -56,6 +63,7 @@ if (!defined('_PS_VERSION_')) {
 class OrderProduct implements BuilderItemInterface
 {
     use DiscountsTrait;
+    use MoloniProductReferenceTrait;
 
     /**
      * Product id in Moloni
@@ -123,7 +131,7 @@ class OrderProduct implements BuilderItemInterface
     /**
      * Taxes builder
      *
-     * @var OrderProductTax[]
+     * @var TaxFromRate[]
      */
     protected $taxes;
 
@@ -225,31 +233,48 @@ class OrderProduct implements BuilderItemInterface
     {
         SyncLogs::prestashopProductAddTimeout((int) $this->orderProduct['product_id']);
 
+        $isVariant = false;
+        $combinationAsSimple = false;
+
         try {
             $product = new \Product($this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            if ($product->product_type === 'combinations' && $product->hasCombinations()) {
-                $productBuilder = new MoloniProductWithVariants($product);
+            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+
+            if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
+                /* No Product Properties module: create the combination as a simple product */
+                $combinationAsSimple = true;
+
+                $combination = new \Combination((int) $this->orderProduct['product_attribute_id']);
+
+                $service = new CreateSimpleProductFromCombination($product, $combination);
+            } elseif ($isVariant) {
+                $service = new CreateVariantProduct($product);
             } else {
-                $productBuilder = new MoloniProductSimple($product);
+                $service = new CreateSimpleProduct($product);
             }
 
-            $productBuilder->insert();
+            $service->run();
+            $service->saveLog();
         } catch (MoloniProductException $e) {
             throw new MoloniDocumentProductException($e->getMessage(), $e->getIdentifiers(), $e->getData());
         }
 
         // Has variants, we need id of variant alone
-        if ($productBuilder instanceof MoloniProductWithVariants) {
-            /** @var MoloniOnProductAssociations $association */
+        if ($isVariant && !$combinationAsSimple) {
+            /** @var MoloniOnProductAssociations|null $association */
             $association = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
+
+            if ($association === null) {
+                throw new MoloniDocumentProductException('Could not find variant association after inserting product ({0})', ['{0}' => $this->reference]);
+            }
 
             $this->productId = $association->getMlVariantId();
         } else {
-            $this->productId = $productBuilder->getMoloniProductId();
+            $this->productId = $service->getMoloniProductId();
         }
 
-        $this->moloniProduct = $productBuilder->getMoloniProduct();
+        $this->moloniProduct = $service->getMoloniProduct();
     }
 
     /**
@@ -260,15 +285,20 @@ class OrderProduct implements BuilderItemInterface
     public function search(): OrderProduct
     {
         if ((int) $this->orderProduct['product_attribute_id'] > 0) {
-            /** @var MoloniOnProductAssociations|null $moloniVariantId */
-            $moloniVariantId = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
+            if (!MoloniContext::instance()->company()->hasProperties()) {
+                /* No Product Properties module: combination lives in Moloni as a simple product */
+                $this->getCombinationAsSimple();
+            } else {
+                /** @var MoloniOnProductAssociations|null $moloniVariantId */
+                $moloniVariantId = ProductAssociations::findByPrestashopCombinationId((int) $this->orderProduct['product_attribute_id']);
 
-            if ($moloniVariantId !== null) {
-                $this->getById($moloniVariantId->getMlVariantId());
-            }
+                if ($moloniVariantId !== null) {
+                    $this->getById($moloniVariantId->getMlVariantId());
+                }
 
-            if (empty($this->moloniProduct)) {
-                $this->getByProductParent();
+                if (empty($this->moloniProduct)) {
+                    $this->getByProductParent();
+                }
             }
         } else {
             $this->getByReference();
@@ -545,12 +575,16 @@ class OrderProduct implements BuilderItemInterface
     /**
      * Search product by reference
      *
+     * @param string|null $reference Reference to search (defaults to the order line reference)
+     *
      * @return OrderProduct
      *
      * @throws MoloniDocumentProductException
      */
-    protected function getByReference(): OrderProduct
+    protected function getByReference(?string $reference = null): OrderProduct
     {
+        $reference = $reference ?? $this->reference;
+
         $variables = [
             'options' => [
                 'filter' => [
@@ -562,7 +596,7 @@ class OrderProduct implements BuilderItemInterface
                     [
                         'field' => 'reference',
                         'comparison' => 'eq',
-                        'value' => $this->reference,
+                        'value' => $reference,
                     ],
                 ],
                 'includeVariants' => true,
@@ -573,12 +607,49 @@ class OrderProduct implements BuilderItemInterface
             $query = MoloniApiClient::products()
                 ->queryProducts($variables);
 
-            if (!empty($query)) {
-                $this->productId = (int) $query[0]['productId'];
-                $this->moloniProduct = $query[0];
+            // Moloni's "reference eq" can return partial/substring matches; keep only the exact one
+            $match = $this->findExactReferenceMatch($query, $reference);
+
+            if (!empty($match)) {
+                $this->productId = (int) $match['productId'];
+                $this->moloniProduct = $match;
             }
         } catch (MoloniApiException $e) {
-            throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $this->reference], $e->getData());
+            throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $reference], $e->getData());
+        }
+
+        return $this;
+    }
+
+    /**
+     * Search a combination represented as a simple product in Moloni.
+     *
+     * Used when the company has no Product Properties module: each ordered
+     * combination is mapped to its own simple Moloni product. We first try the
+     * stored association (created when the combination was invoiced), then fall
+     * back to a reference lookup; when nothing is found the product id stays 0
+     * and the caller creates it via insert().
+     *
+     * @return OrderProduct
+     *
+     * @throws MoloniDocumentProductException
+     */
+    protected function getCombinationAsSimple(): OrderProduct
+    {
+        $combinationId = (int) $this->orderProduct['product_attribute_id'];
+
+        /** @var MoloniOnProductAssociations|null $association */
+        $association = ProductAssociations::findByPrestashopCombinationId($combinationId);
+
+        if ($association !== null && $association->getMlVariantId() <= 0 && $association->getMlProductId() > 0) {
+            $this->getById($association->getMlProductId());
+        }
+
+        if (empty($this->moloniProduct)) {
+            $product = new \Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
+            $combination = new \Combination($combinationId);
+
+            $this->getByReference(CombinationReference::get($product, $combination));
         }
 
         return $this;
@@ -596,7 +667,7 @@ class OrderProduct implements BuilderItemInterface
         /** Let's try to find Moloni product by parent */
         $combinationId = (int) $this->orderProduct['product_attribute_id'];
         $psParent = new \Product((int) $this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
-        $reference = empty($psParent->reference) ? $psParent->id : $psParent->reference;
+        $reference = ProductReference::fromPrestashopProduct($psParent);
 
         $variables = [
             'options' => [
@@ -622,12 +693,13 @@ class OrderProduct implements BuilderItemInterface
             throw new MoloniDocumentProductException('Error fetching product by reference: ({0})', ['{0}' => $reference], $e->getData());
         }
 
+        // Moloni's "reference eq" can return partial/substring matches; keep only the exact one
+        $mlProduct = $this->findExactReferenceMatch($query, $reference);
+
         /* Product really does not exist, can return */
-        if (empty($query)) {
+        if (empty($mlProduct)) {
             return $this;
         }
-
-        $mlProduct = $query[0];
 
         /* For some reason the prodcut is simple in Moloni, use that one */
         if (empty($mlProduct['variants'])) {
@@ -664,13 +736,14 @@ class OrderProduct implements BuilderItemInterface
         SyncLogs::prestashopProductAddTimeout((int) $psParent->id);
 
         try {
-            $productBuilder = new MoloniProductWithVariants($psParent);
-            $productBuilder->update();
+            $service = new UpdateVariantProduct($psParent, $mlProduct);
+            $service->run();
+            $service->saveLog();
         } catch (MoloniProductException $e) {
             throw new MoloniDocumentProductException($e->getMessage(), $e->getIdentifiers(), $e->getData());
         }
 
-        $variant = $productBuilder->getVariant($combinationId);
+        $variant = $service->getVariant($combinationId);
 
         if (empty($variant)) {
             throw new MoloniDocumentProductException('Could not find variant after update.');
