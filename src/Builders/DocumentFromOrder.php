@@ -164,7 +164,7 @@ class DocumentFromOrder implements BuilderInterface
     protected $yourReference;
 
     /**
-     * Document fiscal zone
+     * Fiscal zone used for taxes (based on the "fiscalZoneBasedOn" setting)
      *
      * @var array
      */
@@ -332,7 +332,8 @@ class DocumentFromOrder implements BuilderInterface
     protected function toArray(): DocumentFromOrder
     {
         $props = [
-            'fiscalZone' => $this->fiscalZone['code'],
+            // Document fiscal zone is always the company's; $this->fiscalZone (from settings) is only used for taxes
+            'fiscalZone' => $this->company['fiscalZone']['fiscalZone'] ?? '',
             'documentCalculationsMode' => $this->calculationMode,
             'documentSetId' => $this->documentSetId,
             'date' => $this->dates['date'],
@@ -789,7 +790,7 @@ class DocumentFromOrder implements BuilderInterface
     }
 
     /**
-     * Defines order fiscal zone
+     * Defines the fiscal zone used for taxes
      *
      * @return DocumentFromOrder
      *
