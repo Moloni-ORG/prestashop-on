@@ -25,9 +25,7 @@
 
 namespace MoloniOn\Services\MoloniProduct\Abstracts;
 
-use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Enums\Boolean;
-use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\CreateMappingsAfterMoloniProductCreateOrUpdate;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindOrCreatePropertyGroup;
@@ -104,6 +102,7 @@ abstract class MoloniVariantProductSyncAbstract extends MoloniProductSyncAbstrac
             'productAT' => [
                 'productType' => $this->typeAT,
             ],
+            'variants' => [],
             'taxes' => [],
             'exemptionReason' => '',
         ];
@@ -144,8 +143,33 @@ abstract class MoloniVariantProductSyncAbstract extends MoloniProductSyncAbstrac
             $props['propertyGroupId'] = $this->propertyGroup['propertyGroupId'];
         }
 
+        foreach ($this->variants as $variant) {
+            $props['variants'][] = $variant->toArray();
+        }
+
         if ($this->productExists()) {
             $props['productId'] = $this->getMoloniProductId();
+
+            // Check for unused variants that cannot be deleted
+            foreach ($this->moloniProduct['variants'] as $existingVariant) {
+                foreach ($props['variants'] as $newVariant) {
+                    if (!isset($newVariant['productId'])) {
+                        continue;
+                    }
+
+                    if ($existingVariant['productId'] === $newVariant['productId']) {
+                        continue 2;
+                    }
+                }
+
+                // If we cannot delete variant, set it as invisible
+                if ($existingVariant['deletable'] === false) {
+                    $props['variants'][] = [
+                        'productId' => $existingVariant['productId'],
+                        'visible' => Boolean::NO,
+                    ];
+                }
+            }
         } elseif ($this->productHasStock()) {
             $props['hasStock'] = $this->hasStock;
             $props['warehouseId'] = $this->warehouseId;
@@ -164,11 +188,16 @@ abstract class MoloniVariantProductSyncAbstract extends MoloniProductSyncAbstrac
      */
     protected function afterSave(): void
     {
-        // Snapshot of the variants that already existed in Moloni (empty on a create)
-        $existingVariants = $this->moloniProduct['variants'] ?? [];
+        // Update all variants values
+        foreach ($this->variants as $variant) {
+            // Update product with the one just added
+            $variant->setMoloniParent($this->moloniProduct);
 
-        // Create new / update changed variants and rebuild the live variant list
-        $keptVariantIds = $this->syncVariants($existingVariants);
+            // If was an insert, we need to get the id
+            if ($variant->getMoloniVariantId() === 0) {
+                $variant->setMoloniVariant();
+            }
+        }
 
         if (!empty($this->coverImage) && $this->shouldSyncImage()) {
             new UpdateMoloniVariantsProductImage($this->coverImage, $this->moloniProduct, $this->variants);
@@ -179,173 +208,6 @@ abstract class MoloniVariantProductSyncAbstract extends MoloniProductSyncAbstrac
             $this->moloniProduct,
             $this->variants
         );
-
-        // Delete/hide variants removed from PrestaShop last, so a failure here does
-        // not skip the association rebuild for the variants we just synced
-        $this->removeUnusedVariants($existingVariants, $keptVariantIds);
-    }
-
-    /**
-     * Create/update PrestaShop combinations as Moloni variants and rebuild the
-     * live variant list from what was actually synced.
-     *
-     * The parent product is already saved at this point. New variants are added
-     * with productVariantCreate (without resending their siblings) and existing
-     * variants are updated only when something changed. Matching is done against
-     * the variants that existed before this sync, so a new combination can never
-     * be matched onto a sibling created during this same run.
-     *
-     * @param array $existingVariants
-     *
-     * @return array Moloni ids of the variants that were kept (updated or created)
-     *
-     * @throws MoloniProductException
-     */
-    protected function syncVariants(array $existingVariants): array
-    {
-        // Match only against the pre-sync variants, never against siblings created now
-        $parentForMatching = $this->moloniProduct;
-        $parentForMatching['variants'] = $existingVariants;
-
-        $keptVariantIds = [];
-        $syncedVariants = [];
-
-        foreach ($this->variants as $variant) {
-            $variant->setMoloniParent($parentForMatching);
-
-            if ($variant->getMoloniVariantId() === 0) {
-                $variant->setMoloniVariant();
-            }
-
-            if ($variant->getMoloniVariantId() > 0) {
-                if ($variant->needsUpdate()) {
-                    $this->updateVariant($variant);
-                }
-            } else {
-                $this->createVariant($variant);
-            }
-
-            $keptVariantIds[] = $variant->getMoloniVariantId();
-            $syncedVariants[] = $variant->getMoloniVariant();
-        }
-
-        // Rebuild the list from the synced variants (kept + created), dropping removed
-        // ones so later steps (image sync) never reference a deleted variant id
-        $this->moloniProduct['variants'] = array_values(array_filter($syncedVariants));
-
-        return $keptVariantIds;
-    }
-
-    /**
-     * Create a single variant on the (already saved) parent product.
-     *
-     * @param MoloniVariant $variant
-     *
-     * @return void
-     *
-     * @throws MoloniProductException
-     */
-    protected function createVariant(MoloniVariant $variant): void
-    {
-        $variables = [
-            'productId' => $this->getMoloniProductId(),
-            'data' => $variant->toCreateArray(),
-        ];
-
-        try {
-            $mutation = MoloniApiClient::products()->mutationProductVariantCreate($variables);
-
-            $createdVariant = $mutation['data']['productVariantCreate']['data'] ?? [];
-
-            if (empty($createdVariant['productId'])) {
-                throw new MoloniProductException('Error creating variant for product ({0})', ['{0}' => $this->reference], ['mutation' => $mutation, 'props' => $variables]);
-            }
-        } catch (MoloniApiException $e) {
-            throw new MoloniProductException('Error creating variant for product ({0})', ['{0}' => $this->reference], $e->getData());
-        }
-
-        // Make the new variant available to the following steps (matching, images, mappings)
-        $variant->setMoloniVariantData($createdVariant);
-    }
-
-    /**
-     * Update a single existing variant.
-     *
-     * @param MoloniVariant $variant
-     *
-     * @return void
-     *
-     * @throws MoloniProductException
-     */
-    protected function updateVariant(MoloniVariant $variant): void
-    {
-        $variables = [
-            'data' => $variant->toUpdateArray(),
-        ];
-
-        try {
-            $mutation = MoloniApiClient::products()->mutationProductUpdate($variables);
-
-            $updatedVariant = $mutation['data']['productUpdate']['data'] ?? [];
-
-            if (empty($updatedVariant['productId'])) {
-                throw new MoloniProductException('Error updating variant ({0})', ['{0}' => $variant->getMoloniVariantId()], ['mutation' => $mutation, 'props' => $variables]);
-            }
-        } catch (MoloniApiException $e) {
-            throw new MoloniProductException('Error updating variant ({0})', ['{0}' => $variant->getMoloniVariantId()], $e->getData());
-        }
-    }
-
-    /**
-     * Delete (or hide, when not deletable) the Moloni variants that no longer
-     * exist as PrestaShop combinations.
-     *
-     * @param array $existingVariants
-     * @param array $keptVariantIds
-     *
-     * @return void
-     *
-     * @throws MoloniProductException
-     */
-    protected function removeUnusedVariants(array $existingVariants, array $keptVariantIds): void
-    {
-        $toDelete = [];
-
-        foreach ($existingVariants as $existingVariant) {
-            $variantId = (int) $existingVariant['productId'];
-
-            if (in_array($variantId, $keptVariantIds, true)) {
-                continue;
-            }
-
-            // If it can't be deleted, hide it instead
-            if ($existingVariant['deletable'] === false) {
-                try {
-                    MoloniApiClient::products()->mutationProductUpdate([
-                        'data' => [
-                            'productId' => $variantId,
-                            'visible' => Boolean::NO,
-                        ],
-                    ]);
-                } catch (MoloniApiException $e) {
-                    throw new MoloniProductException('Error hiding unused variant ({0})', ['{0}' => $variantId], $e->getData());
-                }
-
-                continue;
-            }
-
-            $toDelete[] = $variantId;
-        }
-
-        if (empty($toDelete)) {
-            return;
-        }
-
-        try {
-            MoloniApiClient::products()->mutationProductDelete(['productId' => $toDelete]);
-        } catch (MoloniApiException $e) {
-            throw new MoloniProductException('Error deleting unused variants ({0})', ['{0}' => implode(', ', $toDelete)], $e->getData());
-        }
     }
 
     /**

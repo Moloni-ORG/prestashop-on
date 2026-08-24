@@ -100,36 +100,4 @@ class Products extends Endpoint
 
         return $this->simplePost($query, $variables);
     }
-
-    /**
-     * Add a single variant to an existing parent product
-     *
-     * @param array|null $variables variables of the mutation
-     *
-     * @return array returns some data of the created variant
-     *
-     * @throws MoloniApiException
-     */
-    public function mutationProductVariantCreate(?array $variables = []): array
-    {
-        $query = $this->loadMutation('productVariantCreate');
-
-        return $this->simplePost($query, $variables);
-    }
-
-    /**
-     * Delete one or more products (or variants)
-     *
-     * @param array|null $variables variables of the mutation
-     *
-     * @return array returns the deletion result
-     *
-     * @throws MoloniApiException
-     */
-    public function mutationProductDelete(?array $variables = []): array
-    {
-        $query = $this->loadMutation('productDelete');
-
-        return $this->simplePost($query, $variables);
-    }
 }
