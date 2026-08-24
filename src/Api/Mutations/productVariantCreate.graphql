@@ -1,0 +1,52 @@
+mutation productVariantCreate($companyId: Int!,$productId: Int!,$data: ProductVariantCreate!) {
+  productVariantCreate(companyId: $companyId,productId: $productId,data: $data) {
+    data {
+      visible
+      productId
+      parentId
+      name
+      reference
+      summary
+      price
+      img
+      priceWithTaxes
+      hasStock
+      stock
+      deletable
+      warehouse
+      {
+        warehouseId
+      }
+      warehouses
+      {
+        warehouseId
+        stock
+        minStock
+      }
+      identifications
+      {
+        type
+        favorite
+        text
+      }
+      propertyPairs
+      {
+        propertyId
+        propertyValueId
+        property
+        {
+          name
+        }
+        propertyValue
+        {
+          code
+          value
+        }
+      }
+    }
+    errors {
+      field
+      msg
+    }
+  }
+}

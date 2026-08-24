@@ -66,22 +66,6 @@ class PropertyGroups extends Endpoint
     }
 
     /**
-     * Update a property group
-     *
-     * @param array|null $variables
-     *
-     * @return array
-     *
-     * @throws MoloniApiException
-     */
-    public function mutationPropertyGroupUpdate(?array $variables = []): array
-    {
-        $query = $this->loadMutation('propertyGroupUpdate');
-
-        return $this->simplePost($query, $variables);
-    }
-
-    /**
      * Create a property group
      *
      * @param array|null $variables
@@ -93,6 +77,38 @@ class PropertyGroups extends Endpoint
     public function mutationPropertyGroupCreate(?array $variables = []): array
     {
         $query = $this->loadMutation('propertyGroupCreate');
+
+        return $this->simplePost($query, $variables);
+    }
+
+    /**
+     * Add a single property to an existing property group
+     *
+     * @param array|null $variables
+     *
+     * @return array
+     *
+     * @throws MoloniApiException
+     */
+    public function mutationPropertyCreate(?array $variables = []): array
+    {
+        $query = $this->loadMutation('propertyCreate');
+
+        return $this->simplePost($query, $variables);
+    }
+
+    /**
+     * Add a single value to an existing property
+     *
+     * @param array|null $variables
+     *
+     * @return array
+     *
+     * @throws MoloniApiException
+     */
+    public function mutationPropertyValueCreate(?array $variables = []): array
+    {
+        $query = $this->loadMutation('propertyValueCreate');
 
         return $this->simplePost($query, $variables);
     }

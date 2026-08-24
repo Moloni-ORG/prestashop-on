@@ -1,0 +1,16 @@
+mutation propertyValueCreate($companyId: Int!,$propertyId: String!,$data: PropertyValueCreate!) {
+  propertyValueCreate(companyId: $companyId,propertyId: $propertyId,data: $data) {
+    data {
+      propertyValueId
+      code
+      value
+      visible
+      ordering
+      deletable
+    }
+    errors {
+      field
+      msg
+    }
+  }
+}

@@ -146,6 +146,15 @@ class MoloniVariant
     protected $syncFields;
 
     /**
+     * Whether the parent product is being created now (vs. already existing).
+     * Captured at construction because the parent id is only known after its
+     * own save, which happens before the variants are created.
+     *
+     * @var bool
+     */
+    protected $isNewProduct;
+
+    /**
      * Constructor
      *
      * @param \Combination $prestashopCombination
@@ -166,6 +175,7 @@ class MoloniVariant
         $this->parentName = $parentName;
         $this->moloniParentProduct = $moloniParentProduct;
         $this->propertyPairs = $propertyPairs;
+        $this->isNewProduct = empty($moloniParentProduct);
 
         $this->syncFields = $syncFields;
 
@@ -196,13 +206,56 @@ class MoloniVariant
     }
 
     /**
-     * Create variant information to save
+     * Payload to create this variant (productVariantCreate).
+     *
+     * The reference is intentionally omitted so Moloni auto-generates it from
+     * the parent reference and the property value codes.
      *
      * @return array
      */
-    public function toArray(): array
+    public function toCreateArray(): array
     {
         $props = [
+            'visible' => $this->visibility,
+            'name' => $this->name,
+            'propertyPairs' => $this->propertyPairs,
+        ];
+
+        if ($this->shouldSyncPrice()) {
+            $props['price'] = $this->price;
+        }
+
+        if ($this->shouldSyncIdentifiers()) {
+            $props['identifications'] = $this->identifications;
+        }
+
+        if ($this->parentHasStock()) {
+            $props['warehouseId'] = $this->warehouseId;
+
+            $warehouse = [
+                'warehouseId' => $this->warehouseId,
+            ];
+
+            // Only seed the initial stock when the whole product is being created
+            if ($this->isNewProduct) {
+                $warehouse['stock'] = $this->stock;
+            }
+
+            $props['warehouses'] = [$warehouse];
+        }
+
+        return $props;
+    }
+
+    /**
+     * Payload to update this (already existing) variant (productUpdate).
+     *
+     * @return array
+     */
+    public function toUpdateArray(): array
+    {
+        $props = [
+            'productId' => $this->getMoloniVariantId(),
             'visible' => $this->visibility,
             'name' => $this->name,
         ];
@@ -215,26 +268,70 @@ class MoloniVariant
             $props['identifications'] = $this->identifications;
         }
 
-        if ($this->variantExists()) {
-            $props['productId'] = $this->getMoloniVariantId();
-        } else {
-            $props['propertyPairs'] = $this->propertyPairs;
+        return $props;
+    }
 
-            if ($this->parentHasStock()) {
-                $props['warehouseId'] = $this->warehouseId;
-                $warehouses = [
-                    'warehouseId' => $this->warehouseId,
-                ];
-
-                if (!$this->parentExists()) {
-                    $warehouses['stock'] = $this->stock;
-                }
-
-                $props['warehouses'] = [$warehouses];
-            }
+    /**
+     * Whether the matched Moloni variant differs from what we would send, i.e.
+     * whether a productUpdate is actually worth issuing. Errs towards updating:
+     * any field we can't confidently compare returns true.
+     *
+     * @return bool
+     */
+    public function needsUpdate(): bool
+    {
+        // Nothing to compare against -> must update
+        if (empty($this->moloniVariant)) {
+            return true;
         }
 
-        return $props;
+        if ((int) ($this->moloniVariant['visible'] ?? -1) !== (int) $this->visibility) {
+            return true;
+        }
+
+        if (($this->moloniVariant['name'] ?? null) !== $this->name) {
+            return true;
+        }
+
+        if ($this->shouldSyncPrice()
+            && abs((float) ($this->moloniVariant['price'] ?? 0) - (float) $this->price) > 0.00001) {
+            return true;
+        }
+
+        if ($this->shouldSyncIdentifiers()
+            && $this->identificationsChanged($this->moloniVariant['identifications'] ?? [])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Compare the current Moloni identifications against the ones we would send.
+     *
+     * @param array $current
+     *
+     * @return bool
+     */
+    private function identificationsChanged(array $current): bool
+    {
+        if (count($current) !== count($this->identifications)) {
+            return true;
+        }
+
+        $normalize = static function (array $items): array {
+            $out = [];
+
+            foreach ($items as $item) {
+                $out[] = ($item['type'] ?? '') . '|' . ($item['text'] ?? '') . '|' . ((int) ($item['favorite'] ?? 0));
+            }
+
+            sort($out);
+
+            return $out;
+        };
+
+        return $normalize($current) !== $normalize($this->identifications);
     }
 
     //          SETS          //
@@ -492,6 +589,20 @@ class MoloniVariant
     public function setMoloniParent(array $moloniParent): MoloniVariant
     {
         $this->moloniParentProduct = $moloniParent;
+
+        return $this;
+    }
+
+    /**
+     * Store the Moloni variant returned by a create/update mutation
+     *
+     * @param array $moloniVariant
+     *
+     * @return MoloniVariant
+     */
+    public function setMoloniVariantData(array $moloniVariant): MoloniVariant
+    {
+        $this->moloniVariant = $moloniVariant;
 
         return $this;
     }

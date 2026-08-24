@@ -1,0 +1,11 @@
+mutation productDelete($companyId: Int!,$productId: [Int]!) {
+  productDelete(companyId: $companyId,productId: $productId) {
+    status
+    deletedCount
+    elementsCount
+    errors {
+      field
+      msg
+    }
+  }
+}
