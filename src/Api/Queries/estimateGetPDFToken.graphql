@@ -1,4 +1,4 @@
-query estimateGetPDFToken($documentId: Int!) {
+query prestashopEstimateGetPDFToken($documentId: Int!) {
   estimateGetPDFToken(documentId: $documentId) {
     data {
       token

@@ -1,4 +1,4 @@
-mutation stockMovementManualEntryCreate($companyId: Int!,$data: StockMovementManualInsert!) {
+mutation prestashopStockMovementManualEntryCreate($companyId: Int!,$data: StockMovementManualInsert!) {
   stockMovementManualEntryCreate(companyId: $companyId,data: $data) {
     data {
       stockMovementId

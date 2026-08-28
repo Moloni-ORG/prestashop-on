@@ -1,4 +1,4 @@
-query companies($options: CompanyOptions) {
+query prestashopCompanies($options: CompanyOptions) {
     companies(options: $options) {
         data {
             companyId

@@ -1,4 +1,4 @@
-mutation creditNoteGetPDF($companyId: Int!,$documentId: Int!) {
+mutation prestashopCreditNoteGetPDF($companyId: Int!,$documentId: Int!) {
   creditNoteGetPDF(companyId: $companyId,documentId: $documentId)
 }
 

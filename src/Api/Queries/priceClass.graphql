@@ -1,4 +1,4 @@
-query priceClass($companyId: Int!,$priceClassId: Int!) {
+query prestashopPriceClass($companyId: Int!,$priceClassId: Int!) {
   priceClass(companyId: $companyId,priceClassId: $priceClassId) {
     data {
       priceClassId

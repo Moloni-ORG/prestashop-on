@@ -1,4 +1,4 @@
-mutation priceClassCreate($companyId: Int!,$data: PriceClassInsert!) {
+mutation prestashopPriceClassCreate($companyId: Int!,$data: PriceClassInsert!) {
   priceClassCreate(companyId: $companyId,data: $data) {
     data {
       priceClassId

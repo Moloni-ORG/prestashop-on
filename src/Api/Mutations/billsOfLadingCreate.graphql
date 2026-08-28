@@ -1,4 +1,4 @@
-mutation billsOfLadingCreate($companyId: Int!,$data: BillsOfLadingInsert!,$options: BillsOfLadingMutateOptions) {
+mutation prestashopBillsOfLadingCreate($companyId: Int!,$data: BillsOfLadingInsert!,$options: BillsOfLadingMutateOptions) {
   billsOfLadingCreate(companyId: $companyId,data: $data,options: $options) {
     errors {
       field

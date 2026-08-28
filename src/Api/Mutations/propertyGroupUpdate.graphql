@@ -1,4 +1,4 @@
-mutation propertyGroupUpdate($companyId: Int!,$data: PropertyGroupUpdate!) {
+mutation prestashopPropertyGroupUpdate($companyId: Int!,$data: PropertyGroupUpdate!) {
   propertyGroupUpdate(companyId: $companyId,data: $data) {
     data {
       propertyGroupId

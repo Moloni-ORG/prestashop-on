@@ -1,4 +1,4 @@
-mutation customerUpdate($companyId: Int!,$data: CustomerUpdate!) {
+mutation prestashopCustomerUpdate($companyId: Int!,$data: CustomerUpdate!) {
   customerUpdate(companyId: $companyId,data: $data) {
     data {
       customerId

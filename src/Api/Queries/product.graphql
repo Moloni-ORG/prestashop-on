@@ -1,4 +1,4 @@
-query product($companyId: Int!,$productId: Int!) {
+query prestashopProduct($companyId: Int!,$productId: Int!) {
   product(companyId: $companyId,productId: $productId) {
     data {
       visible

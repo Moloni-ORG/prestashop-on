@@ -1,4 +1,4 @@
-query billsOfLading($companyId: Int!,$documentId: Int!) {
+query prestashopBillsOfLading($companyId: Int!,$documentId: Int!) {
   billsOfLading(companyId: $companyId,documentId: $documentId) {
     errors {
       field

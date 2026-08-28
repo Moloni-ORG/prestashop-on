@@ -1,4 +1,4 @@
-query creditNote($companyId: Int!,$documentId: Int!,$options: CreditNoteOptionsSingle) {
+query prestashopCreditNote($companyId: Int!,$documentId: Int!,$options: CreditNoteOptionsSingle) {
   creditNote(companyId: $companyId,documentId: $documentId,options: $options) {
     data {
       documentId

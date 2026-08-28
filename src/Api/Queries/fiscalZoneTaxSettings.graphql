@@ -1,4 +1,4 @@
-query fiscalZoneTaxSettings($companyId: Int!,$fiscalZone: String!) {
+query prestashopFiscalZoneTaxSettings($companyId: Int!,$fiscalZone: String!) {
   fiscalZoneTaxSettings(companyId: $companyId,fiscalZone: $fiscalZone) {
     fiscalZone
     fiscalZoneModes {

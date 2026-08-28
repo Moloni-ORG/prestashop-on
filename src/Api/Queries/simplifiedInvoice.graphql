@@ -1,4 +1,4 @@
-query simplifiedInvoice($companyId: Int!,$documentId: Int!,$options: SimplifiedInvoiceOptionsSingle) {
+query prestashopSimplifiedInvoice($companyId: Int!,$documentId: Int!,$options: SimplifiedInvoiceOptionsSingle) {
   simplifiedInvoice(companyId: $companyId,documentId: $documentId,options: $options) {
     data {
       documentId

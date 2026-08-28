@@ -1,4 +1,4 @@
-query simplifiedInvoiceGetPDFToken($documentId: Int!) {
+query prestashopSimplifiedInvoiceGetPDFToken($documentId: Int!) {
   simplifiedInvoiceGetPDFToken(documentId: $documentId) {
     data {
       token

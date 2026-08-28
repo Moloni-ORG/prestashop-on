@@ -1,4 +1,4 @@
-query propertyGroups($companyId: Int!,$options: PropertyGroupOptions) {
+query prestashopPropertyGroups($companyId: Int!,$options: PropertyGroupOptions) {
   propertyGroups(companyId: $companyId,options: $options) {
     data {
       propertyGroupId

@@ -1,4 +1,4 @@
-mutation invoiceReceiptGetPDF($companyId: Int!,$documentId: Int!) {
+mutation prestashopInvoiceReceiptGetPDF($companyId: Int!,$documentId: Int!) {
   invoiceReceiptGetPDF(companyId: $companyId,documentId: $documentId)
 }
 

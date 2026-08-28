@@ -1,4 +1,4 @@
-mutation purchaseOrderSendMail($companyId: Int!,$documents: [Int]!,$mailData: MailData) {
+mutation prestashopPurchaseOrderSendMail($companyId: Int!,$documents: [Int]!,$mailData: MailData) {
   purchaseOrderSendMail(companyId: $companyId,documents: $documents,mailData: $mailData)
 }
 

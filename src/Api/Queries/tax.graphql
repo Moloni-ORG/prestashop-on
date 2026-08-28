@@ -1,4 +1,4 @@
-query tax($companyId: Int!,$taxId: Int!) {
+query prestashopTax($companyId: Int!,$taxId: Int!) {
   tax(companyId: $companyId,taxId: $taxId) {
     data {
       taxId

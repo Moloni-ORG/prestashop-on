@@ -1,4 +1,4 @@
-mutation productUpdate($companyId: Int!,$data: ProductUpdate!) {
+mutation prestashopProductUpdate($companyId: Int!,$data: ProductUpdate!) {
   productUpdate(companyId: $companyId ,data: $data) {
     data {
       visible

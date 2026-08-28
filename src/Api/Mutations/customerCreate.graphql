@@ -1,4 +1,4 @@
-mutation customerCreate($companyId: Int!,$data: CustomerInsert!) {
+mutation prestashopCustomerCreate($companyId: Int!,$data: CustomerInsert!) {
   customerCreate(companyId: $companyId,data: $data) {
     data {
       customerId

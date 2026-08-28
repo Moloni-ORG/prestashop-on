@@ -1,4 +1,4 @@
-mutation proFormaInvoiceCreate($companyId: Int!,$data: ProFormaInvoiceInsert!,$options: ProFormaInvoiceMutateOptions) {
+mutation prestashopProFormaInvoiceCreate($companyId: Int!,$data: ProFormaInvoiceInsert!,$options: ProFormaInvoiceMutateOptions) {
   proFormaInvoiceCreate(companyId: $companyId,data: $data,options: $options) {
     data {
       documentId

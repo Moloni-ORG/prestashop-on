@@ -1,4 +1,4 @@
-query timezones($options: TimezoneOptions) {
+query prestashopTimezones($options: TimezoneOptions) {
   timezones(options: $options) {
     errors {
       field

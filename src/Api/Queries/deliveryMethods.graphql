@@ -1,4 +1,4 @@
-query deliveryMethods($companyId: Int!,$options: DeliveryMethodOptions)
+query prestashopDeliveryMethods($companyId: Int!,$options: DeliveryMethodOptions)
 {
     deliveryMethods(companyId: $companyId,options: $options)
     {

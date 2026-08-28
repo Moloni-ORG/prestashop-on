@@ -1,4 +1,4 @@
-mutation purchaseOrderCreate($companyId: Int!,$data: PurchaseOrderInsert!,$options: PurchaseOrderMutateOptions) {
+mutation prestashopPurchaseOrderCreate($companyId: Int!,$data: PurchaseOrderInsert!,$options: PurchaseOrderMutateOptions) {
   purchaseOrderCreate(companyId: $companyId,data: $data,options: $options) {
     data {
       documentId

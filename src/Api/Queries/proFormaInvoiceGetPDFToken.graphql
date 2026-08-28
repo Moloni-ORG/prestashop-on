@@ -1,4 +1,4 @@
-query proFormaInvoiceGetPDFToken($documentId: Int!) {
+query prestashopProFormaInvoiceGetPDFToken($documentId: Int!) {
   proFormaInvoiceGetPDFToken(documentId: $documentId) {
     data {
       token

@@ -1,4 +1,4 @@
-query purchaseOrderGetPDFToken($documentId: Int!) {
+query prestashopPurchaseOrderGetPDFToken($documentId: Int!) {
   purchaseOrderGetPDFToken(documentId: $documentId) {
     data {
       token

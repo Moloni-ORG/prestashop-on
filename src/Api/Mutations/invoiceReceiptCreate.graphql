@@ -1,4 +1,4 @@
-mutation invoiceReceiptCreate($companyId: Int!,$data: InvoiceReceiptInsert!,$options: InvoiceReceiptMutateOptions) {
+mutation prestashopInvoiceReceiptCreate($companyId: Int!,$data: InvoiceReceiptInsert!,$options: InvoiceReceiptMutateOptions) {
   invoiceReceiptCreate(companyId: $companyId,data: $data,options: $options) {
     errors {
       field

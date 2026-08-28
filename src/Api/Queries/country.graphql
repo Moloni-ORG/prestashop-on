@@ -1,4 +1,4 @@
-query country($countryId: Int!) {
+query prestashopCountry($countryId: Int!) {
   country(countryId: $countryId) {
     data {
       countryId

@@ -1,4 +1,4 @@
-query productCategories($companyId: Int!,$options: ProductCategoryOptions) {
+query prestashopProductCategories($companyId: Int!,$options: ProductCategoryOptions) {
   productCategories(companyId: $companyId,options: $options) {
     data {
       productCategoryId
