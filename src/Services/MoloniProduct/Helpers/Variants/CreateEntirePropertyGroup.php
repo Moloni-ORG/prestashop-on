@@ -39,6 +39,11 @@ class CreateEntirePropertyGroup
 {
     use ArrayTrait;
 
+    /**
+     * Name used for the property group created by the module.
+     */
+    public const PROPERTY_GROUP_NAME = 'Prestashop';
+
     private $moloniPropertyGroups;
     private $prestashopCombinations;
 
@@ -94,14 +99,7 @@ class CreateEntirePropertyGroup
             }
         }
 
-        // Loop like crazy trying to find a free group name
-        for ($idx = 1; $idx <= 1000; ++$idx) {
-            $newGroupName = 'Prestashop-' . str_pad($idx, 3, '0', STR_PAD_LEFT);
-
-            if ($this->findInName($this->moloniPropertyGroups, $newGroupName) === false) {
-                break;
-            }
-        }
+        $newGroupName = self::PROPERTY_GROUP_NAME;
 
         $creationVariables = [
             'data' => [

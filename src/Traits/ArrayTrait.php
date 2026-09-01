@@ -91,8 +91,10 @@ trait ArrayTrait
 
     private function findInName(array $array, string $needle)
     {
+        $normalizedNeedle = trim(strtolower($needle));
+
         foreach ($array as $key => $value) {
-            if ($value['name'] === $needle) {
+            if (trim(strtolower($value['name'])) === $normalizedNeedle) {
                 return $key;
             }
         }
