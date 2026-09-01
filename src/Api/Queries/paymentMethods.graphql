@@ -1,4 +1,4 @@
-query paymentMethods($companyId: Int!,$options: PaymentMethodOptions) {
+query prestashopPaymentMethods($companyId: Int!,$options: PaymentMethodOptions) {
   paymentMethods(companyId: $companyId, options: $options) {
     errors {
       field

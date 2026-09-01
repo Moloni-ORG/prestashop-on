@@ -1,4 +1,4 @@
-query language($languageId: Int!) {
+query prestashopLanguage($languageId: Int!) {
   language(languageId: $languageId) {
     data {
       languageId

@@ -1,4 +1,4 @@
-mutation simplifiedInvoiceCreate($companyId: Int!,$data: SimplifiedInvoiceInsert!,$options: SimplifiedInvoiceMutateOptions) {
+mutation prestashopSimplifiedInvoiceCreate($companyId: Int!,$data: SimplifiedInvoiceInsert!,$options: SimplifiedInvoiceMutateOptions) {
   simplifiedInvoiceCreate(companyId: $companyId,data: $data,options: $options) {
     data {
       documentId

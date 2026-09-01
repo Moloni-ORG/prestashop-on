@@ -1,4 +1,4 @@
-query customerNextNumber($companyId: Int!, $options: GetNextCustomerNumberOptions) {
+query prestashopCustomerNextNumber($companyId: Int!, $options: GetNextCustomerNumberOptions) {
   customerNextNumber(companyId: $companyId, options: $options) {
     data
     errors {

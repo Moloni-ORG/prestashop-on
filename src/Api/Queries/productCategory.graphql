@@ -1,4 +1,4 @@
-query productCategory($companyId: Int!,$productCategoryId: Int!) {
+query prestashopProductCategory($companyId: Int!,$productCategoryId: Int!) {
   productCategory(companyId: $companyId,productCategoryId: $productCategoryId) {
     data {
       name

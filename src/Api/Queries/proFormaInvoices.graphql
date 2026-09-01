@@ -1,4 +1,4 @@
-query proFormaInvoices($companyId: Int!,$options: ProFormaInvoiceOptions) {
+query prestashopProFormaInvoices($companyId: Int!,$options: ProFormaInvoiceOptions) {
   proFormaInvoices(companyId: $companyId,options: $options) {
     data {
       documentId

@@ -1,4 +1,4 @@
-query languages($options: LanguageOptions) {
+query prestashopLanguages($options: LanguageOptions) {
   languages(options: $options) {
     data {
       languageId

@@ -1,4 +1,4 @@
-mutation productCreate($companyId: Int!,$data: ProductInsert!) {
+mutation prestashopProductCreate($companyId: Int!,$data: ProductInsert!) {
   productCreate(companyId: $companyId,data: $data) {
     data {
       visible

@@ -1,4 +1,4 @@
-mutation estimateUpdate($companyId: Int!,$data: EstimateUpdate!) {
+mutation prestashopEstimateUpdate($companyId: Int!,$data: EstimateUpdate!) {
   estimateUpdate(companyId: $companyId,data: $data) {
     errors {
       field

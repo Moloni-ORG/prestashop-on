@@ -1,4 +1,4 @@
-query creditNoteGetPDFToken($documentId: Int!) {
+query prestashopCreditNoteGetPDFToken($documentId: Int!) {
   creditNoteGetPDFToken(documentId: $documentId) {
     data {
       token

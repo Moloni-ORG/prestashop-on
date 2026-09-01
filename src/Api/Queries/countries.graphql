@@ -1,4 +1,4 @@
-query countries($options: CountryOptions) {
+query prestashopCountries($options: CountryOptions) {
   countries(options: $options) {
     data {
       countryId

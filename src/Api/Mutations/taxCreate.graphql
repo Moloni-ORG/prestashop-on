@@ -1,4 +1,4 @@
-mutation taxCreate($companyId: Int!,$data: TaxInsert!) {
+mutation prestashopTaxCreate($companyId: Int!,$data: TaxInsert!) {
   taxCreate(companyId: $companyId,data: $data) {
     data {
       taxId

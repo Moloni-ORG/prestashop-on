@@ -1,4 +1,4 @@
-query estimates($companyId: Int!,$options: EstimateOptions) {
+query prestashopEstimates($companyId: Int!,$options: EstimateOptions) {
   estimates(companyId: $companyId,options: $options) {
     data {
       documentId

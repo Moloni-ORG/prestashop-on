@@ -1,4 +1,4 @@
-query documentSets($companyId: Int!,$options: DocumentSetOptions) {
+query prestashopDocumentSets($companyId: Int!,$options: DocumentSetOptions) {
   documentSets(companyId: $companyId, options: $options) {
     errors {
       field

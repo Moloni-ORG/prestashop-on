@@ -1,4 +1,4 @@
-query receipts($companyId: Int!,$options: ReceiptOptions) {
+query prestashopReceipts($companyId: Int!,$options: ReceiptOptions) {
   receipts(companyId: $companyId,options: $options) {
     data {
       documentId

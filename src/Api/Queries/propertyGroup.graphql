@@ -1,4 +1,4 @@
-query propertyGroup($companyId: Int!,$propertyGroupId: String!) {
+query prestashopPropertyGroup($companyId: Int!,$propertyGroupId: String!) {
   propertyGroup(companyId: $companyId,propertyGroupId: $propertyGroupId) {
     data {
       propertyGroupId

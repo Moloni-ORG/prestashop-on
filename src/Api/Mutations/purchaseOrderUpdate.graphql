@@ -1,4 +1,4 @@
-mutation purchaseOrderUpdate($companyId: Int!,$data: PurchaseOrderUpdate!) {
+mutation prestashopPurchaseOrderUpdate($companyId: Int!,$data: PurchaseOrderUpdate!) {
   purchaseOrderUpdate(companyId: $companyId,data: $data) {
     data {
       documentId

@@ -1,4 +1,4 @@
-query hooks($companyId: Int!,$options: HookOptions) {
+query prestashopHooks($companyId: Int!,$options: HookOptions) {
   hooks(companyId: $companyId,options: $options) {
     data {
       hookId

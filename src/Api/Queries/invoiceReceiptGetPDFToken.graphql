@@ -1,4 +1,4 @@
-query invoiceReceiptGetPDFToken($documentId: Int!) {
+query prestashopInvoiceReceiptGetPDFToken($documentId: Int!) {
   invoiceReceiptGetPDFToken(documentId: $documentId) {
     data {
       token

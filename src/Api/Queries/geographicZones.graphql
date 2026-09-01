@@ -1,4 +1,4 @@
-query geographicZones($companyId: Int!,$options: GeographicZoneOptions) {
+query prestashopGeographicZones($companyId: Int!,$options: GeographicZoneOptions) {
   geographicZones(companyId: $companyId,options: $options) {
     data {
       geographicZoneId

@@ -1,4 +1,4 @@
-query warehouses($companyId: Int!,$options: WarehouseOptions) {
+query prestashopWarehouses($companyId: Int!,$options: WarehouseOptions) {
   warehouses(companyId: $companyId, options: $options) {
     errors {
       field

@@ -1,4 +1,4 @@
-query measurementUnits($companyId: Int!,$options: MeasurementUnitOptions) {
+query prestashopMeasurementUnits($companyId: Int!,$options: MeasurementUnitOptions) {
   measurementUnits(companyId: $companyId,options: $options) {
     data {
       measurementUnitId

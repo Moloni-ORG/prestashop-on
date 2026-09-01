@@ -1,4 +1,4 @@
-mutation measurementUnitCreate($companyId: Int!,$data: MeasurementUnitInsert!) {
+mutation prestashopMeasurementUnitCreate($companyId: Int!,$data: MeasurementUnitInsert!) {
   measurementUnitCreate(companyId: $companyId,data: $data) {
     data {
       measurementUnitId

@@ -1,4 +1,4 @@
-mutation proFormaInvoiceUpdate($companyId: Int!,$data: ProFormaInvoiceUpdate!) {
+mutation prestashopProFormaInvoiceUpdate($companyId: Int!,$data: ProFormaInvoiceUpdate!) {
   proFormaInvoiceUpdate(companyId: $companyId,data: $data) {
     data {
       documentId

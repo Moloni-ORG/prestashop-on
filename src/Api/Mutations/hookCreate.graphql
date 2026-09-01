@@ -1,4 +1,4 @@
-mutation hookCreate($companyId: Int!,$data: HookInsert!) {
+mutation prestashopHookCreate($companyId: Int!,$data: HookInsert!) {
   hookCreate(companyId: $companyId,data: $data) {
     data {
       hookId

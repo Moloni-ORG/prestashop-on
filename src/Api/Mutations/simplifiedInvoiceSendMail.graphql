@@ -1,4 +1,4 @@
-mutation simplifiedInvoiceSendMail($companyId: Int!,$documents: [Int]!,$mailData: MailData) {
+mutation prestashopSimplifiedInvoiceSendMail($companyId: Int!,$documents: [Int]!,$mailData: MailData) {
   simplifiedInvoiceSendMail(companyId: $companyId,documents: $documents,mailData: $mailData)
 }
 

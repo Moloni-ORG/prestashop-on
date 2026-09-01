@@ -1,4 +1,4 @@
-mutation receiptCreate($companyId: Int!,$data: ReceiptInsert!,$options: ReceiptMutateOptions) {
+mutation prestashopReceiptCreate($companyId: Int!,$data: ReceiptInsert!,$options: ReceiptMutateOptions) {
   receiptCreate(companyId: $companyId,data: $data,options: $options) {
     data {
       documentId

@@ -1,4 +1,4 @@
-query maturityDates($companyId: Int!,$options: MaturityDateOptions) {
+query prestashopMaturityDates($companyId: Int!,$options: MaturityDateOptions) {
   maturityDates(companyId: $companyId, options: $options) {
     errors {
       field

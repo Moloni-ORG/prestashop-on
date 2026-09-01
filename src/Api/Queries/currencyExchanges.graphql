@@ -1,4 +1,4 @@
-query currencyExchanges($options: CurrencyExchangeOptions) {
+query prestashopCurrencyExchanges($options: CurrencyExchangeOptions) {
   currencyExchanges(options: $options) {
     data {
       currencyExchangeId

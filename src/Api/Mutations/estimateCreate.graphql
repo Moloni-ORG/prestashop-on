@@ -1,4 +1,4 @@
-mutation estimateCreate($companyId: Int!,$data: EstimateInsert!,$options: EstimateMutateOptions) {
+mutation prestashopEstimateCreate($companyId: Int!,$data: EstimateInsert!,$options: EstimateMutateOptions) {
   estimateCreate(companyId: $companyId,data: $data,options: $options) {
     errors {
       field

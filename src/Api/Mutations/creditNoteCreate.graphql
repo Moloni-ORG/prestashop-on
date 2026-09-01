@@ -1,4 +1,4 @@
-mutation creditNoteCreate($companyId: Int!,$data: CreditNoteInsert!,$options:CreditNoteMutateOptions) {
+mutation prestashopCreditNoteCreate($companyId: Int!,$data: CreditNoteInsert!,$options:CreditNoteMutateOptions) {
   creditNoteCreate(companyId: $companyId,data: $data,options: $options) {
     data {
       documentId

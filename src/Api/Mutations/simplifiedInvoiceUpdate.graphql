@@ -1,4 +1,4 @@
-mutation simplifiedInvoiceUpdate($companyId: Int!,$data: SimplifiedInvoiceUpdate!) {
+mutation prestashopSimplifiedInvoiceUpdate($companyId: Int!,$data: SimplifiedInvoiceUpdate!) {
   simplifiedInvoiceUpdate(companyId: $companyId,data: $data) {
     data {
       documentId

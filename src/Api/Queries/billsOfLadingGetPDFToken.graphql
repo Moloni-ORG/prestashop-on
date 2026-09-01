@@ -1,4 +1,4 @@
-query billsOfLadingGetPDFToken($documentId: Int!) {
+query prestashopBillsOfLadingGetPDFToken($documentId: Int!) {
   billsOfLadingGetPDFToken(documentId: $documentId) {
     data {
       token

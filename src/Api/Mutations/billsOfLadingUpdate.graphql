@@ -1,4 +1,4 @@
-mutation billsOfLadingUpdate($companyId: Int!,$data: BillsOfLadingUpdate!) {
+mutation prestashopBillsOfLadingUpdate($companyId: Int!,$data: BillsOfLadingUpdate!) {
   billsOfLadingUpdate(companyId: $companyId,data: $data) {
     errors {
       field

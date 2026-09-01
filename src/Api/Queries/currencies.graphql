@@ -1,4 +1,4 @@
-query currencies($options: CurrencyOptions) {
+query prestashopCurrencies($options: CurrencyOptions) {
   currencies(options: $options) {
     errors {
       field

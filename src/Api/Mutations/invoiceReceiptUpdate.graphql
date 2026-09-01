@@ -1,4 +1,4 @@
-mutation invoiceReceiptUpdate($companyId: Int!,$data: InvoiceReceiptUpdate!) {
+mutation prestashopInvoiceReceiptUpdate($companyId: Int!,$data: InvoiceReceiptUpdate!) {
   invoiceReceiptUpdate(companyId: $companyId,data: $data) {
     errors {
       field

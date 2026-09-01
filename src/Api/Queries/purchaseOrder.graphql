@@ -1,4 +1,4 @@
-query purchaseOrder($companyId: Int!,$documentId: Int!,$options: PurchaseOrderOptionsSingle) {
+query prestashopPurchaseOrder($companyId: Int!,$documentId: Int!,$options: PurchaseOrderOptionsSingle) {
   purchaseOrder(companyId: $companyId,documentId: $documentId,options: $options) {
     data {
       documentId

@@ -1,4 +1,4 @@
-mutation propertyCreate($companyId: Int!,$propertyGroupId: String!,$data: PropertyCreate!) {
+mutation prestashopPropertyCreate($companyId: Int!,$propertyGroupId: String!,$data: PropertyCreate!) {
   propertyCreate(companyId: $companyId,propertyGroupId: $propertyGroupId,data: $data) {
     data {
       propertyId
