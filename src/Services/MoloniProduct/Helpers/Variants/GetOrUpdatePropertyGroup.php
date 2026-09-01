@@ -26,7 +26,6 @@
 namespace MoloniOn\Services\MoloniProduct\Helpers\Variants;
 
 use MoloniOn\Api\MoloniApiClient;
-use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Traits\ArrayTrait;
@@ -38,6 +37,7 @@ if (!defined('_PS_VERSION_')) {
 class GetOrUpdatePropertyGroup
 {
     use ArrayTrait;
+    use PrestashopCombinationsTrait;
 
     /**
      * @var array
@@ -82,155 +82,10 @@ class GetOrUpdatePropertyGroup
             throw new MoloniProductException('Error fetching property group', [], $queryParams);
         }
 
-        $propertyGroupForUpdate = [
-            'propertyGroupId' => $moloniPropertyGroup['propertyGroupId'],
-            'properties' => $moloniPropertyGroup['properties'],
-        ];
-
-        // Delete unwanted props
-        foreach ($propertyGroupForUpdate['properties'] as $idx => $group) {
-            unset($propertyGroupForUpdate['properties'][$idx]['deletable']);
-
-            foreach ($group['values'] as $idx2 => $property) {
-                unset($propertyGroupForUpdate['properties'][$idx]['values'][$idx2]['deletable']);
-            }
-        }
-
-        $updateNeeded = false;
-
-        foreach ($this->prestashopCombinations as $groups) {
-            foreach ($groups as $groupName => $attributes) {
-                foreach ($attributes as $attribute) {
-                    $propExistsKey = $this->findInName($propertyGroupForUpdate['properties'], $groupName);
-
-                    // Property name exists
-                    if ($propExistsKey !== false) {
-                        $propExists = $propertyGroupForUpdate['properties'][$propExistsKey];
-
-                        $valueExistsKey = $this->findInCodeWithFallback(
-                            $propExists['values'],
-                            $attribute
-                        );
-
-                        // Property value doesn't, add value
-                        if ($valueExistsKey === false) {
-                            $updateNeeded = true;
-
-                            $nextOrdering = $this->getNextPropertyOrder($propExists['values']);
-
-                            $propertyGroupForUpdate['properties'][$propExistsKey]['values'][] = [
-                                'code' => $this->cleanReferenceString($attribute),
-                                'value' => $attribute,
-                                'ordering' => $nextOrdering,
-                                'visible' => Boolean::YES,
-                            ];
-                        }
-
-                    // Property name doesn't exist
-                    // need to create property and the value
-                    } else {
-                        $updateNeeded = true;
-
-                        $nextOrdering = $this->getNextPropertyOrder($propertyGroupForUpdate['properties']);
-
-                        $propertyGroupForUpdate['properties'][] = [
-                            'ordering' => $nextOrdering,
-                            'name' => $groupName,
-                            'visible' => Boolean::YES,
-                            'values' => [
-                                [
-                                    'code' => $this->cleanReferenceString($attribute),
-                                    'value' => $attribute,
-                                    'visible' => Boolean::YES,
-                                    'ordering' => 1,
-                                ],
-                            ],
-                        ];
-                    }
-                }
-            }
-        }
-
-        // There was stuff missing, we need to update the property group
-        if ($updateNeeded) {
-            try {
-                $mutation = MoloniApiClient::propertyGroups()->mutationPropertyGroupUpdate(
-                    ['data' => $propertyGroupForUpdate]
-                );
-
-                $updatedPropertyGroup = $mutation['data']['propertyGroupUpdate']['data'] ?? [];
-
-                if (empty($updatedPropertyGroup)) {
-                    throw new MoloniProductException('Failed to update existing property group "{0}"', ['{0}' => $bestPropertyGroup['name'] ?? ''], ['mutation' => $mutation, 'props' => $propertyGroupForUpdate]);
-                }
-            } catch (MoloniApiException $e) {
-                throw new MoloniProductException('Failed to update existing property group "{0}"', ['{0}' => $bestPropertyGroup['name'] ?? ''], $e->getData());
-            }
-
-            return (new PrepareVariantPropertiesReturn($updatedPropertyGroup, $this->prestashopCombinations))->handle();
-        }
-
-        // This was a 100% match, we can return right away
-        return (new PrepareVariantPropertiesReturn($moloniPropertyGroup, $this->prestashopCombinations))->handle();
-    }
-
-    /**
-     * Prepare initial data structure for looping
-     *
-     * @param array|null $productAttributes
-     *
-     * @return array
-     */
-    private function preparePrestashopProductAttributes(?array $productAttributes = []): array
-    {
-        /**
-         * [
-         *      'combination_id => [
-         *          'group_name' => [
-         *              'attribute_a',
-         *              'attribute_b',
-         *              ...
-         *          ]
-         *      ]
-         * ]
+        /*
+         * Add any missing properties/values one by one, then map the combinations
+         * to their Moloni property pairs.
          */
-        $result = [];
-
-        foreach ($productAttributes as $attribute) {
-            $combinationId = (int) $attribute['id_product_attribute'];
-            $groupName = $attribute['group_name'];
-            $attributeName = $attribute['attribute_name'];
-
-            if (!isset($result[$combinationId][$groupName])) {
-                $result[$combinationId][$groupName] = [];
-            }
-
-            $result[$combinationId][$groupName][] = $attributeName;
-        }
-
-        return $result;
-    }
-
-    //          AUXILIARY          //
-
-    /**
-     * Get next attribute order
-     *
-     * @param array|null $properties
-     *
-     * @return int
-     */
-    private function getNextPropertyOrder(?array $properties = []): int
-    {
-        $lastOrder = 0;
-
-        if (!empty($properties)) {
-            $count = count($properties);
-            $lastIndex = $count - 1;
-
-            $lastOrder = $properties[$lastIndex]['ordering'] ?? 0;
-        }
-
-        return $lastOrder + 1;
+        return (new AddMissingPropertiesAndValues($moloniPropertyGroup, $this->prestashopCombinations))->handle();
     }
 }

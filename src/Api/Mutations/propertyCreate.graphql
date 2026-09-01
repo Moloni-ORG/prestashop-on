@@ -1,0 +1,24 @@
+mutation prestashopPropertyCreate($companyId: Int!,$propertyGroupId: String!,$data: PropertyCreate!) {
+  propertyCreate(companyId: $companyId,propertyGroupId: $propertyGroupId,data: $data) {
+    data {
+      propertyId
+      name
+      visible
+      ordering
+      deletable
+      values
+      {
+        propertyValueId
+        code
+        value
+        visible
+        ordering
+        deletable
+      }
+    }
+    errors {
+      field
+      msg
+    }
+  }
+}
