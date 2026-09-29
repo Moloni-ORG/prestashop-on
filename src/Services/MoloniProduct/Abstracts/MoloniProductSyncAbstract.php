@@ -28,6 +28,7 @@ namespace MoloniOn\Services\MoloniProduct\Abstracts;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\Countries;
+use MoloniOn\Enums\ProductDeletionBlocker;
 use MoloniOn\Enums\ProductType;
 use MoloniOn\Enums\ProductTypeAT;
 use MoloniOn\Enums\ProductVisibility;
@@ -769,6 +770,18 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
         return $this->hasStock;
     }
 
+    /**
+     * Checks if the fetched Moloni product has documents associated. Moloni
+     * rejects a name change on a product/variant in that state, so its name
+     * must be left out of the payload.
+     *
+     * @return bool
+     */
+    protected function moloniProductHasDocuments(): bool
+    {
+        return in_array(ProductDeletionBlocker::PRODUCT_HAS_DOCUMENT, $this->moloniProduct['deletionBlockers'] ?? [], true);
+    }
+
     //          VERIFICATIONS          //
 
     /**
@@ -794,6 +807,10 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
      */
     protected function shouldSyncName(): bool
     {
+        if ($this->productExists() && $this->moloniProductHasDocuments()) {
+            return false;
+        }
+
         return !$this->productExists() || in_array(SyncFields::NAME, $this->syncFields, true);
     }
 

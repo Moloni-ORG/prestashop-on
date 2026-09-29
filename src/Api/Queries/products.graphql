@@ -16,6 +16,7 @@ query prestashopProducts($companyId: Int!,$options: ProductOptions) {
       stock
       img
       deletable
+      deletionBlockers
       identifications
       {
         type
@@ -88,6 +89,7 @@ query prestashopProducts($companyId: Int!,$options: ProductOptions) {
         hasStock
         stock
         deletable
+        deletionBlockers
         warehouse
         {
           warehouseId

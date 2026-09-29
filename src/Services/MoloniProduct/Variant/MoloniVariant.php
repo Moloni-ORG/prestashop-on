@@ -28,6 +28,7 @@ namespace MoloniOn\Services\MoloniProduct\Variant;
 use Combination;
 use Image;
 use MoloniOn\Enums\Boolean;
+use MoloniOn\Enums\ProductDeletionBlocker;
 use MoloniOn\Enums\ProductVisibility;
 use MoloniOn\Enums\SyncFields;
 use MoloniOn\Services\MoloniProduct\Helpers\Variants\FindVariant;
@@ -206,6 +207,10 @@ class MoloniVariant
             'visible' => $this->visibility,
             'name' => $this->name,
         ];
+
+        if (!$this->shouldSyncName()) {
+            unset($props['name']);
+        }
 
         if ($this->shouldSyncPrice()) {
             $props['price'] = $this->price;
@@ -583,6 +588,18 @@ class MoloniVariant
     //          VERIFICATIONS          //
 
     /**
+     * Should sync variant name. Moloni rejects a designation change on a
+     * variant that has documents associated, so it must be left out of the
+     * payload for those.
+     *
+     * @return bool
+     */
+    protected function shouldSyncName(): bool
+    {
+        return !$this->variantExists() || !$this->moloniVariantHasDocuments();
+    }
+
+    /**
      * Should sync variant price
      *
      * @return bool
@@ -632,5 +649,15 @@ class MoloniVariant
     protected function variantExists(): bool
     {
         return $this->getMoloniVariantId() > 0;
+    }
+
+    /**
+     * Checks if the matched Moloni variant has documents associated
+     *
+     * @return bool
+     */
+    protected function moloniVariantHasDocuments(): bool
+    {
+        return in_array(ProductDeletionBlocker::PRODUCT_HAS_DOCUMENT, $this->moloniVariant['deletionBlockers'] ?? [], true);
     }
 }

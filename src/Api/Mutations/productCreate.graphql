@@ -16,6 +16,7 @@ mutation prestashopProductCreate($companyId: Int!,$data: ProductInsert!) {
       stock
       img
       deletable
+      deletionBlockers
       identifications
       {
         type
@@ -88,6 +89,7 @@ mutation prestashopProductCreate($companyId: Int!,$data: ProductInsert!) {
         hasStock
         stock
         deletable
+        deletionBlockers
         warehouse
         {
           warehouseId
