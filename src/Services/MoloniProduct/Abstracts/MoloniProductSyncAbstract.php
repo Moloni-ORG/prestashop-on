@@ -28,7 +28,6 @@ namespace MoloniOn\Services\MoloniProduct\Abstracts;
 use MoloniOn\Api\MoloniApiClient;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Enums\Countries;
-use MoloniOn\Enums\ProductDeletionBlocker;
 use MoloniOn\Enums\ProductType;
 use MoloniOn\Enums\ProductTypeAT;
 use MoloniOn\Enums\ProductVisibility;
@@ -40,7 +39,6 @@ use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Exceptions\Product\MoloniProductTaxException;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
-use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Helpers\ProductReference;
 use MoloniOn\Services\MoloniProduct\Interfaces\MoloniProductServiceInterface;
 use MoloniOn\Services\MoloniProduct\ProductCategory;
@@ -232,7 +230,7 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
     public function __construct(\Product $prestashopProduct, array $moloniProduct = [])
     {
         $this->prestashopProduct = $prestashopProduct;
-        $this->moloniProduct = $this->withDeletionBlockers($moloniProduct);
+        $this->moloniProduct = $moloniProduct;
 
         $this->syncFields = Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
         $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
@@ -772,34 +770,17 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
     }
 
     /**
-     * Checks if the fetched Moloni product has documents associated. Moloni
-     * rejects a reference change on a product in that state (any country),
-     * and a name change too when the company is Portuguese, so those fields
-     * must be left out of the payload.
+     * Checks if the fetched Moloni product may have documents associated (it is
+     * not deletable; it may also just have stock movements). Moloni rejects a
+     * reference change on a product with documents (any country), and a name
+     * change too when the company is Portuguese, so those fields must be left
+     * out of the payload.
      *
      * @return bool
      */
     protected function moloniProductHasDocuments(): bool
     {
-        return in_array(ProductDeletionBlocker::PRODUCT_HAS_DOCUMENT, $this->moloniProduct['deletionBlockers'] ?? [], true);
-    }
-
-    /**
-     * Product lists (and searches by reference) don't select deletionBlockers, as it
-     * is costly to resolve. Re-read such a product by id so the name/reference guards
-     * below can rely on it.
-     *
-     * @param array $moloniProduct
-     *
-     * @return array
-     */
-    protected function withDeletionBlockers(array $moloniProduct): array
-    {
-        if (array_key_exists('deletionBlockers', $moloniProduct) || empty($moloniProduct['productId'])) {
-            return $moloniProduct;
-        }
-
-        return FindMoloniProductByReference::byId((int) $moloniProduct['productId']) ?: $moloniProduct;
+        return ($this->moloniProduct['deletable'] ?? true) === false;
     }
 
     /**

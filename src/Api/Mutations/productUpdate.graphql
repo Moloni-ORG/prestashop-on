@@ -15,7 +15,6 @@ mutation prestashopProductUpdate($companyId: Int!,$data: ProductUpdate!) {
       hasStock
       stock
       img
-      deletable
       identifications
       {
         type
@@ -87,7 +86,6 @@ mutation prestashopProductUpdate($companyId: Int!,$data: ProductUpdate!) {
         priceWithTaxes
         hasStock
         stock
-        deletable
         warehouse
         {
           warehouseId
