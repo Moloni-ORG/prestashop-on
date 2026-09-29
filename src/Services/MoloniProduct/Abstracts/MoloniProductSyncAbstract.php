@@ -40,6 +40,7 @@ use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Exceptions\Product\MoloniProductTaxException;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
+use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Helpers\ProductReference;
 use MoloniOn\Services\MoloniProduct\Interfaces\MoloniProductServiceInterface;
 use MoloniOn\Services\MoloniProduct\ProductCategory;
@@ -231,7 +232,7 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
     public function __construct(\Product $prestashopProduct, array $moloniProduct = [])
     {
         $this->prestashopProduct = $prestashopProduct;
-        $this->moloniProduct = $moloniProduct;
+        $this->moloniProduct = $this->withDeletionBlockers($moloniProduct);
 
         $this->syncFields = Settings::get('productSyncFields') ?? SyncFields::getDefaultFields();
         $this->canSyncStock = MoloniContext::instance()->company()->canSyncStock();
@@ -781,6 +782,24 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
     protected function moloniProductHasDocuments(): bool
     {
         return in_array(ProductDeletionBlocker::PRODUCT_HAS_DOCUMENT, $this->moloniProduct['deletionBlockers'] ?? [], true);
+    }
+
+    /**
+     * Product lists (and searches by reference) don't select deletionBlockers, as it
+     * is costly to resolve. Re-read such a product by id so the name/reference guards
+     * below can rely on it.
+     *
+     * @param array $moloniProduct
+     *
+     * @return array
+     */
+    protected function withDeletionBlockers(array $moloniProduct): array
+    {
+        if (array_key_exists('deletionBlockers', $moloniProduct) || empty($moloniProduct['productId'])) {
+            return $moloniProduct;
+        }
+
+        return FindMoloniProductByReference::byId((int) $moloniProduct['productId']) ?: $moloniProduct;
     }
 
     /**
