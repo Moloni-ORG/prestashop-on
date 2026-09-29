@@ -772,7 +772,8 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
 
     /**
      * Checks if the fetched Moloni product has documents associated. Moloni
-     * rejects a name change on a product/variant in that state, so its name
+     * rejects a reference change on a product in that state (any country),
+     * and a name change too when the company is Portuguese, so those fields
      * must be left out of the payload.
      *
      * @return bool
@@ -780,6 +781,18 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
     protected function moloniProductHasDocuments(): bool
     {
         return in_array(ProductDeletionBlocker::PRODUCT_HAS_DOCUMENT, $this->moloniProduct['deletionBlockers'] ?? [], true);
+    }
+
+    /**
+     * Checks if the authenticated company is Portuguese. Moloni only locks
+     * the product name on documents for PT companies (the Reference lock
+     * applies to every country).
+     *
+     * @return bool
+     */
+    protected function companyIsPortuguese(): bool
+    {
+        return MoloniContext::instance()->company()->getCountry() === Countries::PORTUGAL;
     }
 
     //          VERIFICATIONS          //
@@ -807,11 +820,23 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
      */
     protected function shouldSyncName(): bool
     {
-        if ($this->productExists() && $this->moloniProductHasDocuments()) {
+        if ($this->productExists() && $this->companyIsPortuguese() && $this->moloniProductHasDocuments()) {
             return false;
         }
 
         return !$this->productExists() || in_array(SyncFields::NAME, $this->syncFields, true);
+    }
+
+    /**
+     * Should sync product reference. Moloni rejects the whole update, in any
+     * country, when the reference changes on a product that has documents
+     * associated.
+     *
+     * @return bool
+     */
+    protected function shouldSyncReference(): bool
+    {
+        return !$this->productExists() || !$this->moloniProductHasDocuments();
     }
 
     /**

@@ -95,6 +95,10 @@ abstract class MoloniSimpleProductSyncAbstract extends MoloniProductSyncAbstract
             unset($props['visible']);
         }
 
+        if (!$this->shouldSyncReference()) {
+            unset($props['reference']);
+        }
+
         if (!$this->shouldSyncName()) {
             unset($props['name']);
         }
