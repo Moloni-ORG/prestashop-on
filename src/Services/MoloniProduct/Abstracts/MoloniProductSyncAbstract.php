@@ -769,6 +769,32 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
         return $this->hasStock;
     }
 
+    /**
+     * Checks if the fetched Moloni product may have documents associated (it is
+     * not deletable; it may also just have stock movements). Moloni rejects a
+     * reference change on a product with documents (any country), and a name
+     * change too when the company is Portuguese, so those fields must be left
+     * out of the payload.
+     *
+     * @return bool
+     */
+    protected function moloniProductHasDocuments(): bool
+    {
+        return ($this->moloniProduct['deletable'] ?? true) === false;
+    }
+
+    /**
+     * Checks if the authenticated company is Portuguese. Moloni only locks
+     * the product name on documents for PT companies (the Reference lock
+     * applies to every country).
+     *
+     * @return bool
+     */
+    protected function companyIsPortuguese(): bool
+    {
+        return MoloniContext::instance()->company()->getCountry() === Countries::PORTUGAL;
+    }
+
     //          VERIFICATIONS          //
 
     /**
@@ -794,7 +820,23 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
      */
     protected function shouldSyncName(): bool
     {
+        if ($this->productExists() && $this->companyIsPortuguese() && $this->moloniProductHasDocuments()) {
+            return false;
+        }
+
         return !$this->productExists() || in_array(SyncFields::NAME, $this->syncFields, true);
+    }
+
+    /**
+     * Should sync product reference. Moloni rejects the whole update, in any
+     * country, when the reference changes on a product that has documents
+     * associated.
+     *
+     * @return bool
+     */
+    protected function shouldSyncReference(): bool
+    {
+        return !$this->productExists() || !$this->moloniProductHasDocuments();
     }
 
     /**

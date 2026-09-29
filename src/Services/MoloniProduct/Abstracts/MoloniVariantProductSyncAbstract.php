@@ -111,6 +111,10 @@ abstract class MoloniVariantProductSyncAbstract extends MoloniProductSyncAbstrac
             $props['visible'] = $this->visibility;
         }
 
+        if (!$this->shouldSyncReference()) {
+            unset($props['reference']);
+        }
+
         if ($this->shouldSyncName()) {
             $props['name'] = $this->name;
         }
