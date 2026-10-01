@@ -40,6 +40,7 @@ query prestashopCompany($companyId: Int!,$options: CompanyOptionsSingle) {
         active
         moduleId
         resource
+        limit
         remaining
       }
     }
