@@ -29,6 +29,13 @@ final class Company
 {
     private $company;
 
+    /**
+     * The plan's product count limit (the limits entry with this resource). Moloni ON refuses
+     * a product create once its "remaining" reaches 0, but only plans with an actual cap
+     * ("limit" > 0) are capped at all; an unlimited plan reports "limit": 0, "remaining": 0.
+     */
+    private const PRODUCTS_RESOURCE = 'products';
+
     private $targetPermissions = [
         'plugins.prestashop',
         'tools.apiClients',
@@ -41,7 +48,11 @@ final class Company
     public function __construct(array $company)
     {
         foreach ($company['limits'] ?? [] as $key => $value) {
-            if (in_array($value['moduleId'], $this->targetPermissions)) {
+            if (in_array($value['moduleId'] ?? null, $this->targetPermissions)) {
+                continue;
+            }
+
+            if (($value['resource'] ?? null) === self::PRODUCTS_RESOURCE) {
                 continue;
             }
 
@@ -110,6 +121,34 @@ final class Company
         return $this->hasStocks() && $this->hasWarehouses();
     }
 
+    // Limits //
+
+    /**
+     * Whether the plan still has room for another product. No products entry (unexpected, or
+     * the company could not be loaded) means don't block, and let Moloni ON decide.
+     *
+     * A plan with no product cap (unlimited) reports "limit": 0, "remaining": 0 for this
+     * resource, so we only block when there is an actual limit (> 0) and it has been reached.
+     */
+    public function canCreateProducts(): bool
+    {
+        foreach ($this->company['limits'] ?? [] as $limit) {
+            if (($limit['resource'] ?? null) !== self::PRODUCTS_RESOURCE) {
+                continue;
+            }
+
+            $planLimit = (int) ($limit['limit'] ?? 0);
+
+            if ($planLimit <= 0) {
+                return true;
+            }
+
+            return (int) ($limit['remaining'] ?? 0) > 0;
+        }
+
+        return true;
+    }
+
     // Privates //
 
     private function isAllowed(string $resource): bool
@@ -117,7 +156,7 @@ final class Company
         $limits = $this->company['limits'] ?? [];
 
         foreach ($limits as $limit) {
-            if ($limit['moduleId'] !== $resource) {
+            if (($limit['moduleId'] ?? null) !== $resource) {
                 continue;
             }
 

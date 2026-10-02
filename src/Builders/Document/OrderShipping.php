@@ -33,6 +33,8 @@ use MoloniOn\Exceptions\Document\MoloniDocumentShippingException;
 use MoloniOn\Exceptions\Document\MoloniDocumentShippingTaxException;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
+use MoloniOn\Exceptions\Product\MoloniProductLimitException;
+use MoloniOn\MoloniContext;
 use MoloniOn\Services\Tax\TaxFromRate;
 use MoloniOn\Tools\Settings;
 use Order;
@@ -224,6 +226,10 @@ class OrderShipping implements BuilderItemInterface
      */
     public function insert(): void
     {
+        if (!MoloniContext::instance()->company()->canCreateProducts()) {
+            throw new MoloniDocumentShippingException(MoloniProductLimitException::MESSAGE, ['{0}' => $this->reference]);
+        }
+
         $this
             ->setType()
             ->setMeasurementUnit()
@@ -255,6 +261,8 @@ class OrderShipping implements BuilderItemInterface
 
             if ($productId > 0) {
                 $this->productId = $productId;
+            } elseif (MoloniProductLimitException::isApiError($mutation)) {
+                throw new MoloniDocumentShippingException(MoloniProductLimitException::MESSAGE, ['{0}' => $this->reference], ['mutation' => $mutation]);
             } else {
                 throw new MoloniDocumentShippingException('Error creating shipping product', [], ['mutation' => $mutation]);
             }
