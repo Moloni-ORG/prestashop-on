@@ -4,3 +4,5 @@ imports:
   - { resource: services/admin/listeners.yml }
   - { resource: services/admin/forms.yml }
   - { resource: services/admin/controllers.yml }
+  # PrestaShop 9 only; 1.7 has no PHP loader here, hence ignore_errors (see the file)
+  - { resource: services/admin/controllers.php, ignore_errors: true }

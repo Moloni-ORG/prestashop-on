@@ -50,7 +50,10 @@ abstract class MoloniController extends FrameworkBundleAdminController implement
 
     public function __construct(MoloniContext $context)
     {
-        parent::__construct();
+        // PrestaShop 9 dropped the parent constructor
+        if (method_exists(FrameworkBundleAdminController::class, '__construct')) {
+            parent::__construct();
+        }
 
         $this->moloniContext = $context;
 
