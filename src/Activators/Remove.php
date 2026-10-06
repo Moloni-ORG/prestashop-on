@@ -75,14 +75,20 @@ class Remove extends ActivatorAbstract
     private function removeLogin(): void
     {
         try {
+            $doctrine = $this->module->get('doctrine');
+
+            // PrestaShop 1.7 has no service container outside the back office (e.g. CLI uninstall)
+            if (!$doctrine) {
+                \Db::getInstance()->delete('moloni_on_app');
+
+                return;
+            }
+
             /** @var MoloniOnAppRepository $repository */
-            $repository = $this
-                ->module
-                ->get('doctrine')
-                ->getRepository(MoloniOnApp::class);
+            $repository = $doctrine->getRepository(MoloniOnApp::class);
 
             $repository->deleteApp();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // No need to catch
         }
     }
