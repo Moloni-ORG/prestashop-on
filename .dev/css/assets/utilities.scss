@@ -24,3 +24,21 @@ Temporary Fixes
   inset: initial;
   color: initial;
 }
+
+/*
+Error details in flash messages (toggled by .moloni-error-toggle, see js/app.js)
+*/
+
+.moloni-error-details {
+  display: none;
+
+  &.is-open {
+    display: block;
+  }
+
+  pre {
+    max-height: 300px;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+}

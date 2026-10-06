@@ -96,17 +96,16 @@ abstract class MoloniController extends FrameworkBundleAdminController implement
     {
         $msg = $this->trans('Click for more information', 'Modules.Molonion.Errors');
 
-        $error = ' </br>';
-        $error .= '<a onclick="$(\'#toggleDiv\').toggle(200);" href="#">' . $msg . '</a>';
-        $error .= '</br>';
+        // PrestaShop strips inline style and onclick from flash messages, so the details are hidden by
+        // the module stylesheet and toggled by the module script (.dev/js/app.js)
+        $error = '<br>';
+        $error .= '<a href="#" class="moloni-error-toggle">' . $msg . '</a>';
 
-        $error .= '<div style="display: none;" id="toggleDiv">';
+        $error .= '<div class="moloni-error-details">';
 
         foreach ($errors as $key => $value) {
-            $error .= '<br>';
-            $error .= '    <b>' . $key . ': </b>';
-            $error .= '    <pre>' . print_r($value, true) . '</pre>';
-            $error .= '</br>';
+            $error .= '<b>' . htmlspecialchars((string) $key) . ': </b>';
+            $error .= '<pre>' . htmlspecialchars(print_r($value, true)) . '</pre>';
         }
 
         $error .= '</div>';
