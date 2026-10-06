@@ -30,6 +30,7 @@ namespace MoloniOn\Hooks;
 use MoloniOn\Api\MoloniApi;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Helpers\FindMoloniProductByReference;
 use MoloniOn\Services\MoloniProduct\Stock\SyncProductStock;
@@ -67,7 +68,7 @@ class ProductStockUpdate extends AbstractHookAction
             SyncLogs::prestashopProductAddTimeout($this->productId);
             $product = new \Product($this->productId, true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             if ($isVariant && !$this->variantId) {
                 return;

@@ -26,6 +26,7 @@
 namespace MoloniOn\Actions\Exports;
 
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
@@ -72,7 +73,7 @@ class ExportProductsToMoloni extends ExportProducts
             $product = new \Product($productData['id_product'], true, $this->languageId);
 
             try {
-                $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+                $isVariant = ProductType::hasCombinations($product);
 
                 if ($isVariant && !$hasProperties) {
                     $skippedVariants[] = $product->reference;

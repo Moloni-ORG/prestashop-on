@@ -32,6 +32,7 @@ use MoloniOn\Entity\MoloniOnProductAssociations;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\Repository\MoloniOnOrderDocumentsRepository;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
@@ -358,7 +359,7 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
@@ -405,7 +406,7 @@ class Debug extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             $moloniProduct = FindMoloniProductByReference::fromPrestashopProduct($product);
 
