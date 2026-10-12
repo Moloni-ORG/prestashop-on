@@ -151,6 +151,8 @@ class DummyTranslations
         $this->translator->trans('Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error importing products. Part {0}', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Error importing products stock. Part {0}', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Could not create "{0}" in Moloni ON: the plan\'s product limit has been reached.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Some products were not created in Moloni ON: the plan\'s product limit has been reached.', [], 'Modules.Molonion.Errors');
     }
 
     public function common(): void

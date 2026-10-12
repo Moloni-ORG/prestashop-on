@@ -26,6 +26,7 @@
 namespace MoloniOn\Actions\Exports;
 
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Exceptions\Product\MoloniProductLimitException;
 use MoloniOn\Helpers\ProductType;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
@@ -58,6 +59,7 @@ class ExportProductsToMoloni extends ExportProducts
 
         $hasProperties = MoloniContext::instance()->company()->hasProperties();
         $skippedVariants = [];
+        $limitReached = [];
 
         foreach ($products as $productData) {
             if (empty($productData['reference'])) {
@@ -97,6 +99,10 @@ class ExportProductsToMoloni extends ExportProducts
                         $product->reference => 'Product already exists in Moloni ON',
                     ];
                 }
+            } catch (MoloniProductLimitException $e) {
+                // A full plan is an account state, not an export failure. Each product is
+                // still tried on its own.
+                $limitReached[] = $product->reference;
             } catch (MoloniProductException $e) {
                 $this->errorProducts[] = [
                     $product->reference => $e->getData(),
@@ -108,6 +114,13 @@ class ExportProductsToMoloni extends ExportProducts
             Logs::addWarningLog(
                 'Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.',
                 ['module' => 'productsServices.productProperties', 'references' => $skippedVariants]
+            );
+        }
+
+        if (!empty($limitReached)) {
+            Logs::addWarningLog(
+                'Some products were not created in Moloni ON: the plan\'s product limit has been reached.',
+                ['references' => $limitReached]
             );
         }
 

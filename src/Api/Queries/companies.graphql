@@ -18,6 +18,9 @@ query prestashopCompanies($options: CompanyOptions) {
             limits {
                 active
                 moduleId
+                resource
+                limit
+                remaining
             }
         }
         errors {

@@ -507,6 +507,26 @@
         <target>Order not found</target>
         <note>Line: </note>
       </trans-unit>
+      <trans-unit id="625976a1952dd427d837769f54a611de">
+        <source>Could not create "{0}" in Moloni ON: the plan's product limit has been reached.</source>
+        <target>Could not create "{0}" in Moloni ON: the plan's product limit has been reached.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="bf30b4a671587da155c3da51846bf511">
+        <source>Some products were not created in Moloni ON: the plan's product limit has been reached.</source>
+        <target>Some products were not created in Moloni ON: the plan's product limit has been reached.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="16ee195564b16e7f42d53fc03e30225e">
+        <source>Product skipped: the Product Properties module is not active in your Moloni ON company.</source>
+        <target>Product skipped: the Product Properties module is not active in your Moloni ON company.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="c6665d884f4826b5f20e920853c2e0c3">
+        <source>Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.</source>
+        <target>Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.</target>
+        <note>Line: </note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
