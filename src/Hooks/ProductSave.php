@@ -29,6 +29,7 @@ use MoloniOn\Api\MoloniApi;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
 use MoloniOn\Exceptions\Product\MoloniProductLimitException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
@@ -64,7 +65,7 @@ class ProductSave extends AbstractHookAction
             SyncLogs::prestashopProductAddTimeout($this->productId);
             $product = new \Product($this->productId, true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
                 /* No Product Properties module: skip products with combinations.

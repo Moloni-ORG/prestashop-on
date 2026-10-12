@@ -39,6 +39,7 @@ use MoloniOn\Exceptions\Document\MoloniDocumentProductTaxException;
 use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProductFromCombination;
@@ -239,7 +240,7 @@ class OrderProduct implements BuilderItemInterface
         try {
             $product = new \Product($this->orderProduct['product_id'], true, \Configuration::get('PS_LANG_DEFAULT'));
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
                 /* No Product Properties module: create the combination as a simple product */

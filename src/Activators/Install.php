@@ -208,8 +208,32 @@ class Install extends ActivatorAbstract
 
     private function registerHooks(): void
     {
+        $shopIds = \Shop::getContextListShopID();
+
         foreach ($this->hooks as $hookName) {
-            $this->module->registerHook($hookName);
+            $missingShopIds = array_values(array_filter($shopIds, function ($shopId) use ($hookName) {
+                return !$this->isHookRegistered($hookName, (int) $shopId);
+            }));
+
+            if (!empty($missingShopIds)) {
+                $this->module->registerHook($hookName, $missingShopIds);
+            }
         }
+    }
+
+    /**
+     * Checks the database directly: PrestaShop's own check goes through a hook id cache that is
+     * stale for hooks created earlier in the same request, which makes a second registerHook()
+     * (install() runs enable() first) insert a duplicate row
+     */
+    private function isHookRegistered(string $hookName, int $shopId): bool
+    {
+        $sql = 'SELECT 1 FROM `' . _DB_PREFIX_ . 'hook_module` hm
+            INNER JOIN `' . _DB_PREFIX_ . 'hook` h ON h.`id_hook` = hm.`id_hook`
+            WHERE h.`name` = \'' . pSQL($hookName) . '\'
+            AND hm.`id_module` = ' . (int) $this->module->id . '
+            AND hm.`id_shop` = ' . $shopId;
+
+        return (bool) \Db::getInstance()->getValue($sql);
     }
 }

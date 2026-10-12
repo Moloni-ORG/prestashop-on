@@ -32,6 +32,7 @@ if (!defined('_PS_VERSION_')) {
 use MoloniOn\Activators\Install;
 use MoloniOn\Activators\Remove;
 use MoloniOn\Enums\MoloniRoutes;
+use MoloniOn\Helpers\Version;
 use MoloniOn\Hooks\AdminOrderButtons;
 use MoloniOn\Hooks\OrderStatusUpdate;
 use MoloniOn\Hooks\ProductSave;
@@ -183,12 +184,35 @@ class CoreModule extends Module
     {
         $action = $this->context->controller->php_self ?? '';
 
-        $this->context->controller->addCSS("{$this->_path}views/css/moloni-icons.css");
+        $this->context->controller->addCSS($this->getAssetUri('views/css/moloni-icons.css'));
 
         if (strpos($action, 'Moloni') === 0) {
-            $this->context->controller->addJS("{$this->_path}views/js/app.js");
-            $this->context->controller->addCSS("{$this->_path}views/css/app.css");
+            $this->context->controller->addJS($this->getAssetUri('views/js/app.js'));
+            $this->context->controller->addCSS($this->getAssetUri('views/css/app.css'));
         }
+    }
+
+    /**
+     * Asset URI with a cache-busting version, so a module update doesn't keep serving cached files
+     *
+     * PrestaShop 1.7 can't resolve media URIs with a query string (the asset would not load), so the
+     * version is only added from PrestaShop 8 on.
+     *
+     * @param string $file Path relative to the module folder
+     *
+     * @return string
+     */
+    private function getAssetUri(string $file): string
+    {
+        $uri = $this->_path . $file;
+
+        if (!Version::isPrestashopNewVersion()) {
+            return $uri;
+        }
+
+        $modifiedAt = @filemtime($this->getLocalPath() . $file);
+
+        return $modifiedAt ? $uri . '?v=' . $modifiedAt : $uri;
     }
 
     /**

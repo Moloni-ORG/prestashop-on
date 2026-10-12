@@ -23,14 +23,30 @@
  * @noinspection PhpMultipleClassDeclarationsInspection
  */
 
-declare(strict_types=1);
+namespace MoloniOn\Helpers;
 
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+class ProductType
+{
+    /**
+     * Whether the product is a product with combinations
+     *
+     * Product::$product_type only exists since PrestaShop 8; on 1.7 a product with combinations is
+     * recognised by its combinations alone.
+     *
+     * @param \Product $product
+     *
+     * @return bool
+     */
+    public static function hasCombinations(\Product $product): bool
+    {
+        if (property_exists($product, 'product_type') && $product->product_type !== 'combinations') {
+            return false;
+        }
 
-header('Location: ../');
-exit;
+        return (bool) $product->hasCombinations();
+    }
+}

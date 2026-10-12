@@ -32,6 +32,7 @@ use MoloniOn\Actions\ProductsList\Prestashop\VerifyProductForList;
 use MoloniOn\Controller\Admin\MoloniController;
 use MoloniOn\Enums\MoloniRoutes;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Helpers\ProductType;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
 use MoloniOn\Repository\ProductsRepository;
@@ -89,7 +90,7 @@ class PrestashopProducts extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
                 throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);
@@ -131,7 +132,7 @@ class PrestashopProducts extends MoloniController
                 throw new MoloniProductException('Product not found', null, [$productId]);
             }
 
-            $isVariant = $product->product_type === 'combinations' && $product->hasCombinations();
+            $isVariant = ProductType::hasCombinations($product);
 
             if ($isVariant && !MoloniContext::instance()->company()->hasProperties()) {
                 throw new MoloniProductException('Product skipped: the Product Properties module is not active in your Moloni ON company.', null, [$productId]);

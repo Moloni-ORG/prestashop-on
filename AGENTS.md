@@ -4,7 +4,7 @@ Guidance for AI coding agents (Claude Code, Cursor, Copilot, …) and new develo
 
 ## What this plugin is
 
-The **Moloni ON** PrestaShop module — a **PHP module** (Composer `type: prestashop-module`, namespace `MoloniOn\` PSR-4 → `src/`, PHP ≥ 7.2, platform pinned 7.4). It installs into a PrestaShop back-office (`ps_versions_compliancy` **1.7.6 – 9.0.0**) and syncs the store to Moloni ON **over the public GraphQL API** (`https://api.molonion.in/v1`). It creates Moloni documents from PrestaShop orders, syncs products/stock (both ways), taxes, and customers.
+The **Moloni ON** PrestaShop module — a **PHP module** (Composer `type: prestashop-module`, namespace `MoloniOn\` PSR-4 → `src/`, PHP ≥ 7.2, platform pinned 7.4). It installs into a PrestaShop back-office (`ps_versions_compliancy` **1.7.6 → current**, no upper bound) and syncs the store to Moloni ON **over the public GraphQL API** (`https://api.molonion.in/v1`). It creates Moloni documents from PrestaShop orders, syncs products/stock (both ways), taxes, and customers.
 
 ## Responsibilities & boundaries
 
@@ -70,7 +70,7 @@ No test suite is configured (`tests/` phpstan config is missing; no PHPUnit). "T
 ## Conventions
 
 - **Namespace `MoloniOn\`**, PSR-4 → `src/`; **PrestaShop coding standard** enforced by `php-cs-fixer` (`.php-cs-fixer.php` → `PrestaShop\CodingStandards\CsFixer\Config`). Run `composer run auto-phpcs` before committing.
-- **Every PHP file** starts with the Moloni license header and `if (!defined('_PS_VERSION_')) { exit; }`, and every directory carries an `index.php` guard — all **auto-applied by `composer run build`** (`auto-header` / `auto-index`); don't hand-maintain or delete them.
+- **Every PHP file** starts with the Moloni license header and `if (!defined('_PS_VERSION_')) { exit; }`, and every directory carries an `index.php` guard — all **auto-applied by `composer run build`** (`auto-header` / `auto-index`); don't hand-maintain or delete them. The one exception is `src/Entity`, which must have no `index.php` (PrestaShop 9 loads every file there; `auto-index` excludes it).
 - **PrestaShop/Symfony idioms**: module lifecycle via `CoreModule`, Symfony `Controller/`, `Form/`, `EventListener/`, Doctrine `Entity/` + `Repository/`. **DI is autowired** (`config/services/admin/*.yml`, `_defaults: autowire/autoconfigure: true`).
 - **GraphQL operations live in `.graphql` files** (`src/Api/Queries/`, `src/Api/Mutations/`) — edit those, never inline PHP strings.
 - **i18n** via the new translation system (`$this->trans( …, 'Modules.Molonion.*' )`); translations in `translations/`.
@@ -86,7 +86,7 @@ Curated, verified conventions and traps. This is the default-trusted source — 
 - **`composer run build` rewrites source, it's not just a zip.** It runs `auto-index` (drops `index.php` into every folder), `auto-header` (stamps the license header via `header-stamp`), and `auto-phpcs` (`php-cs-fixer fix`) *before* `builder.php`. Running it mutates the working tree — expect a diff, and don't run it casually mid-review.
 - **Assets are webpack / Symfony Encore** (in `.dev/`), *not* gulp like `woocommerce-on`. `npm run build-prod` in `.dev/` is mandatory after any JS/CSS change or the back-office UI ships stale.
 - **This PHP module *does* have an inbound webhook-like surface** — the PrestaShop **Webservice API** resource (`src/Webservice/`), which Moloni calls to push product/stock changes. It's registered in `CoreModule::install()`; a broken install won't sync inbound.
-- **Wide PrestaShop compat (1.7.6 → 9.0.0).** Core APIs differ substantially between 1.7 and 8/9 — guard version-specific calls; a fix that works on one major can break another. Test against the version you're targeting.
+- **Wide PrestaShop compat (1.7.6 → 9.x).** Core APIs differ substantially between 1.7 and 8/9 — guard version-specific calls; a fix that works on one major can break another. Test against the version you're targeting.
 - **`check-phpstan` is broken out of the box** — its config (`tests/phpstan/phpstan.neon`) isn't in the checkout, even though the phpstan bin is installed. Don't assume `composer run check-phpstan` runs; it won't until that config is restored.
 - **Fiscal idempotency is load-bearing** — never double-issue a document; treat tax/document-type mappings as legal, not cosmetic.
 - **No submodules** here (`.gitmodules` absent).

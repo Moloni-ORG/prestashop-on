@@ -18,4 +18,11 @@ $(document).ready(() => {
   window.molonion.Login = new Login();
   window.molonion.PrestashopProducts = new PrestashopProducts();
   window.molonion.MoloniProducts = new MoloniProducts();
+
+  // Flash messages lose inline handlers, so error details are toggled here
+  $(document).on('click', '.moloni-error-toggle', (event) => {
+    event.preventDefault();
+
+    $(event.currentTarget).closest('.alert').find('.moloni-error-details').toggleClass('is-open');
+  });
 });

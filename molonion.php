@@ -41,7 +41,7 @@ class MoloniOn extends CoreModule
 
         $this->need_instance = 1;
         $this->version = '#VERSION#';
-        $this->ps_versions_compliancy = ['min' => '1.7.6', 'max' => '9.0.0'];
+        $this->ps_versions_compliancy = ['min' => '1.7.6', 'max' => _PS_VERSION_];
 
         parent::__construct();
 

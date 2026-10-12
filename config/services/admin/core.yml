@@ -10,3 +10,7 @@ services:
       - "@doctrine.orm.entity_manager"
       - '@router'
       - '@translator'
+
+  # PrestaShop 9 registers every FrameworkBundleAdminController subclass as an autowired service,
+  # including the abstract MoloniController, so the class name must resolve to the context service
+  MoloniOn\MoloniContext: '@molonion.context'
