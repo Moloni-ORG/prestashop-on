@@ -28,6 +28,7 @@ namespace MoloniOn\Hooks;
 use MoloniOn\Api\MoloniApi;
 use MoloniOn\Enums\Boolean;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Exceptions\Product\MoloniProductLimitException;
 use MoloniOn\MoloniContext;
 use MoloniOn\Services\MoloniProduct\Create\CreateSimpleProduct;
 use MoloniOn\Services\MoloniProduct\Create\CreateVariantProduct;
@@ -92,6 +93,9 @@ class ProductSave extends AbstractHookAction
                 $service->run();
                 $service->saveLog();
             }
+        } catch (MoloniProductLimitException $e) {
+            // A full plan is an account state, not a sync failure
+            Logs::addWarningLog([$e->getMessage(), $e->getIdentifiers()], $e->getData());
         } catch (MoloniProductException $e) {
             Logs::addErrorLog(
                 [['Error saving Moloni ON product'], [$e->getMessage(), $e->getIdentifiers()]],

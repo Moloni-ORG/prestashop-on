@@ -477,7 +477,7 @@ class OrderProduct implements BuilderItemInterface
             return $this;
         }
 
-        $this->warehouseId = Settings::get('documentWarehouse');
+        $this->warehouseId = (int) (Settings::get('documentWarehouse') ?? 0);
 
         return $this;
     }

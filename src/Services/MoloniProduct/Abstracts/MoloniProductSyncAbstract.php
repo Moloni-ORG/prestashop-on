@@ -36,6 +36,7 @@ use MoloniOn\Exceptions\MoloniApiException;
 use MoloniOn\Exceptions\MoloniException;
 use MoloniOn\Exceptions\Product\MoloniProductCategoryException;
 use MoloniOn\Exceptions\Product\MoloniProductException;
+use MoloniOn\Exceptions\Product\MoloniProductLimitException;
 use MoloniOn\Exceptions\Product\MoloniProductTaxException;
 use MoloniOn\Helpers\Warehouse;
 use MoloniOn\MoloniContext;
@@ -277,6 +278,12 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
      */
     protected function insert(): void
     {
+        // The plan's product limit is exposed in the company limits, so refuse up front
+        // instead of letting Moloni ON reject the create
+        if (!MoloniContext::instance()->company()->canCreateProducts()) {
+            throw new MoloniProductLimitException($this->reference);
+        }
+
         $this->setCategory();
 
         $props = $this->toArray();
@@ -288,6 +295,12 @@ abstract class MoloniProductSyncAbstract implements MoloniProductServiceInterfac
             $moloniProduct = $mutation['data']['productCreate']['data'] ?? [];
 
             if (empty($moloniProduct)) {
+                // The limit can still be hit here (the company is read once per request, or
+                // another client created products meanwhile)
+                if (MoloniProductLimitException::isApiError($mutation)) {
+                    throw new MoloniProductLimitException($this->reference, ['mutation' => $mutation, 'props' => $props]);
+                }
+
                 throw new MoloniProductException('Error creating product ({0})', ['{0}' => $this->reference], ['mutation' => $mutation, 'props' => $props]);
             }
 
