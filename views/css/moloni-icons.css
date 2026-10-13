@@ -1,10 +1,16 @@
 [class^="moloni-icon-"], [class*=" moloni-icon-"], .mi-logo, .icon-MoloniTab {
     content: "";
     display: inline-block;
-    width: 18px;
-    height: 18px;
-    background-image: url('../img/logo_tab.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
+    /* 1em = the host's icon size (24px on PS 9, 19px on PS 8), so the menu label lines up */
+    width: 1em;
+    height: 1em;
+    /* the SVG is a single-colour shape: paint it in the host's icon colour (white sidebar on PS 9, dark on 1.7/8) */
+    background-color: currentColor;
+    -webkit-mask: url('../img/logo_tab.svg') no-repeat center / 75%;
+    mask: url('../img/logo_tab.svg') no-repeat center / 75%;
     vertical-align: middle;
+    /* the tab icon is a Material ligature ("logo" isn't one), so push its text out of the box */
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
