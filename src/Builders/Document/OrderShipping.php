@@ -240,7 +240,8 @@ class OrderShipping implements BuilderItemInterface
                 'productCategoryId' => $this->categoryId,
                 'reference' => $this->reference,
                 'type' => $this->type,
-                'name' => $this->name,
+                // Fixed name: Moloni locks a product's name once it has documents
+                'name' => 'Portes',
                 'measurementUnitId' => $this->measurementUnit,
                 'price' => $this->price,
                 'hasStock' => false,
