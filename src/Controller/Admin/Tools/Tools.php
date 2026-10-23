@@ -165,18 +165,13 @@ class Tools extends MoloniController
     {
         try {
             (new WebhookDeleteAll())->handle();
-            $action = new WebhookCreate();
 
-            if ((int) Settings::get('syncStockToPrestashop') === Boolean::YES) {
-                $action->handle('Product', 'stockChanged');
-            }
+            $hasProductHook = (int) Settings::get('syncStockToPrestashop') === Boolean::YES
+                || (int) Settings::get('addProductsToPrestashop') === Boolean::YES
+                || (int) Settings::get('updateProductsToPrestashop') === Boolean::YES;
 
-            if ((int) Settings::get('addProductsToPrestashop') === Boolean::YES) {
-                $action->handle('Product', 'create');
-            }
-
-            if ((int) Settings::get('updateProductsToPrestashop') === Boolean::YES) {
-                $action->handle('Product', 'update');
+            if ($hasProductHook) {
+                (new WebhookCreate())->handle('Product');
             }
 
             $msg = $this->trans('Webhooks reinstall was successful', 'Modules.Molonion.Common');

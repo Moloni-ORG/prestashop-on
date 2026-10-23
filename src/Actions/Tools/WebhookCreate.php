@@ -45,7 +45,7 @@ class WebhookCreate
      *
      * @throws MoloniException
      */
-    public function handle($model, $operation): void
+    public function handle($model, $operation = null): void
     {
         if ((int) \Configuration::get('PS_WEBSERVICE') === Boolean::NO) {
             $this->enableWebServices();
@@ -62,13 +62,16 @@ class WebhookCreate
         $props = [
             'model' => $model,
             'url' => $this->url,
-            'operation' => $operation,
         ];
+
+        if ($operation !== null) {
+            $props['operation'] = $operation;
+        }
 
         try {
             MoloniApiClient::hooks()->mutationHookCreate(['data' => $props]);
         } catch (MoloniApiException $e) {
-            throw new MoloniException('Error creating {0} hook', ['{0}' => $operation], [$e->getData()]);
+            throw new MoloniException('Error creating {0} hook', ['{0}' => $model], [$e->getData()]);
         }
     }
 

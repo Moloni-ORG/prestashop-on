@@ -42,13 +42,15 @@ class WebhookDeleteAll
      */
     public function handle(): void
     {
-        $baseUrl = defined('__PS_BASE_URI__') ? __PS_BASE_URI__ : '';
+        /* Same base as WebhookCreate. The search is a substring match, so a bare path
+           (__PS_BASE_URI__) would also match other PrestaShop stores on the company. */
+        $baseUrl = defined('_PS_BASE_URL_SSL_') ? _PS_BASE_URL_SSL_ : '';
 
         $props = [
             'options' => [
                 'search' => [
                     'field' => 'url',
-                    'value' => $baseUrl . 'api/molonionresource/',
+                    'value' => $baseUrl . '/api/molonionresource/',
                 ],
             ],
         ];
