@@ -66,7 +66,9 @@ class Guzzle5 extends GuzzleAbstract implements GuzzleInterface
                 $response = [];
             }
 
-            throw new MoloniApiException('Request error', [], ['data' => $body, 'response' => $response]);
+            $status = $e->getResponse() ? $e->getResponse()->getStatusCode() : 0;
+
+            throw new MoloniApiException('Request error', [], ['data' => $body, 'response' => json_encode($response), 'status' => $status]);
         }
 
         if ($request === null) {

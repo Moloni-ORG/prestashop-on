@@ -527,6 +527,21 @@
         <target>Os produtos com combinações foram ignorados: o módulo Propriedades de Produto não está ativo na tua empresa Moloni ON.</target>
         <note>Line: </note>
       </trans-unit>
+      <trans-unit id="755b2d227215ed43f7724dcaa1105855">
+        <source>Your store must use HTTPS to connect to Moloni ON.</source>
+        <target>A tua loja tem de usar HTTPS para se ligar ao Moloni ON.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="8f739da5c913ad61b1585466166dd473">
+        <source>Too many connection attempts. Please try again later.</source>
+        <target>Demasiadas tentativas de ligação. Tenta novamente mais tarde.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="ae100682586e9103fd75c8b7d5e7bb7d">
+        <source>We could not connect your store to Moloni ON. Please try again.</source>
+        <target>Não foi possível ligar a tua loja ao Moloni ON. Tenta novamente.</target>
+        <note>Line: </note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

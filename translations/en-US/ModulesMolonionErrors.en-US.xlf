@@ -527,6 +527,21 @@
         <target>Products with combinations were skipped: the Product Properties module is not active in your Moloni ON company.</target>
         <note>Line: </note>
       </trans-unit>
+      <trans-unit id="755b2d227215ed43f7724dcaa1105855">
+        <source>Your store must use HTTPS to connect to Moloni ON.</source>
+        <target>Your store must use HTTPS to connect to Moloni ON.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="8f739da5c913ad61b1585466166dd473">
+        <source>Too many connection attempts. Please try again later.</source>
+        <target>Too many connection attempts. Please try again later.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="ae100682586e9103fd75c8b7d5e7bb7d">
+        <source>We could not connect your store to Moloni ON. Please try again.</source>
+        <target>We could not connect your store to Moloni ON. Please try again.</target>
+        <note>Line: </note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

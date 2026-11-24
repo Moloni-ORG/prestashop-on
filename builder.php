@@ -33,6 +33,7 @@ require_once __DIR__ . '/src/Exceptions/MoloniException.php';
 
 const INCLUDE_DIRS = [
     'config',
+    'controllers',
     'mails',
     'src',
     'translations',

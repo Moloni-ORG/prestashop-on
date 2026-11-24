@@ -153,6 +153,10 @@ class DummyTranslations
         $this->translator->trans('Error importing products stock. Part {0}', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Could not create "{0}" in Moloni ON: the plan\'s product limit has been reached.', [], 'Modules.Molonion.Errors');
         $this->translator->trans('Some products were not created in Moloni ON: the plan\'s product limit has been reached.', [], 'Modules.Molonion.Errors');
+
+        $this->translator->trans('Your store must use HTTPS to connect to Moloni ON.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('Too many connection attempts. Please try again later.', [], 'Modules.Molonion.Errors');
+        $this->translator->trans('We could not connect your store to Moloni ON. Please try again.', [], 'Modules.Molonion.Errors');
     }
 
     public function common(): void

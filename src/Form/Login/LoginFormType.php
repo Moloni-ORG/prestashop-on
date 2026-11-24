@@ -29,11 +29,8 @@ namespace MoloniOn\Form\Login;
 
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -44,25 +41,9 @@ class LoginFormType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         return $builder
-            ->add('clientID', TextType::class, [
-                'label' => $this->trans('Client ID', 'Modules.Molonion.Common'),
-                'required' => true,
-                'translation_domain' => 'Modules.Molonion.Common',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('clientSecret', TextType::class, [
-                'label' => $this->trans('Client secret', 'Modules.Molonion.Common'),
-                'required' => true,
-                'constraints' => [
-                    new Length(['min' => 10]),
-                    new NotBlank(),
-                ],
-            ])
             ->add('connect', SubmitType::class, [
                 'attr' => ['class' => 'btn-primary moloni-login--button'],
-                'label' => $this->trans('Connect', 'Modules.Molonion.Common'),
+                'label' => $this->trans('Connect to Moloni ON', 'Modules.Molonion.Common'),
             ])
             ->setAction($options['url'])
             ->setMethod('POST');
