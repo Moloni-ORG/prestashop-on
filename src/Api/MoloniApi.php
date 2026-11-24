@@ -134,7 +134,11 @@ class MoloniApi
         try {
             $body = self::$guzzle->post($url, $headers, $params);
         } catch (MoloniApiException $e) {
-            throw new MoloniLoginException('The client credentials are invalid', [], $e->getData());
+            $message = empty(self::$app->getClientSecret())
+                ? 'We could not connect your store to Moloni ON. Please try again.'
+                : 'The client credentials are invalid';
+
+            throw new MoloniLoginException($message, [], $e->getData());
         }
 
         if (empty($body)) {

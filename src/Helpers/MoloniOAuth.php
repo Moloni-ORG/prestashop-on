@@ -43,7 +43,7 @@ class MoloniOAuth
     private const PENDING_CONFIG_KEY = 'MOLONI_ON_OAUTH_PENDING';
 
     /** Pending connect requests are abandoned after this many seconds */
-    private const PENDING_TTL = 600;
+    private const PENDING_TTL = 1800;
 
     /**
      * The stable redirect_uri for the OAuth flow: a module front controller link carries no

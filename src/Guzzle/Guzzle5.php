@@ -62,7 +62,7 @@ class Guzzle5 extends GuzzleAbstract implements GuzzleInterface
         } catch (BadResponseException $e) {
             try {
                 $response = $e->getResponse() ? $e->getResponse()->json() : [];
-            } catch (ParseException $e) {
+            } catch (ParseException $parseException) {
                 $response = [];
             }
 
