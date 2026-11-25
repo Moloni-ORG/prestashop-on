@@ -50,8 +50,9 @@ class Guzzle6 extends GuzzleAbstract implements GuzzleInterface
             $request = $this->client->request('post', $url, ['headers' => $headers, 'json' => $body]);
         } catch (BadResponseException $e) {
             $response = $e->getResponse()->getBody()->getContents();
+            $status = $e->getResponse()->getStatusCode();
 
-            throw new MoloniApiException('Request error', [], ['data' => $body, 'response' => $response]);
+            throw new MoloniApiException('Request error', [], ['data' => $body, 'response' => $response, 'status' => $status]);
         } catch (GuzzleException $e) {
             throw new MoloniApiException($e->getMessage(), ['data' => $body]);
         }

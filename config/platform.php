@@ -32,7 +32,6 @@ return [
     'plans_page' => 'https://www.molonion.pt/pricing',
     'help_page' => 'https://www.molonion.pt/help/plugins/prestashop',
     'home_page' => 'https://www.molonion.pt/',
-    'register_page' => 'https://account.molonion.pt/signup',
     'terms_page' => 'https://www.molonion.pt/legal',
 
     // Builder configuration

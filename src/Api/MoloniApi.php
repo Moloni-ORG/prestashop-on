@@ -75,18 +75,34 @@ class MoloniApi
         self::$guzzle = new GuzzleWrapper($configurations);
     }
 
+    /**
+     * Overrides the app loaded for this request. Used to recover a pending connect whose app row was
+     * wiped in the meantime (e.g. a second admin tab's redirectToLogin() deleting it while this
+     * connect was still waiting on Moloni's consent screen).
+     *
+     * @param MoloniOnApp $app
+     *
+     * @return void
+     */
+    public static function setApp(MoloniOnApp $app): void
+    {
+        self::$app = $app;
+    }
+
     //          Requests          //
 
     /**
      * Login action
      *
      * @param string $code
+     * @param string $codeVerifier PKCE verifier, only sent for a public client (empty stored secret)
+     * @param string $redirectUri Must match the one used to obtain $code, only sent alongside $codeVerifier
      *
      * @return bool
      *
      * @throws MoloniLoginException
      */
-    public static function login(string $code): bool
+    public static function login(string $code, string $codeVerifier = '', string $redirectUri = ''): bool
     {
         if (empty($code)) {
             throw new MoloniLoginException('Code missing');
@@ -99,14 +115,30 @@ class MoloniApi
         $params = [
             'grantType' => 'authorization_code',
             'apiClientId' => self::$app->getClientId(),
-            'clientSecret' => self::$app->getClientSecret(),
             'code' => $code,
         ];
+
+        // A non-empty stored secret is a legacy (merchant-made API client) login: keep its request exactly as before
+        if (!empty(self::$app->getClientSecret())) {
+            $params['clientSecret'] = self::$app->getClientSecret();
+        }
+
+        if (!empty($codeVerifier)) {
+            $params['code_verifier'] = $codeVerifier;
+        }
+
+        if (!empty($redirectUri)) {
+            $params['redirect_uri'] = $redirectUri;
+        }
 
         try {
             $body = self::$guzzle->post($url, $headers, $params);
         } catch (MoloniApiException $e) {
-            throw new MoloniLoginException('The client credentials are invalid', [], $e->getData());
+            $message = empty(self::$app->getClientSecret())
+                ? 'We could not connect your store to Moloni ON. Please try again.'
+                : 'The client credentials are invalid';
+
+            throw new MoloniLoginException($message, [], $e->getData());
         }
 
         if (empty($body)) {
@@ -132,6 +164,66 @@ class MoloniApi
     }
 
     /**
+     * Registers (or reuses, dedup is server-side) a public OAuth client for this store's redirect_uri,
+     * so a merchant can connect without creating an API client or pasting a Client ID/secret.
+     *
+     * @param string $redirectUri
+     *
+     * @return string The registered client id
+     *
+     * @throws MoloniLoginException
+     */
+    public static function registerClient(string $redirectUri): string
+    {
+        $url = self::$configurations->getApiUrl() . '/auth/register';
+        $headers = [
+            'Content-Type' => 'application/json',
+        ];
+
+        // The store's host makes the name unique, so the server's dedup finds this store's client again
+        $host = parse_url($redirectUri, PHP_URL_HOST) ?: $redirectUri;
+        $params = [
+            'client_name' => "Moloni ON PrestaShop ($host)",
+            'redirect_uris' => [$redirectUri],
+        ];
+
+        try {
+            $body = self::$guzzle->post($url, $headers, $params);
+        } catch (MoloniApiException $e) {
+            throw self::registerExceptionFor($e);
+        }
+
+        if (empty($body['client_id'])) {
+            throw new MoloniLoginException('We could not connect your store to Moloni ON. Please try again.', [], ['response' => $body]);
+        }
+
+        return $body['client_id'];
+    }
+
+    /**
+     * Maps a failed /auth/register call to a user-facing message
+     *
+     * @param MoloniApiException $e
+     *
+     * @return MoloniLoginException
+     */
+    private static function registerExceptionFor(MoloniApiException $e): MoloniLoginException
+    {
+        $data = $e->getData();
+        $response = json_decode((string) ($data['response'] ?? ''), true);
+
+        if (is_array($response) && ($response['error'] ?? '') === 'invalid_redirect_uri') {
+            return new MoloniLoginException('Your store must use HTTPS to connect to Moloni ON.', [], $data);
+        }
+
+        if ((int) ($data['status'] ?? 0) === 429) {
+            return new MoloniLoginException('Too many connection attempts. Please try again later.', [], $data);
+        }
+
+        return new MoloniLoginException('We could not connect your store to Moloni ON. Please try again.', [], $data);
+    }
+
+    /**
      * Refresh tokens action
      *
      * @return bool
@@ -145,9 +237,13 @@ class MoloniApi
         $params = [
             'grantType' => 'refresh_token',
             'apiClientId' => self::$app->getClientId(),
-            'clientSecret' => self::$app->getClientSecret(),
             'refreshToken' => self::$app->getRefreshToken(),
         ];
+
+        // A non-empty stored secret is a legacy (merchant-made API client) login: keep its request exactly as before
+        if (!empty(self::$app->getClientSecret())) {
+            $params['clientSecret'] = self::$app->getClientSecret();
+        }
 
         try {
             $body = self::$guzzle->post($url, $headers, $params);

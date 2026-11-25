@@ -522,6 +522,11 @@
         <target>Export stock to Moloni ON</target>
         <note>Line: </note>
       </trans-unit>
+      <trans-unit id="f0540f7589584e037b106a1c6a964484">
+        <source>Connect to Moloni ON</source>
+        <target>Connect to Moloni ON</target>
+        <note>Line: </note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
